@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.ir.backend.js.compile
-
 plugins {
     kotlin("jvm") version "1.3.72"
 }
@@ -16,6 +14,14 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.11.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
+}
+
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
 }
 
 tasks {

@@ -1,7 +1,8 @@
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.readValue
 import java.io.File
-import com.fasterxml.jackson.module.kotlin.*
 
 open class ConfigurationProvider {
     private val fileNameJSON = "src/main/resources/BaseConfigurationJSON"
@@ -12,6 +13,7 @@ open class ConfigurationProvider {
     private fun readJSONFileWithBufferedReader(): String {
         return File(fileNameJSON).bufferedReader().readText()
     }
+
     private fun readYAMLFileWithBufferedReader(): String {
         return File(fileNameYAML).bufferedReader().readText()
     }
@@ -20,6 +22,7 @@ open class ConfigurationProvider {
         val stringFromJSON: String = ConfigurationProvider().readJSONFileWithBufferedReader()
         return objectMapperJSON.readValue(stringFromJSON)
     }
+
     fun deserializeObjectYAML(): Configuration.ConfigurationObject {
         val stringFromYAML: String = ConfigurationProvider().readYAMLFileWithBufferedReader()
         return objectMapperYAML.readValue(stringFromYAML)
