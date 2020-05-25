@@ -1,6 +1,6 @@
 {
 "user": "moneyman",
-"pass": 1005,
-"host": "qa-delivery-mx-master.moneyman.ru",
+"pass": 100500,
+"host": "qa-delivery-master.mm.ru",
 "registrationServiceEndpoint": "/client-area/registration"
 }
