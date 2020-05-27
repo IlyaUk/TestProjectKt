@@ -1,0 +1,7 @@
+{
+"user": "moneyman",
+"pass": 100500,
+"host": "qa-delivery-master.mm.ru",
+"registrationServiceEndpoint": "/client-area/registration",
+"phone": 123456789
+}
