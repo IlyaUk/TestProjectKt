@@ -1,0 +1,5 @@
+user: moneyman
+pass: 100500
+host: qa-delivery-master.mm.ru
+registrationServiceEndpoint: /client-area/registration
+numberPhone: 123456789
