@@ -1,15 +1,11 @@
 package config
 
 open class ConfigurationProvider {
-  enum class ConfigSource {
-    YAML, JSON
-  }
-
   companion object {
-    fun setConfigType(type: ConfigSource): Configuration {
+    fun setConfigType(type: ConfigSource): ConfigFactory {
       return when (type) {
-        ConfigSource.YAML -> YAMLConfiguration()
-        ConfigSource.JSON -> JSONConfiguration()
+        ConfigSource.YAML -> YamlConfigurationFactory()
+        ConfigSource.JSON -> JsonConfigurationFactory()
       }
     }
   }

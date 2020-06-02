@@ -4,28 +4,34 @@ import config.ConfigurationProvider
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
+import config.ConfigSource
 
 class CreateConfigTest {
   @DisplayName("Create_Config_Object_From_Json")
   @Test
   fun CreateConfigObjectFromJson() {
-    val configurationObjectJSON = ConfigurationProvider.setConfigType(ConfigurationProvider.ConfigSource.JSON)
+    val configurationObjectJSON = ConfigurationProvider.setConfigType(ConfigSource.JSON)
         .getConfig()
-    assertEquals(configurationObjectJSON.user, "moneyman")
-    assertEquals(configurationObjectJSON.pass, 100500)
-    assertEquals(configurationObjectJSON.host, "qa-delivery-master.mm.ru")
-    assertEquals(configurationObjectJSON.registrationServiceEndpoint, "/client-area/registration")
-    assertEquals(configurationObjectJSON.phoneNumber, 0)
+    assertAll("configurationObjectJSON",
+        { assertEquals("moneyman", configurationObjectJSON.user) },
+        { assertEquals(100500, configurationObjectJSON.pass) },
+        { assertEquals("qa-delivery-master.mm.ru", configurationObjectJSON.host) },
+        { assertEquals("/client-area/registration", configurationObjectJSON.registrationServiceEndpoint) },
+        { assertEquals(0, configurationObjectJSON.phoneNumber) }
+    )
   }
 
   @DisplayName("Create_Config_Object_From_Yaml")
   @Test
   fun CreateConfigObjectFromYaml() {
-    val configurationObjectYAML = ConfigurationProvider.setConfigType(ConfigurationProvider.ConfigSource.JSON)
+    val configurationObjectYAML = ConfigurationProvider.setConfigType(ConfigSource.JSON)
         .getConfig()
-    assertEquals(configurationObjectYAML.user, "moneyman")
-    assertEquals(configurationObjectYAML.pass, 100500)
-    assertEquals(configurationObjectYAML.host, "qa-delivery-master.mm.ru")
-    assertEquals(configurationObjectYAML.registrationServiceEndpoint, "/client-area/registration")
+    assertAll("configurationObjectYAML",
+        { assertEquals("moneyman", configurationObjectYAML.user) },
+        { assertEquals(100500, configurationObjectYAML.pass) },
+        { assertEquals("qa-delivery-master.mm.ru", configurationObjectYAML.host) },
+        { assertEquals("/client-area/registration", configurationObjectYAML.registrationServiceEndpoint) }
+    )
   }
 }
