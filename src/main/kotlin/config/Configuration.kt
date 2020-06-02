@@ -1,11 +1,14 @@
 package config
 
-class Configuration : ConfigurationProvider() {
-    fun createObjectFromJSON(): ConfigurationObject {
-        return ConfigurationProvider().getObjectFromJSONFile()
-    }
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 
-    fun createObjectFromYAML(): ConfigurationObject {
-        return ConfigurationProvider().getObjectFromYAMLFile()
-    }
-}
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class Configuration(
+    val user: String,
+    val pass: Int,
+    val host: String,
+    val registrationServiceEndpoint: String,
+    @JsonProperty("numberPhone")
+    val phoneNumber: Int
+)
