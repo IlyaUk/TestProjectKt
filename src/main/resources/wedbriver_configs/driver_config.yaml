@@ -1,0 +1,7 @@
+width: 1600
+height: 900
+defaultTimeoutSec: 10
+webDriverHost: localhost
+webDriverPort: 5566
+browserType: Chrome
+webDriverType: Remote
