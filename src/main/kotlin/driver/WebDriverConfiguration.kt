@@ -1,4 +1,4 @@
-package core
+package driver
 
 data class WebDriverConfiguration (
     val width: Int,

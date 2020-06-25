@@ -2,17 +2,33 @@ package landingPage
 
 import config.ConfigSource
 import config.ConfigurationProvider
-import core.Waiter
-import core.WebDriverManager
+import driver.WebDriverManager
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.openqa.selenium.WebDriver
 import pages.LandingPage
+import utils.Waiter
 
 class CheckCalculatorTest {
-  private val username = ConfigurationProvider.setConfigType(ConfigSource.YAML).getConfig().user
-  private val password = ConfigurationProvider.setConfigType(ConfigSource.YAML).getConfig().pass
-  private val host = ConfigurationProvider.setConfigType(ConfigSource.YAML).getConfig().host
+  private val configObject = ConfigurationProvider.setConfigType(ConfigSource.YAML).getConfig()
+  private val username = configObject.user
+  private val password = configObject.pass
+  private val host = configObject.host
   private lateinit var landingPage: LandingPage
+  private lateinit var driver: WebDriver
+
+  @BeforeEach
+  fun getWebDriver() {
+    driver = WebDriverManager().getDriver()
+    driver.get("https://$username:$password@$host")
+  }
+
+  @AfterEach
+  fun quitWebDriver() {
+    driver.quit()
+  }
 
   @Test
   fun checkCalculatorBlock() {
@@ -24,8 +40,6 @@ class CheckCalculatorTest {
     val expectedMaxCreditPeriodValue = "30"
     landingPage = LandingPage()
 
-    val driver = WebDriverManager().getDriver()
-    driver.get("https://$username:$password@$host")
     Waiter().waitExplicitlyForElement(driver, landingPage.calculator.creditAmountSlider)
 
     Assertions.assertEquals(expectedDefaultCreditAmountValue, landingPage.calculator.getCalculatorAmountValue(driver))
@@ -42,8 +56,6 @@ class CheckCalculatorTest {
     Assertions.assertEquals(expectedMaxCreditPeriodValue, landingPage.calculator.getCalculatorPeriodValue(driver))
 
     Assertions.assertTrue(landingPage.calculator.isTakeLoanButtonAvailable(driver))
-
-    driver.quit()
   }
 
   @Test
@@ -52,8 +64,6 @@ class CheckCalculatorTest {
     val creditPeriod = "25"
     landingPage = LandingPage()
 
-    val driver = WebDriverManager().getDriver()
-    driver.get("https://$username:$password@$host")
     Waiter().waitFluentlyForElement(driver, landingPage.calculator.creditAmountSlider)
 
     landingPage.calculator.setCreditAmountSliderJS(driver, 0.0, 100.0)
@@ -66,7 +76,5 @@ class CheckCalculatorTest {
 
     Assertions.assertTrue(landingPage.calculator.isTakeLoanButtonAvailable(driver))
     landingPage.calculator.clickTakeLoanButtonJS(driver)
-
-    driver.quit()
   }
 }

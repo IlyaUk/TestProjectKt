@@ -1,8 +1,8 @@
 package webdriver
 
-import core.BrowserType
-import core.WebDriverConfigProvider
-import core.WebDriverType
+import driver.BrowserType
+import driver.WebDriverConfigProvider
+import driver.WebDriverType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
@@ -19,9 +19,11 @@ class GetWebDriverObjectTest {
         { assertEquals(1600, webDriverObject.width) },
         { assertEquals(10, webDriverObject.defaultTimeoutSec) },
         { assertEquals(4444, webDriverObject.webDriverPort) },
-        { assertEquals("localhost", webDriverObject.webDriverHost) },
-        { Assertions.assertTrue(webDriverObject.webDriverType == WebDriverType.Local || webDriverObject.webDriverType == WebDriverType.Remote) },
-        { Assertions.assertTrue(webDriverObject.browserType == BrowserType.Firefox || webDriverObject.browserType == BrowserType.Chrome) }
+        { assertEquals("127.0.0.1", webDriverObject.webDriverHost) },
+        { Assertions.assertTrue(webDriverObject.webDriverType == WebDriverType.LOCAL || webDriverObject.webDriverType ==
+            WebDriverType.REMOTE) },
+        { Assertions.assertTrue(webDriverObject.browserType == BrowserType.FIREFOX || webDriverObject.browserType ==
+            BrowserType.CHROME) }
     )
   }
 }
