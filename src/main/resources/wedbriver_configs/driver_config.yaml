@@ -3,5 +3,5 @@ height: 900
 defaultTimeoutSec: 10
 webDriverHost: 127.0.0.1
 webDriverPort: 4444
-browserType: FIREFOX
+browserType: CHROME
 webDriverType: LOCAL
