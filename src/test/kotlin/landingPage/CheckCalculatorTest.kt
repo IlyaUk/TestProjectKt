@@ -9,6 +9,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.WebDriver
 import pages.LandingPage
+import elements.Button
+import elements.Input
+import elements.Slider
 import utils.Waiter
 
 class CheckCalculatorTest {
@@ -40,22 +43,23 @@ class CheckCalculatorTest {
     val expectedMaxCreditPeriodValue = "30"
     landingPage = LandingPage()
 
-    Waiter().waitExplicitlyForElement(driver, landingPage.calculator.creditAmountSlider)
+    Waiter().waitExplicitlyForElement(driver, landingPage.calculator.creditAmountSliderPoint)
 
-    Assertions.assertEquals(expectedDefaultCreditAmountValue, landingPage.calculator.getCalculatorAmountValue(driver))
-    Assertions.assertEquals(expectedDefaultCreditPeriodValue, landingPage.calculator.getCalculatorPeriodValue(driver))
+    Assertions.assertEquals(expectedDefaultCreditAmountValue, Input.getCalculatorAmountValue(driver, landingPage.calculator.calculatorAmount))
+    Assertions.assertEquals(expectedDefaultCreditPeriodValue, Input.getCalculatorPeriodValue(driver, landingPage.calculator.calculatorPeriod))
 
-    landingPage.calculator.setCreditAmountSlider(driver, -100, 0)
-    Assertions.assertEquals(expectedMinCreditAmountValue, landingPage.calculator.getCalculatorAmountValue(driver))
-    landingPage.calculator.setCreditAmountSlider(driver, 400, 0)
-    Assertions.assertEquals(expectedMaxCreditAmountValue, landingPage.calculator.getCalculatorAmountValue(driver))
+    Slider.setCreditAmountSlider(driver, -100, 0, landingPage.calculator.creditAmountSliderPoint)
+    Assertions.assertEquals(expectedMinCreditAmountValue, Input.getCalculatorAmountValue(driver, landingPage.calculator.calculatorAmount))
+    Slider.setCreditAmountSlider(driver, 400, 0, landingPage.calculator.creditAmountSliderPoint)
+    Assertions.assertEquals(expectedMaxCreditAmountValue, Input.getCalculatorAmountValue(driver, landingPage.calculator.calculatorAmount))
 
-    landingPage.calculator.setCreditPeriodSlider(driver, -400, 0)
-    Assertions.assertEquals(expectedMinCreditPeriodValue, landingPage.calculator.getCalculatorPeriodValue(driver))
-    landingPage.calculator.setCreditPeriodSlider(driver, 400, 0)
-    Assertions.assertEquals(expectedMaxCreditPeriodValue, landingPage.calculator.getCalculatorPeriodValue(driver))
+    Slider.setCreditPeriodSlider(driver, -400, 0, landingPage.calculator.creditPeriodSliderPoint)
+    Assertions.assertEquals(expectedMinCreditPeriodValue, Input.getCalculatorPeriodValue(driver, landingPage.calculator.calculatorPeriod))
+    Slider.setCreditPeriodSlider(driver, 400, 0, landingPage.calculator.creditPeriodSliderPoint)
+    Assertions.assertEquals(expectedMaxCreditPeriodValue, Input.getCalculatorPeriodValue(driver, landingPage.calculator.calculatorPeriod))
 
-    Assertions.assertTrue(landingPage.calculator.isTakeLoanButtonAvailable(driver))
+    Assertions.assertTrue(Button.isTakeLoanButtonAvailable(driver, landingPage.calculator.takeLoanButton))
+    Button.clickTakeLoanButton(driver, landingPage.calculator.takeLoanButton)
   }
 
   @Test
@@ -64,17 +68,17 @@ class CheckCalculatorTest {
     val creditPeriod = "25"
     landingPage = LandingPage()
 
-    Waiter().waitFluentlyForElement(driver, landingPage.calculator.creditAmountSlider)
+    Waiter().waitFluentlyForElement(driver, landingPage.calculator.creditAmountSliderPoint)
 
-    landingPage.calculator.setCreditAmountSliderJS(driver, 0.0, 100.0)
-    landingPage.calculator.setCreditPeriodSliderJS(driver, 0.0, 100.0)
+    Slider.setCreditAmountSliderJS(driver, 0.0, 100.0, landingPage.calculator.creditAmountSliderPoint, landingPage.calculator.creditAmountSliderLine)
+    Slider.setCreditPeriodSliderJS(driver, 0.0, 100.0, landingPage.calculator.creditPeriodSliderPoint, landingPage.calculator.creditPeriodSliderLine)
 
-    landingPage.calculator.setCreditAmountJS(driver, creditAmount)
-    Assertions.assertEquals(creditAmount, landingPage.calculator.getCalculatorAmountValue(driver))
-    landingPage.calculator.setCreditPeriodJS(driver, creditPeriod)
-    Assertions.assertEquals(creditPeriod, landingPage.calculator.getCalculatorPeriodValue(driver))
+    Input.setCreditAmountJS(driver, creditAmount)
+    Assertions.assertEquals(creditAmount, Input.getCalculatorAmountValue(driver, landingPage.calculator.calculatorAmount))
+    Input.setCreditPeriodJS(driver, creditPeriod)
+    Assertions.assertEquals(creditPeriod, Input.getCalculatorPeriodValue(driver, landingPage.calculator.calculatorPeriod))
 
-    Assertions.assertTrue(landingPage.calculator.isTakeLoanButtonAvailable(driver))
-    landingPage.calculator.clickTakeLoanButtonJS(driver)
+    Assertions.assertTrue(Button.isTakeLoanButtonAvailable(driver, landingPage.calculator.takeLoanButton))
+    Button.clickTakeLoanButtonJS(driver, landingPage.calculator.takeLoanButton)
   }
 }
