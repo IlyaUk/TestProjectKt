@@ -1,7 +1,5 @@
-package smoke
+package config
 
-import config.ConfigSource
-import config.ConfigurationProvider
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 

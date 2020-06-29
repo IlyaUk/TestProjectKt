@@ -1,6 +1,7 @@
 package utils
 
 import org.openqa.selenium.By
+import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.support.ui.ExpectedConditions
@@ -21,5 +22,12 @@ class Waiter {
         .pollingEvery(Duration.ofMillis(defaultPollingInterval))
         .ignoring(WebDriverException::class.java)
         .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(element))
+  }
+
+  fun waitForJQuery(driver: WebDriver) {
+    WebDriverWait(driver, defaultTimeOut).until { webDriver ->
+      val js = webDriver as JavascriptExecutor
+      js.executeScript("return JQuery.active === 0") as Boolean
+    }
   }
 }

@@ -1,7 +1,5 @@
-package smoke
+package config
 
-import config.ConfigSource
-import config.ConfigurationProvider
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.assertAll
@@ -16,9 +14,10 @@ class CreateConfigDynamicTest {
     val configurationObject = ConfigurationProvider.setConfigType(source).getConfig()
     assertAll("configurationObjectJSON",
         { assertEquals("moneyman", configurationObject.user) },
-        { assertEquals(100500, configurationObject.pass) },
-        { assertEquals("qa-delivery-master.mm.ru", configurationObject.host) },
-        { assertEquals("/client-area/registration", configurationObject.registrationServiceEndpoint) }
+        { assertEquals(1005, configurationObject.pass) },
+        { assertEquals("qa-delivery-mx-master.moneyman.ru", configurationObject.host) },
+        { assertEquals("client-area/registration", configurationObject.registrationServiceEndpoint) },
+        { assertEquals("private-area/static/#/login", configurationObject.privateAreaServiceEndpoint) }
     )
   }
 }

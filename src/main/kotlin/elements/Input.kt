@@ -6,21 +6,16 @@ import org.openqa.selenium.WebDriver
 
 object Input {
 
-  fun getCalculatorAmountValue(driver: WebDriver, element: By): String? {
+  fun getInputValue(driver: WebDriver, element: By): String? {
     return driver.findElement(element).getAttribute("value")
   }
 
-  fun getCalculatorPeriodValue(driver: WebDriver, element: By): String? {
-    return driver.findElement(element).getAttribute("value")
+  fun setInputValueJS(driver: WebDriver, value: String, element: String) {
+    val js = driver as JavascriptExecutor
+    js.executeScript("document.querySelectorAll('.mainCalculatorDynamic__input[name=$element]')[0].value = '$value'")
   }
 
-  fun setCreditAmountJS(driver: WebDriver, amount: String) {
-    val js = driver as JavascriptExecutor
-    js.executeScript("document.querySelectorAll('.mainCalculatorDynamic__input')[0].value = '$amount'")
-  }
-
-  fun setCreditPeriodJS(driver: WebDriver, period: String) {
-    val js = driver as JavascriptExecutor
-    js.executeScript("document.querySelectorAll('.mainCalculatorDynamic__input')[1].value = '$period'")
+  fun inputValue(driver: WebDriver, value: String, element: By) {
+    driver.findElement(element).sendKeys(value)
   }
 }

@@ -1,7 +1,5 @@
-package smoke
+package config
 
-import config.ConfigSource
-import config.ConfigurationProvider
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -15,9 +13,10 @@ class CreateConfigTest {
             .getConfig()
         assertAll("configurationObjectJSON",
             { assertEquals("moneyman", configurationObjectJSON.user) },
-            { assertEquals(100500, configurationObjectJSON.pass) },
-            { assertEquals("qa-delivery-master.mm.ru", configurationObjectJSON.host) },
-            { assertEquals("/client-area/registration", configurationObjectJSON.registrationServiceEndpoint) },
+            { assertEquals(1005, configurationObjectJSON.pass) },
+            { assertEquals("qa-delivery-mx-master.moneyman.ru", configurationObjectJSON.host) },
+            { assertEquals("client-area/registration", configurationObjectJSON.registrationServiceEndpoint) },
+            { assertEquals("private-area/static/#/login", configurationObjectJSON.privateAreaServiceEndpoint) },
             { assertEquals(0, configurationObjectJSON.phoneNumber) }
         )
     }
@@ -29,10 +28,11 @@ class CreateConfigTest {
             .getConfig()
         assertAll("configurationObjectYAML",
             { assertEquals("moneyman", configurationObjectYAML.user) },
-            { assertEquals(100500, configurationObjectYAML.pass) },
-            { assertEquals("qa-delivery-master.mm.ru", configurationObjectYAML.host) },
-            { assertEquals("/client-area/registration", configurationObjectYAML.registrationServiceEndpoint) },
-            { assertEquals(123456789, configurationObjectYAML.phoneNumber) }
+            { assertEquals(1005, configurationObjectYAML.pass) },
+            { assertEquals("qa-delivery-mx-master.moneyman.ru", configurationObjectYAML.host) },
+            { assertEquals("client-area/registration", configurationObjectYAML.registrationServiceEndpoint) },
+            { assertEquals("private-area/static/#/login", configurationObjectYAML.privateAreaServiceEndpoint) },
+            { assertEquals(0, configurationObjectYAML.phoneNumber) }
         )
     }
 }

@@ -9,6 +9,7 @@ data class Configuration(
     val pass: Int,
     val host: String,
     val registrationServiceEndpoint: String,
+    val privateAreaServiceEndpoint: String,
     @JsonProperty("numberPhone")
     val phoneNumber: Int
 )
