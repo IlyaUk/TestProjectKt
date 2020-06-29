@@ -1,0 +1,7 @@
+width: 1600
+height: 900
+defaultTimeoutSec: 10
+webDriverHost: 127.0.0.1
+webDriverPort: 4444
+browserType: CHROME
+webDriverType: LOCAL

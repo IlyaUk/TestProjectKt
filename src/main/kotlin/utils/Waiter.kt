@@ -1,4 +1,4 @@
-package core
+package utils
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
