@@ -15,8 +15,8 @@ class CreateConfigTest {
             .getConfig()
         assertAll("configurationObjectJSON",
             { assertEquals("moneyman", configurationObjectJSON.user) },
-            { assertEquals(100500, configurationObjectJSON.pass) },
-            { assertEquals("qa-delivery-master.mm.ru", configurationObjectJSON.host) },
+            { assertEquals(1005, configurationObjectJSON.pass) },
+            { assertEquals("qa-delivery-mx-master.moneyman.ru", configurationObjectJSON.host) },
             { assertEquals("/client-area/registration", configurationObjectJSON.registrationServiceEndpoint) },
             { assertEquals(0, configurationObjectJSON.phoneNumber) }
         )
@@ -29,10 +29,10 @@ class CreateConfigTest {
             .getConfig()
         assertAll("configurationObjectYAML",
             { assertEquals("moneyman", configurationObjectYAML.user) },
-            { assertEquals(100500, configurationObjectYAML.pass) },
-            { assertEquals("qa-delivery-master.mm.ru", configurationObjectYAML.host) },
+            { assertEquals(1005, configurationObjectYAML.pass) },
+            { assertEquals("qa-delivery-mx-master.moneyman.ru", configurationObjectYAML.host) },
             { assertEquals("/client-area/registration", configurationObjectYAML.registrationServiceEndpoint) },
-            { assertEquals(123456789, configurationObjectYAML.phoneNumber) }
+            { assertEquals(0, configurationObjectYAML.phoneNumber) }
         )
     }
 }

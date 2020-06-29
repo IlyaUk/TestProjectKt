@@ -16,8 +16,8 @@ class CreateConfigDynamicTest {
     val configurationObject = ConfigurationProvider.setConfigType(source).getConfig()
     assertAll("configurationObjectJSON",
         { assertEquals("moneyman", configurationObject.user) },
-        { assertEquals(100500, configurationObject.pass) },
-        { assertEquals("qa-delivery-master.mm.ru", configurationObject.host) },
+        { assertEquals(1005, configurationObject.pass) },
+        { assertEquals("qa-delivery-mx-master.moneyman.ru", configurationObject.host) },
         { assertEquals("/client-area/registration", configurationObject.registrationServiceEndpoint) }
     )
   }
