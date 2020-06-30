@@ -1,34 +1,12 @@
 package landingpage
 
-import config.ConfigSource
-import config.ConfigurationProvider
-import driver.WebDriverManager
-import org.junit.jupiter.api.AfterEach
+import BaseUiTest
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.openqa.selenium.WebDriver
-import pages.LandingPage
+import services.LandingPageOperations
 import utils.Waiter
-import elements.Navigation.close
 
-class CheckCalculatorTest {
-  private val configObject = ConfigurationProvider.setConfigType(ConfigSource.YAML).getConfig()
-  private val username = configObject.user
-  private val password = configObject.pass
-  private val host = configObject.host
-  private lateinit var landingPage: LandingPage
-  private lateinit var driver: WebDriver
-
-  @BeforeEach
-  fun getWebDriver() {
-    driver = WebDriverManager().getDriver()
-  }
-
-  @AfterEach
-  fun quitWebDriver() {
-    close(driver)
-  }
+class CheckCalculatorTest : BaseUiTest() {
 
   @Test
   fun `check Calculator Block`() {
@@ -38,46 +16,47 @@ class CheckCalculatorTest {
     val expectedMinCreditPeriodValue = "7"
     val expectedMaxCreditAmountValue = "5,000"
     val expectedMaxCreditPeriodValue = "30"
-    landingPage = LandingPage(driver)
 
-    landingPage.calculator.open(username, password, host)
+    LandingPageOperations(driver, configObject).apply {
+      openLandingPage()
 
-    Waiter().waitExplicitlyForElement(driver, landingPage.calculator.creditAmountSliderPoint)
+      Waiter().waitExplicitlyForElement(driver, landingPage.creditAmountSliderPoint)
 
-    Assertions.assertEquals(expectedDefaultCreditAmountValue, landingPage.calculator.getActualCreditAmountValue())
-    Assertions.assertEquals(expectedDefaultCreditPeriodValue, landingPage.calculator.getActualCreditPeriodValue())
+      Assertions.assertEquals(expectedDefaultCreditAmountValue, landingPage.getActualCreditAmountValue())
+      Assertions.assertEquals(expectedDefaultCreditPeriodValue, landingPage.getActualCreditPeriodValue())
 
-    landingPage.calculator.setCreditAmountSlider(-100, 0)
-    Assertions.assertEquals(expectedMinCreditAmountValue, landingPage.calculator.getActualCreditAmountValue())
-    landingPage.calculator.setCreditAmountSlider(400, 0)
-    Assertions.assertEquals(expectedMaxCreditAmountValue, landingPage.calculator.getActualCreditAmountValue())
+      landingPage.setCreditAmountSlider(-100, 0)
+      Assertions.assertEquals(expectedMinCreditAmountValue, landingPage.getActualCreditAmountValue())
+      landingPage.setCreditAmountSlider(400, 0)
+      Assertions.assertEquals(expectedMaxCreditAmountValue, landingPage.getActualCreditAmountValue())
 
-    landingPage.calculator.setCreditPeriodSlider(-400, 0)
-    Assertions.assertEquals(expectedMinCreditPeriodValue, landingPage.calculator.getActualCreditPeriodValue())
-    landingPage.calculator.setCreditPeriodSlider(400, 0)
-    Assertions.assertEquals(expectedMaxCreditPeriodValue, landingPage.calculator.getActualCreditPeriodValue())
+      landingPage.setCreditPeriodSlider(-400, 0)
+      Assertions.assertEquals(expectedMinCreditPeriodValue, landingPage.getActualCreditPeriodValue())
+      landingPage.setCreditPeriodSlider(400, 0)
+      Assertions.assertEquals(expectedMaxCreditPeriodValue, landingPage.getActualCreditPeriodValue())
 
-    landingPage.calculator.clickTakeLoanButton()
+      landingPage.clickTakeLoanButton()
+    }
   }
 
   @Test
   fun `check Calculator Block With JS`() {
     val creditAmount = "4,000"
     val creditPeriod = "25"
-    landingPage = LandingPage(driver)
+    val xOffsetMin = 0.0
+    val xOffsetMax = 100.0
 
-    landingPage.calculator.open(username, password, host)
+    LandingPageOperations(driver, configObject).apply {
+      openLandingPage()
 
-    Waiter().waitFluentlyForElement(driver, landingPage.calculator.creditAmountSliderPoint)
+      Waiter().waitFluentlyForElement(driver, landingPage.creditAmountSliderPoint)
 
-    landingPage.calculator.apply {
-      setCreditAmountSliderJS(0.0, 100.0)
-      setCreditPeriodSliderJS(0.0, 100.0)
-      setCreditValuesJS(creditAmount, creditPeriod)
+      setValuesOnCalculator(creditAmount, creditPeriod, xOffsetMin, xOffsetMax)
+
+      Assertions.assertEquals(creditAmount, landingPage.getActualCreditAmountValue())
+      Assertions.assertEquals(creditPeriod, landingPage.getActualCreditPeriodValue())
+
+      landingPage.clickTakeLoanButtonJS()
     }
-    Assertions.assertEquals(creditAmount, landingPage.calculator.getActualCreditAmountValue())
-    Assertions.assertEquals(creditPeriod, landingPage.calculator.getActualCreditPeriodValue())
-
-    landingPage.calculator.clickTakeLoanButtonJS()
   }
 }

@@ -5,7 +5,6 @@ import elements.Button.clickButtonJS
 import elements.Button.isButtonEnabled
 import elements.Input.getInputValue
 import elements.Input.setInputValueJS
-import elements.Navigation.open
 import elements.Slider.setValueUsingSlider
 import elements.Slider.setValueUsingSliderJS
 import org.openqa.selenium.By
@@ -25,10 +24,6 @@ class CalculatorBlock(private val driver: WebDriver) {
   private val takeLoanButton: By = By.cssSelector("[data-test-id='calculator_submit']")
   private val creditAmountIdentification: String = "amount"
   private val creditPeriodIdentification: String = "days"
-
-  fun open(username: String, password: Int, host: String) {
-    open(driver, username, password, host)
-  }
 
   fun getActualCreditAmountValue(): String? {
     return getInputValue(driver, calculatorAmount)

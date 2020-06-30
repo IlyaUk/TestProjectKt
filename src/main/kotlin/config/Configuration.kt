@@ -9,4 +9,7 @@ data class Configuration(
     val host: String,
     val registrationServiceEndpoint: String,
     val privateAreaServiceEndpoint: String
-)
+){
+  fun getURLWithAuthorization() = "https://$user:$pass@$host/"
+  fun getHostURL() = "https://$host/"
+}
