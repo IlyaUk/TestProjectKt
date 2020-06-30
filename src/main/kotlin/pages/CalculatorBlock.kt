@@ -2,11 +2,10 @@ package pages
 
 import elements.Button.clickButton
 import elements.Button.clickButtonJS
-import elements.Button.isButtonAvailable
+import elements.Button.isButtonEnabled
 import elements.Input.getInputValue
 import elements.Input.setInputValueJS
-import elements.Navigation.close
-import elements.Navigation.openPageWithoutEndpoint
+import elements.Navigation.open
 import elements.Slider.setValueUsingSlider
 import elements.Slider.setValueUsingSliderJS
 import org.openqa.selenium.By
@@ -28,7 +27,7 @@ class CalculatorBlock(private val driver: WebDriver) {
   private val creditPeriodIdentification: String = "days"
 
   fun open(username: String, password: Int, host: String) {
-    openPageWithoutEndpoint(driver, username, password, host)
+    open(driver, username, password, host)
   }
 
   fun getActualCreditAmountValue(): String? {
@@ -40,37 +39,33 @@ class CalculatorBlock(private val driver: WebDriver) {
   }
 
   fun setCreditAmountSlider(xOffset: Int, yOffset: Int) {
-    setValueUsingSlider(driver, xOffset, yOffset, creditAmountSliderPoint)
+    setValueUsingSlider(driver, creditAmountSliderPoint, xOffset, yOffset)
   }
 
   fun setCreditPeriodSlider(xOffset: Int, yOffset: Int) {
-    setValueUsingSlider(driver, xOffset, yOffset, creditPeriodSliderPoint)
+    setValueUsingSlider(driver, creditPeriodSliderPoint, xOffset, yOffset)
   }
 
   fun setCreditAmountSliderJS(xOffsetMin: Double, xOffsetMax: Double) {
-    setValueUsingSliderJS(driver, xOffsetMin, xOffsetMax, creditAmountSliderPoint, creditAmountSliderLine)
+    setValueUsingSliderJS(driver, creditAmountSliderPoint, creditAmountSliderLine, xOffsetMin, xOffsetMax)
   }
 
   fun setCreditPeriodSliderJS(xOffsetMin: Double, xOffsetMax: Double) {
-    setValueUsingSliderJS(driver, xOffsetMin, xOffsetMax, creditPeriodSliderPoint, creditPeriodSliderLine)
+    setValueUsingSliderJS(driver, creditPeriodSliderPoint, creditPeriodSliderLine, xOffsetMin, xOffsetMax)
   }
 
   fun setCreditValuesJS(amount: String, period: String) {
-    setInputValueJS(driver, amount, creditAmountIdentification)
-    setInputValueJS(driver, period, creditPeriodIdentification)
+    setInputValueJS(driver, creditAmountIdentification, amount)
+    setInputValueJS(driver, creditPeriodIdentification, period)
   }
 
   fun clickTakeLoanButton() {
-    isButtonAvailable(driver, takeLoanButton)
+    isButtonEnabled(driver, takeLoanButton)
     clickButton(driver, takeLoanButton)
   }
 
   fun clickTakeLoanButtonJS() {
-    isButtonAvailable(driver, takeLoanButton)
+    isButtonEnabled(driver, takeLoanButton)
     clickButtonJS(driver, takeLoanButton)
-  }
-
-  fun close() {
-    close(driver)
   }
 }

@@ -3,12 +3,14 @@ package landingpage
 import config.ConfigSource
 import config.ConfigurationProvider
 import driver.WebDriverManager
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.WebDriver
 import pages.LandingPage
 import utils.Waiter
+import elements.Navigation.close
 
 class CheckCalculatorTest {
   private val configObject = ConfigurationProvider.setConfigType(ConfigSource.YAML).getConfig()
@@ -21,6 +23,11 @@ class CheckCalculatorTest {
   @BeforeEach
   fun getWebDriver() {
     driver = WebDriverManager().getDriver()
+  }
+
+  @AfterEach
+  fun quitWebDriver() {
+    close(driver)
   }
 
   @Test
@@ -51,7 +58,6 @@ class CheckCalculatorTest {
     Assertions.assertEquals(expectedMaxCreditPeriodValue, landingPage.calculator.getActualCreditPeriodValue())
 
     landingPage.calculator.clickTakeLoanButton()
-    landingPage.calculator.close()
   }
 
   @Test
@@ -64,13 +70,14 @@ class CheckCalculatorTest {
 
     Waiter().waitFluentlyForElement(driver, landingPage.calculator.creditAmountSliderPoint)
 
-    landingPage.calculator.setCreditAmountSliderJS(0.0, 100.0)
-    landingPage.calculator.setCreditPeriodSliderJS(0.0, 100.0)
-    landingPage.calculator.setCreditValuesJS(creditAmount, creditPeriod)
+    landingPage.calculator.apply {
+      setCreditAmountSliderJS(0.0, 100.0)
+      setCreditPeriodSliderJS(0.0, 100.0)
+      setCreditValuesJS(creditAmount, creditPeriod)
+    }
     Assertions.assertEquals(creditAmount, landingPage.calculator.getActualCreditAmountValue())
     Assertions.assertEquals(creditPeriod, landingPage.calculator.getActualCreditPeriodValue())
 
     landingPage.calculator.clickTakeLoanButtonJS()
-    landingPage.calculator.close()
   }
 }

@@ -10,12 +10,12 @@ object Input {
     return driver.findElement(element).getAttribute("value")
   }
 
-  fun setInputValueJS(driver: WebDriver, value: String, element: String) {
+  fun setInputValueJS(driver: WebDriver, element: String, value: String) {
     val js = driver as JavascriptExecutor
     js.executeScript("document.querySelectorAll('.mainCalculatorDynamic__input[name=$element]')[0].value = '$value'")
   }
 
-  fun inputValue(driver: WebDriver, value: String, element: By) {
+  fun inputValue(driver: WebDriver, element: By, value: String) {
     driver.findElement(element).sendKeys(value)
   }
 }

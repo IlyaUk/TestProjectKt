@@ -5,7 +5,7 @@ import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
 
 object Button {
-  fun isButtonAvailable(driver: WebDriver, element: By): Boolean {
+  fun isButtonEnabled(driver: WebDriver, element: By): Boolean {
     return driver.findElement(element).isEnabled
   }
 

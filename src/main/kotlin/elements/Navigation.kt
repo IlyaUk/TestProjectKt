@@ -4,12 +4,13 @@ import org.openqa.selenium.WebDriver
 
 object Navigation {
 
-  fun open(driver: WebDriver, username: String, password: Int, host: String, endpoint: String) {
-    driver.get("https://$username:$password@$host/$endpoint")
+  private fun composeURLFromConfigFile(username: String, password: Int, host: String, endpoint: String): String {
+    return "https://$username:$password@$host/$endpoint"
   }
 
-  fun openPageWithoutEndpoint(driver: WebDriver, username: String, password: Int, host: String) {
-    driver.get("https://$username:$password@$host/")
+  fun open(driver: WebDriver, username: String, password: Int, host: String, endpoint: String = "") {
+    val url = composeURLFromConfigFile(username, password, host, endpoint)
+    driver.get(url)
   }
 
   fun close(driver: WebDriver) {

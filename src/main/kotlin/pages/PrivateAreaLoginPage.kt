@@ -2,7 +2,6 @@ package pages
 
 import elements.Button.clickButton
 import elements.Input.inputValue
-import elements.Navigation.close
 import elements.Navigation.open
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
@@ -23,18 +22,14 @@ class PrivateAreaLoginPage(private val driver: WebDriver) {
   }
 
   private fun inputLogin(user: String) {
-    inputValue(driver, user, loginInput)
+    inputValue(driver, loginInput, user)
   }
 
   private fun inputPassword(pass: String) {
-    inputValue(driver, pass, passInput)
+    inputValue(driver, passInput, pass)
   }
 
-  fun clickLoginButton() {
+  private fun clickLoginButton() {
     clickButton(driver, loginButton)
-  }
-
-  fun close() {
-    close(driver)
   }
 }
