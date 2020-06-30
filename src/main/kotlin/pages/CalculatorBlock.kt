@@ -1,81 +1,66 @@
 package pages
 
+import elements.Button.clickButton
+import elements.Button.clickButtonJS
+import elements.Button.isButtonEnabled
+import elements.Input.getInputValue
+import elements.Input.setInputValueJS
+import elements.Slider.setValueUsingSlider
+import elements.Slider.setValueUsingSliderJS
 import org.openqa.selenium.By
-import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.interactions.Actions
 
-class CalculatorBlock {
-  val calculatorAmount: By = By.cssSelector("[data-test-id='calculator_amount']")
-  val calculatorPeriod: By = By.cssSelector("[data-test-id='calculator_days']")
-  val creditAmountSlider: By = By.xpath(
+class CalculatorBlock(private val driver: WebDriver) {
+  private val calculatorAmount: By = By.cssSelector("[data-test-id='calculator_amount']")
+  private val calculatorPeriod: By = By.cssSelector("[data-test-id='calculator_days']")
+  val creditAmountSliderPoint: By = By.xpath(
       "//*[@data-test-id='amount']//div[contains(@class, 'mainCalculator__slider')]/span")
-  val creditPeriodSlider: By = By.xpath(
+  private val creditPeriodSliderPoint: By = By.xpath(
       "//*[@data-test-id='period']//div[contains(@class, 'mainCalculator__slider')]/span")
-  val takeLoanButton: By = By.cssSelector("[data-test-id='calculator_submit']")
+  private val creditAmountSliderLine: By = By.xpath(
+      "//*[@data-test-id='amount']//div[contains(@class, 'mainCalculator__slider')]/div")
+  private val creditPeriodSliderLine: By = By.xpath(
+      "//*[@data-test-id='period']//div[contains(@class, 'mainCalculator__slider')]/div")
+  private val takeLoanButton: By = By.cssSelector("[data-test-id='calculator_submit']")
+  private val creditAmountIdentification: String = "amount"
+  private val creditPeriodIdentification: String = "days"
 
-  fun getCalculatorAmountValue(driver: WebDriver): String? {
-    return driver.findElement(calculatorAmount).getAttribute("value")
+  fun getActualCreditAmountValue(): String? {
+    return getInputValue(driver, calculatorAmount)
   }
 
-  fun getCalculatorPeriodValue(driver: WebDriver): String? {
-    return driver.findElement(calculatorPeriod).getAttribute("value")
+  fun getActualCreditPeriodValue(): String? {
+    return getInputValue(driver, calculatorPeriod)
   }
 
-  fun setCreditAmountSlider(driver: WebDriver, xOffset: Int, yOffset: Int) {
-    val actions = Actions(driver)
-    actions.dragAndDropBy(driver.findElement(creditAmountSlider), xOffset, yOffset).perform()
-    actions.release(driver.findElement(creditAmountSlider))
+  fun setCreditAmountSlider(xOffset: Int, yOffset: Int) {
+    setValueUsingSlider(driver, creditAmountSliderPoint, xOffset, yOffset)
   }
 
-  fun setCreditPeriodSlider(driver: WebDriver, xOffset: Int, yOffset: Int) {
-    val actions = Actions(driver)
-    actions.dragAndDropBy(driver.findElement(creditPeriodSlider), xOffset, yOffset).perform()
-    actions.release(driver.findElement(creditPeriodSlider))
+  fun setCreditPeriodSlider(xOffset: Int, yOffset: Int) {
+    setValueUsingSlider(driver, creditPeriodSliderPoint, xOffset, yOffset)
   }
 
-  fun isTakeLoanButtonAvailable(driver: WebDriver): Boolean {
-    return driver.findElement(takeLoanButton).isEnabled
+  fun setCreditAmountSliderJS(xOffsetMin: Double, xOffsetMax: Double) {
+    setValueUsingSliderJS(driver, creditAmountSliderPoint, creditAmountSliderLine, xOffsetMin, xOffsetMax)
   }
 
-  fun setCreditAmountSliderJS(driver: WebDriver, xOffsetMin: Double, xOffsetMax: Double) {
-    val js = driver as JavascriptExecutor
-    js.executeScript("arguments[0].setAttribute('style', 'left: $xOffsetMin%')", driver.findElement(By.xpath
-    ("//*[@data-test-id='amount']//div[contains(@class, 'mainCalculator__slider')]/span")))
-    js.executeScript("arguments[0].setAttribute('style', 'width: $xOffsetMin%')", driver.findElement(By.xpath
-    ("//*[@data-test-id='amount']//div[contains(@class, 'mainCalculator__slider')]/div")))
-
-    js.executeScript("arguments[0].setAttribute('style', 'left: $xOffsetMax%')", driver.findElement(By.xpath
-    ("//*[@data-test-id='amount']//div[contains(@class, 'mainCalculator__slider')]/span")))
-    js.executeScript("arguments[0].setAttribute('style', 'width: $xOffsetMax%')", driver.findElement(By.xpath
-    ("//*[@data-test-id='amount']//div[contains(@class, 'mainCalculator__slider')]/div")))
+  fun setCreditPeriodSliderJS(xOffsetMin: Double, xOffsetMax: Double) {
+    setValueUsingSliderJS(driver, creditPeriodSliderPoint, creditPeriodSliderLine, xOffsetMin, xOffsetMax)
   }
 
-  fun setCreditPeriodSliderJS(driver: WebDriver, xOffsetMin: Double, xOffsetMax: Double) {
-    val js = driver as JavascriptExecutor
-    js.executeScript("arguments[0].setAttribute('style', 'left: $xOffsetMin%')", driver.findElement(By.xpath
-    ("//*[@data-test-id='period']//div[contains(@class, 'mainCalculator__slider')]/span")))
-    js.executeScript("arguments[0].setAttribute('style', 'width: $xOffsetMin%')", driver.findElement(By.xpath
-    ("//*[@data-test-id='period']//div[contains(@class, 'mainCalculator__slider')]/div")))
-
-    js.executeScript("arguments[0].setAttribute('style', 'left: $xOffsetMax%')", driver.findElement(By.xpath
-    ("//*[@data-test-id='period']//div[contains(@class, 'mainCalculator__slider')]/span")))
-    js.executeScript("arguments[0].setAttribute('style', 'width: $xOffsetMax%')", driver.findElement(By.xpath
-    ("//*[@data-test-id='period']//div[contains(@class, 'mainCalculator__slider')]/div")))
+  fun setCreditValuesJS(amount: String, period: String) {
+    setInputValueJS(driver, creditAmountIdentification, amount)
+    setInputValueJS(driver, creditPeriodIdentification, period)
   }
 
-  fun setCreditAmountJS(driver: WebDriver, amount: String) {
-    val js = driver as JavascriptExecutor
-    js.executeScript("document.querySelectorAll('.mainCalculatorDynamic__input')[0].value = '$amount'")
+  fun clickTakeLoanButton() {
+    isButtonEnabled(driver, takeLoanButton)
+    clickButton(driver, takeLoanButton)
   }
 
-  fun setCreditPeriodJS(driver: WebDriver, period: String) {
-    val js = driver as JavascriptExecutor
-    js.executeScript("document.querySelectorAll('.mainCalculatorDynamic__input')[1].value = '$period'")
-  }
-
-  fun clickTakeLoanButtonJS(driver: WebDriver) {
-    val js = driver as JavascriptExecutor
-    js.executeScript("arguments[0].click();", driver.findElement(By.cssSelector("[data-test-id='calculator_submit']")))
+  fun clickTakeLoanButtonJS() {
+    isButtonEnabled(driver, takeLoanButton)
+    clickButtonJS(driver, takeLoanButton)
   }
 }

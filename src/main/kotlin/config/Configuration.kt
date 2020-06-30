@@ -1,7 +1,6 @@
 package config
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Configuration(
@@ -9,6 +8,8 @@ data class Configuration(
     val pass: Int,
     val host: String,
     val registrationServiceEndpoint: String,
-    @JsonProperty("numberPhone")
-    val phoneNumber: Int
-)
+    val privateAreaServiceEndpoint: String
+){
+  fun getURLWithAuthorization() = "https://$user:$pass@$host/"
+  fun getHostURL() = "https://$host/"
+}

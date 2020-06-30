@@ -2,6 +2,6 @@
 "user": "moneyman",
 "pass": 1005,
 "host": "qa-delivery-mx-master.moneyman.ru",
-"registrationServiceEndpoint": "/client-area/registration",
-"phone": 123456789
+"registrationServiceEndpoint": "client-area/registration",
+"privateAreaServiceEndpoint": "private-area/static/#/login"
 }

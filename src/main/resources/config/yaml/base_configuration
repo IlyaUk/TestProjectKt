@@ -1,4 +1,5 @@
 user: moneyman
 pass: 1005
 host: qa-delivery-mx-master.moneyman.ru
-registrationServiceEndpoint: /client-area/registration
+registrationServiceEndpoint: client-area/registration
+privateAreaServiceEndpoint: private-area/static/#/login
