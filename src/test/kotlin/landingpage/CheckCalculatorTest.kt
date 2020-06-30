@@ -4,7 +4,6 @@ import BaseUiTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import services.LandingPageOperations
-import utils.Waiter
 
 class CheckCalculatorTest : BaseUiTest() {
 
@@ -20,22 +19,18 @@ class CheckCalculatorTest : BaseUiTest() {
     LandingPageOperations(driver, configObject).apply {
       openLandingPage()
 
-      Waiter().waitExplicitlyForElement(driver, landingPage.creditAmountSliderPoint)
+      Assertions.assertEquals(expectedDefaultCreditAmountValue, getCreditAmountValue())
+      Assertions.assertEquals(expectedDefaultCreditPeriodValue, getCreditPeriodValue())
 
-      Assertions.assertEquals(expectedDefaultCreditAmountValue, landingPage.getActualCreditAmountValue())
-      Assertions.assertEquals(expectedDefaultCreditPeriodValue, landingPage.getActualCreditPeriodValue())
+      setValuesOnCalculator(-400, 0)
+      Assertions.assertEquals(expectedMinCreditAmountValue, getCreditAmountValue())
+      Assertions.assertEquals(expectedMinCreditPeriodValue, getCreditPeriodValue())
 
-      landingPage.setCreditAmountSlider(-100, 0)
-      Assertions.assertEquals(expectedMinCreditAmountValue, landingPage.getActualCreditAmountValue())
-      landingPage.setCreditAmountSlider(400, 0)
-      Assertions.assertEquals(expectedMaxCreditAmountValue, landingPage.getActualCreditAmountValue())
+      setValuesOnCalculator(400, 0)
+      Assertions.assertEquals(expectedMaxCreditAmountValue, getCreditAmountValue())
+      Assertions.assertEquals(expectedMaxCreditPeriodValue, getCreditPeriodValue())
 
-      landingPage.setCreditPeriodSlider(-400, 0)
-      Assertions.assertEquals(expectedMinCreditPeriodValue, landingPage.getActualCreditPeriodValue())
-      landingPage.setCreditPeriodSlider(400, 0)
-      Assertions.assertEquals(expectedMaxCreditPeriodValue, landingPage.getActualCreditPeriodValue())
-
-      landingPage.clickTakeLoanButton()
+      clickTakeButton()
     }
   }
 
@@ -49,14 +44,12 @@ class CheckCalculatorTest : BaseUiTest() {
     LandingPageOperations(driver, configObject).apply {
       openLandingPage()
 
-      Waiter().waitFluentlyForElement(driver, landingPage.creditAmountSliderPoint)
+      setValuesOnCalculatorJS(creditAmount, creditPeriod, xOffsetMin, xOffsetMax)
 
-      setValuesOnCalculator(creditAmount, creditPeriod, xOffsetMin, xOffsetMax)
+      Assertions.assertEquals(creditAmount, getCreditAmountValue())
+      Assertions.assertEquals(creditPeriod, getCreditPeriodValue())
 
-      Assertions.assertEquals(creditAmount, landingPage.getActualCreditAmountValue())
-      Assertions.assertEquals(creditPeriod, landingPage.getActualCreditPeriodValue())
-
-      landingPage.clickTakeLoanButtonJS()
+      clickTakeButtonJS()
     }
   }
 }
