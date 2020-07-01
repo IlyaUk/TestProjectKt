@@ -2,15 +2,13 @@ package pages
 
 import elements.Button.clickButton
 import elements.Button.clickButtonJS
-import elements.Button.isButtonEnabled
 import elements.Input.getInputValue
 import elements.Input.setInputValueJS
 import elements.Slider.setValueUsingSlider
 import elements.Slider.setValueUsingSliderJS
 import org.openqa.selenium.By
-import org.openqa.selenium.WebDriver
 
-class CalculatorBlock(private val driver: WebDriver) {
+class CalculatorBlock {
   private val calculatorAmount: By = By.cssSelector("[data-test-id='calculator_amount']")
   private val calculatorPeriod: By = By.cssSelector("[data-test-id='calculator_days']")
   val creditAmountSliderPoint: By = By.xpath(
@@ -26,41 +24,39 @@ class CalculatorBlock(private val driver: WebDriver) {
   private val creditPeriodIdentification: String = "days"
 
   fun getActualCreditAmountValue(): String? {
-    return getInputValue(driver, calculatorAmount)
+    return getInputValue(calculatorAmount)
   }
 
   fun getActualCreditPeriodValue(): String? {
-    return getInputValue(driver, calculatorPeriod)
+    return getInputValue(calculatorPeriod)
   }
 
   fun setCreditAmountSlider(xOffset: Int, yOffset: Int) {
-    setValueUsingSlider(driver, creditAmountSliderPoint, xOffset, yOffset)
+    setValueUsingSlider(creditAmountSliderPoint, xOffset, yOffset)
   }
 
   fun setCreditPeriodSlider(xOffset: Int, yOffset: Int) {
-    setValueUsingSlider(driver, creditPeriodSliderPoint, xOffset, yOffset)
+    setValueUsingSlider(creditPeriodSliderPoint, xOffset, yOffset)
   }
 
   fun setCreditAmountSliderJS(xOffsetMin: Double, xOffsetMax: Double) {
-    setValueUsingSliderJS(driver, creditAmountSliderPoint, creditAmountSliderLine, xOffsetMin, xOffsetMax)
+    setValueUsingSliderJS(creditAmountSliderPoint, creditAmountSliderLine, xOffsetMin, xOffsetMax)
   }
 
   fun setCreditPeriodSliderJS(xOffsetMin: Double, xOffsetMax: Double) {
-    setValueUsingSliderJS(driver, creditPeriodSliderPoint, creditPeriodSliderLine, xOffsetMin, xOffsetMax)
+    setValueUsingSliderJS(creditPeriodSliderPoint, creditPeriodSliderLine, xOffsetMin, xOffsetMax)
   }
 
   fun setCreditValuesJS(amount: String, period: String) {
-    setInputValueJS(driver, creditAmountIdentification, amount)
-    setInputValueJS(driver, creditPeriodIdentification, period)
+    setInputValueJS(creditAmountIdentification, amount)
+    setInputValueJS(creditPeriodIdentification, period)
   }
 
   fun clickTakeLoanButton() {
-    isButtonEnabled(driver, takeLoanButton)
-    clickButton(driver, takeLoanButton)
+    clickButton(takeLoanButton)
   }
 
   fun clickTakeLoanButtonJS() {
-    isButtonEnabled(driver, takeLoanButton)
-    clickButtonJS(driver, takeLoanButton)
+    clickButtonJS(takeLoanButton)
   }
 }

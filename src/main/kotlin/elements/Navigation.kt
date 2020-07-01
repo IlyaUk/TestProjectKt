@@ -1,14 +1,14 @@
 package elements
 
-import org.openqa.selenium.WebDriver
+import driver.WebDriverManager
 
 object Navigation {
 
-  fun open(driver: WebDriver, url: String) {
-    driver.get(url)
+  fun open(url: String) {
+    WebDriverManager.getDriver().get(url)
   }
 
-  fun close(driver: WebDriver) {
-    driver.quit()
+  fun close() {
+    WebDriverManager.getDriver().quit()
   }
 }

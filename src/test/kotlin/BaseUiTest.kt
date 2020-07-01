@@ -12,7 +12,7 @@ import org.openqa.selenium.WebDriver
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class BaseUiTest {
   protected lateinit var configObject: Configuration
-  protected lateinit var driver: WebDriver
+  private lateinit var driver: WebDriver
 
   @BeforeAll
   fun setConfig() {
@@ -21,11 +21,11 @@ abstract class BaseUiTest {
 
   @BeforeEach
   fun getWebDriver() {
-    driver = WebDriverManager().getDriver()
+    driver = WebDriverManager.getDriver()
   }
 
   @AfterEach
   fun quitWebDriver() {
-    close(driver)
+    close()
   }
 }

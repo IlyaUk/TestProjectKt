@@ -2,25 +2,25 @@ package services
 
 import config.Configuration
 import elements.Navigation.open
-import org.openqa.selenium.WebDriver
 import pages.LandingPage
 import utils.Waiter
 
-class LandingPageOperations(private val driver: WebDriver, private val configObject: Configuration) {
-  private val landingPage = LandingPage(driver).calculator
+class LandingPageOperations(private val configObject: Configuration) {
+  private val landingPage = LandingPage().calculator
   private val url = configObject.getURLWithAuthorization()
 
   fun openLandingPage() {
     configObject.apply {
-      open(driver, url)
+      open(url)
     }
   }
 
-  fun getCreditAmountValue (): String? {
-    Waiter().waitFluentlyForElement(driver, landingPage.creditAmountSliderPoint)
+  fun getCreditAmountValue(): String? {
+    Waiter().waitFluentlyForElement(landingPage.creditAmountSliderPoint)
     return landingPage.getActualCreditAmountValue()
   }
-  fun getCreditPeriodValue (): String? {
+
+  fun getCreditPeriodValue(): String? {
     return landingPage.getActualCreditPeriodValue()
   }
 
