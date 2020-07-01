@@ -1,11 +1,9 @@
 import config.ConfigSource
 import config.Configuration
 import config.ConfigurationProvider
-import driver.WebDriverManager
 import elements.Navigation.close
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestInstance
 import org.openqa.selenium.WebDriver
 
@@ -17,11 +15,6 @@ abstract class BaseUiTest {
   @BeforeAll
   fun setConfig() {
     configObject = ConfigurationProvider.setConfigType(ConfigSource.YAML).getConfig()
-  }
-
-  @BeforeEach
-  fun getWebDriver() {
-    driver = WebDriverManager.getDriver()
   }
 
   @AfterEach

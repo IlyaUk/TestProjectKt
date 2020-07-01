@@ -1,14 +1,14 @@
 package elements
 
-import driver.WebDriverManager
+import driver.WebDriverManager.Companion.getDriver
 
 object Navigation {
 
   fun open(url: String) {
-    WebDriverManager.getDriver().get(url)
+    getDriver().get(url)
   }
 
   fun close() {
-    WebDriverManager.getDriver().quit()
+    getDriver().quit()
   }
 }
