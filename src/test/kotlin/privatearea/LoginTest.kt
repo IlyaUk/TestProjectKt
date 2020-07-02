@@ -12,7 +12,7 @@ class LoginTest : BaseUiTest() {
 
   @Test
   fun `login to PA`() {
-    PrivateAreaOperations(configObject).apply {
+    PrivateAreaOperations(config).apply {
       openLoginPage()
       Waiter().waitDomModelLoad(5)
       login(user, pass)

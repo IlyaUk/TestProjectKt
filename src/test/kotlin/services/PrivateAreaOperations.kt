@@ -5,13 +5,13 @@ import elements.Navigation.open
 import pages.PrivateAreaHomePage
 import pages.PrivateAreaLoginPage
 
-class PrivateAreaOperations(private val configObject: Configuration) {
+class PrivateAreaOperations(private val config: Configuration) {
   private val privateAreaLoginPage = PrivateAreaLoginPage()
   private val privateAreaHomePage = PrivateAreaHomePage()
-  private var url = configObject.getURLWithAuthorization() + configObject.privateAreaServiceEndpoint
+  private var url = config.getURLWithAuthorization() + config.privateAreaServiceEndpoint
 
   fun openLoginPage() {
-    configObject.apply {
+    config.apply {
       open(url)
     }
   }

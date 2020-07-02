@@ -5,12 +5,12 @@ import elements.Navigation.open
 import pages.LandingPage
 import utils.Waiter
 
-class LandingPageOperations(private val configObject: Configuration) {
+class LandingPageOperations(private val config: Configuration) {
   private val landingPage = LandingPage().calculator
-  private val url = configObject.getURLWithAuthorization()
+  private val url = config.getURLWithAuthorization()
 
   fun openLandingPage() {
-    configObject.apply {
+    config.apply {
       open(url)
     }
   }
@@ -35,7 +35,8 @@ class LandingPageOperations(private val configObject: Configuration) {
     landingPage.apply {
       setCreditAmountSliderJS(xOffsetMin, xOffsetMax)
       setCreditPeriodSliderJS(xOffsetMin, xOffsetMax)
-      setCreditValuesJS(creditAmount, creditPeriod)
+      setCreditAmountValueJS(creditAmount)
+      setCreditPeriodValueJS(creditPeriod)
     }
   }
 

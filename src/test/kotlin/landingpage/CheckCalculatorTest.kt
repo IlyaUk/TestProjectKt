@@ -16,7 +16,7 @@ class CheckCalculatorTest : BaseUiTest() {
     val expectedMaxCreditAmountValue = "5,000"
     val expectedMaxCreditPeriodValue = "30"
 
-    LandingPageOperations(configObject).apply {
+    LandingPageOperations(config).apply {
       openLandingPage()
 
       Assertions.assertEquals(expectedDefaultCreditAmountValue, getCreditAmountValue())
@@ -41,7 +41,7 @@ class CheckCalculatorTest : BaseUiTest() {
     val xOffsetMin = 0.0
     val xOffsetMax = 100.0
 
-    LandingPageOperations(configObject).apply {
+    LandingPageOperations(config).apply {
       openLandingPage()
 
       setValuesOnCalculatorJS(creditAmount, creditPeriod, xOffsetMin, xOffsetMax)

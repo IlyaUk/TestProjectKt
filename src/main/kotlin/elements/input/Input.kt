@@ -5,7 +5,6 @@ import org.openqa.selenium.By
 import utils.JavaScriptOperations.getJsExecutor
 import utils.MmTestException
 import utils.Waiter
-import elements.input.VerifyInputValue.isTextInputMatchExpected
 
 object Input {
 
@@ -21,8 +20,13 @@ object Input {
   fun inputValue(element: By, value: String) {
     val driver = getDriver()
     driver.findElement(element).sendKeys(value)
-    if (!isTextInputMatchExpected(getInputValue(element), value)) {
+    if (!isTextInputMatchExpected(element, value)) {
       throw MmTestException("Incorrect input in field $element")
     }
+  }
+
+  private fun isTextInputMatchExpected(actualInput: By, expectedValue: String): Boolean {
+    val actualInputValue = getInputValue(actualInput).toString()
+    return actualInputValue == expectedValue
   }
 }

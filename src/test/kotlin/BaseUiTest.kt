@@ -9,12 +9,11 @@ import org.openqa.selenium.WebDriver
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class BaseUiTest {
-  protected lateinit var configObject: Configuration
-  private lateinit var driver: WebDriver
+  protected lateinit var config: Configuration
 
   @BeforeAll
   fun setConfig() {
-    configObject = ConfigurationProvider.setConfigType(ConfigSource.YAML).getConfig()
+    config = ConfigurationProvider.setConfigType(ConfigSource.YAML).getConfig()
   }
 
   @AfterEach

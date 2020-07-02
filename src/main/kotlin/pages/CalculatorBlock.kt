@@ -47,8 +47,11 @@ class CalculatorBlock {
     setValueUsingSliderJS(creditPeriodSliderPoint, creditPeriodSliderLine, xOffsetMin, xOffsetMax)
   }
 
-  fun setCreditValuesJS(amount: String, period: String) {
+  fun setCreditAmountValueJS(amount: String) {
     setInputValueJS(creditAmountIdentification, amount)
+  }
+
+  fun setCreditPeriodValueJS(period: String) {
     setInputValueJS(creditPeriodIdentification, period)
   }
 
