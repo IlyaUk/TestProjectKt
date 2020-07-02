@@ -1,20 +1,31 @@
 package elements
 
+import driver.WebDriverManager.Companion.getDriver
 import org.openqa.selenium.By
-import org.openqa.selenium.JavascriptExecutor
-import org.openqa.selenium.WebDriver
+import utils.MmTestException
+import utils.JavaScriptOperations.getJsExecutor
 
 object Button {
-  fun isButtonEnabled(driver: WebDriver, element: By): Boolean {
-    return driver.findElement(element).isEnabled
+  fun isButtonEnabled(element: By): Boolean {
+    return getDriver().findElement(element).isEnabled
   }
 
-  fun clickButton(driver: WebDriver, element: By) {
-    driver.findElement(element).click()
+  fun isButtonDisplayed(element: By): Boolean {
+    return getDriver().findElement(element).isDisplayed
   }
 
-  fun clickButtonJS(driver: WebDriver, element: By) {
-    val js = driver as JavascriptExecutor
-    js.executeScript("arguments[0].click();", driver.findElement(element))
+  fun isButtonExists(element: By): Boolean {
+    return getDriver().findElements(element).size > 0
+  }
+
+  fun clickButton(element: By) {
+    if (isButtonExists(element)) {
+      getDriver().findElement(element).click()
+    } else throw MmTestException("The button $element is not displayed")
+  }
+
+  fun clickButtonJS(element: By) {
+    val driver = getDriver()
+    getJsExecutor().executeScript("arguments[0].click();", driver.findElement(element))
   }
 }

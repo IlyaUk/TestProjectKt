@@ -2,25 +2,25 @@ package services
 
 import config.Configuration
 import elements.Navigation.open
-import org.openqa.selenium.WebDriver
 import pages.LandingPage
 import utils.Waiter
 
-class LandingPageOperations(private val driver: WebDriver, private val configObject: Configuration) {
-  private val landingPage = LandingPage(driver).calculator
-  private val url = configObject.getURLWithAuthorization()
+class LandingPageOperations(private val config: Configuration) {
+  private val landingPage = LandingPage().calculator
+  private val url = config.getURLWithAuthorization()
 
   fun openLandingPage() {
-    configObject.apply {
-      open(driver, url)
+    config.apply {
+      open(url)
     }
   }
 
-  fun getCreditAmountValue (): String? {
-    Waiter().waitFluentlyForElement(driver, landingPage.creditAmountSliderPoint)
+  fun getCreditAmountValue(): String? {
+    Waiter().waitFluentlyForElement(landingPage.creditAmountSliderPoint)
     return landingPage.getActualCreditAmountValue()
   }
-  fun getCreditPeriodValue (): String? {
+
+  fun getCreditPeriodValue(): String? {
     return landingPage.getActualCreditPeriodValue()
   }
 
@@ -35,7 +35,8 @@ class LandingPageOperations(private val driver: WebDriver, private val configObj
     landingPage.apply {
       setCreditAmountSliderJS(xOffsetMin, xOffsetMax)
       setCreditPeriodSliderJS(xOffsetMin, xOffsetMax)
-      setCreditValuesJS(creditAmount, creditPeriod)
+      setCreditAmountValueJS(creditAmount)
+      setCreditPeriodValueJS(creditPeriod)
     }
   }
 

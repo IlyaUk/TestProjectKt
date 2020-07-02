@@ -5,6 +5,16 @@ import org.openqa.selenium.WebDriver
 class WebDriverManager {
   private val driverConfiguration = WebDriverConfigProvider().getDriverConfig()
 
+  companion object {
+    private var driver: WebDriver? = null
+    fun getDriver(): WebDriver {
+      if (driver == null) {
+        driver = WebDriverManager().setDriverFactory().getDriver()
+      }
+      return driver as WebDriver
+    }
+  }
+
   private fun setDriverFactory(): WebDriverFactory {
     return when (driverConfiguration.webDriverType) {
       WebDriverType.REMOTE -> RemoteDriverFactory(driverConfiguration)
@@ -14,9 +24,5 @@ class WebDriverManager {
           BrowserType.FIREFOX -> FirefoxDriverFactory(driverConfiguration)
         }
     }
-  }
-
-  fun getDriver(): WebDriver {
-    return setDriverFactory().getDriver()
   }
 }
