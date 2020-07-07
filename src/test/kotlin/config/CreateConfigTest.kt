@@ -9,28 +9,28 @@ class CreateConfigTest {
     @DisplayName("Create_Config_Object_From_Json")
     @Test
     fun createConfigObjectFromJson() {
-        val configurationObjectJSON = ConfigurationProvider.setConfigType(ConfigSource.JSON)
-            .getConfig()
+        val configurationFromJsonFile = ConfigurationProvider.setConfigType(ConfigSource.JSON).getConfig()
         assertAll("configurationObjectJSON",
-            { assertEquals("moneyman", configurationObjectJSON.user) },
-            { assertEquals(1005, configurationObjectJSON.pass) },
-            { assertEquals("qa-delivery-mx-master.moneyman.ru", configurationObjectJSON.host) },
-            { assertEquals("client-area/registration", configurationObjectJSON.registrationServiceEndpoint) },
-            { assertEquals("private-area/static/#/login", configurationObjectJSON.privateAreaServiceEndpoint) }
+            { assertEquals("moneyman", configurationFromJsonFile.user) },
+            { assertEquals(1005, configurationFromJsonFile.pass) },
+            { assertEquals("qa-delivery-mx-master.moneyman.ru", configurationFromJsonFile.host) },
+            { assertEquals("client-area/registration", configurationFromJsonFile.registrationServiceEndpoint) },
+            { assertEquals("private-area/static/#/login", configurationFromJsonFile.privateAreaServiceEndpoint) },
+            { assertEquals("/", configurationFromJsonFile.landingPageServiceEndpoint) }
         )
     }
 
     @DisplayName("Create_Config_Object_From_Yaml")
     @Test
     fun createConfigObjectFromYaml() {
-        val configurationObjectYAML = ConfigurationProvider.setConfigType(ConfigSource.YAML)
-            .getConfig()
+        val configurationFromYamlFile = ConfigurationProvider.setConfigType(ConfigSource.YAML).getConfig()
         assertAll("configurationObjectYAML",
-            { assertEquals("moneyman", configurationObjectYAML.user) },
-            { assertEquals(1005, configurationObjectYAML.pass) },
-            { assertEquals("qa-delivery-mx-master.moneyman.ru", configurationObjectYAML.host) },
-            { assertEquals("client-area/registration", configurationObjectYAML.registrationServiceEndpoint) },
-            { assertEquals("private-area/static/#/login", configurationObjectYAML.privateAreaServiceEndpoint) }
+            { assertEquals("moneyman", configurationFromYamlFile.user) },
+            { assertEquals(1005, configurationFromYamlFile.pass) },
+            { assertEquals("qa-delivery-mx-master.moneyman.ru", configurationFromYamlFile.host) },
+            { assertEquals("client-area/registration", configurationFromYamlFile.registrationServiceEndpoint) },
+            { assertEquals("private-area/static/#/login", configurationFromYamlFile.privateAreaServiceEndpoint) },
+            { assertEquals("/", configurationFromYamlFile.landingPageServiceEndpoint) }
         )
     }
 }

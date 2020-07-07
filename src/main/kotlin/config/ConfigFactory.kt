@@ -1,5 +1,5 @@
 package config
 
 interface ConfigFactory {
-  fun getConfig(): Configuration
+  fun getConfig(): ApplicationConfig
 }

@@ -8,7 +8,7 @@ import utils.MmTestException
 
 object Button {
   fun isButtonEnabled(element: By) {
-    `$`(element).should(Condition.enabled)
+    `$`(element).shouldBe(Condition.enabled)
   }
 
   fun isButtonDisplayed(element: By): Boolean {
@@ -16,9 +16,11 @@ object Button {
   }
 
   fun clickButton(element: By) {
-    if (`$`(element).isDisplayed) {
-      `$`(element).click()
-    } else throw MmTestException("The button $element is not displayed")
+    `$`(element).also {
+      if (it.isDisplayed){
+        it.click()
+      } else throw MmTestException("The button $element is not displayed")
+    }
   }
 
   fun clickButtonJS(element: By) {

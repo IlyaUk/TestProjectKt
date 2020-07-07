@@ -1,12 +1,14 @@
 package webdriver
 
-import driver.WebDriverConfigProvider
+import driver.config.DriverConfigProvider
+import driver.config.DriverFrameworkType
+import driver.selenium.WebDriverConfiguration
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-class WebDriverConfigurationTest {
+class WebDriverApplicationConfigTest {
   private val screenResolutionRegex = Regex("[0-9]{3,4}")
   private val timeoutRegex = Regex("[0-9]{1,4}")
   private val portRegex = Regex("[0-9]{4}")
@@ -15,7 +17,7 @@ class WebDriverConfigurationTest {
   @DisplayName("Get_WebDriverConfig_From_Default_FilePath_To_Yaml")
   @Test
   fun getWebDriverObjectFromDefaultFilepath() {
-    val webDriverConfig = WebDriverConfigProvider().getDriverConfig()
+    val webDriverConfig = DriverConfigProvider().getDriverConfig(DriverFrameworkType.SELENIUM) as WebDriverConfiguration
     assertAll(
         { Assertions.assertTrue((webDriverConfig.height).toString().matches(screenResolutionRegex)) },
         { Assertions.assertTrue((webDriverConfig.width).toString().matches(screenResolutionRegex)) },
@@ -29,7 +31,7 @@ class WebDriverConfigurationTest {
   @Test
   fun getWebDriverObjectFromSpecifiedFilepath() {
     val filePath = "wedbriver_configs/fake_driver_config.yaml"
-    val webDriverConfig = WebDriverConfigProvider().getDriverConfig(filePath)
+    val webDriverConfig = DriverConfigProvider().getSeleniumDriverConfig(filePath)
     assertAll(
         { Assertions.assertEquals(1080, webDriverConfig.height) },
         { Assertions.assertEquals(1920, webDriverConfig.width) },
@@ -44,7 +46,7 @@ class WebDriverConfigurationTest {
   fun getWebDriverObjectFromNonExistedFilepath() {
     val incorrectFilePath = "wedbriver_configs/driver_config1.yaml"
     Assertions.assertThrows(IllegalArgumentException::class.java) {
-      WebDriverConfigProvider().getDriverConfig(incorrectFilePath)
+      DriverConfigProvider().getSeleniumDriverConfig(incorrectFilePath)
     }
   }
 }

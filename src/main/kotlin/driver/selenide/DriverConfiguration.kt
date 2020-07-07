@@ -1,6 +1,8 @@
-package selenide
+package driver.selenide
 
-data class DriverConfiguration (
+import driver.config.BrowserType
+
+data class DriverConfiguration(
     val browserScreenSize: String,
     val defaultTimeoutMilliseconds: Long,
     val webDriverHost: String,

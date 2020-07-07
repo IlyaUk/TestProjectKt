@@ -8,7 +8,7 @@ class PrivateAreaHomePage {
   private val signOutButton: By = By.cssSelector("[data-test-id='logOut']")
 
   fun isOnHomePage(): Boolean {
-    Waiter().waitElementVisibleWithTimeout(signOutButton, 5000)
+    Waiter().waitElementVisibleWithTimeout(signOutButton)
     return isButtonDisplayed(signOutButton)
   }
 }

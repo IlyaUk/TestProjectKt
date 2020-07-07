@@ -17,7 +17,8 @@ class CreateConfigDynamicTest {
         { assertEquals(1005, configuration.pass) },
         { assertEquals("qa-delivery-mx-master.moneyman.ru", configuration.host) },
         { assertEquals("client-area/registration", configuration.registrationServiceEndpoint) },
-        { assertEquals("private-area/static/#/login", configuration.privateAreaServiceEndpoint) }
+        { assertEquals("private-area/static/#/login", configuration.privateAreaServiceEndpoint) },
+        { assertEquals("/", configuration.landingPageServiceEndpoint) }
     )
   }
 }

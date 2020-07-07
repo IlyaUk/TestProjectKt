@@ -2,36 +2,34 @@ package utils
 
 import com.codeborne.selenide.Condition
 import com.codeborne.selenide.Selenide
-import com.codeborne.selenide.WebDriverRunner
-import driver.WebDriverConfigProvider
-import driver.WebDriverManager.Companion.getDriver
+import com.codeborne.selenide.WebDriverRunner.getWebDriver
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.FluentWait
 import org.openqa.selenium.support.ui.WebDriverWait
-import utils.JavaScriptOperations.getJsExecutor
 import java.time.Duration
+import driver.config.DriverConfigProvider
 
 class Waiter {
-  private val defaultTimeoutMilliseconds: Long = WebDriverConfigProvider().getDriverConfig().defaultTimeoutMilliseconds
+  private val defaultTimeoutMilliseconds: Long = DriverConfigProvider().getSelenideDriverConfig().defaultTimeoutMilliseconds
   private val defaultPollingInterval: Long = 500
 
-  fun waitElementVisibleWithTimeout(element: By, timeoutSeconds: Long = defaultTimeoutMilliseconds) {
-    Selenide.`$`(element).waitUntil(Condition.visible, timeoutSeconds)
+  fun waitElementVisibleWithTimeout(element: By, timeoutMilliseconds: Long = defaultTimeoutMilliseconds) {
+    Selenide.`$`(element).waitUntil(Condition.visible, timeoutMilliseconds)
   }
 
-  fun waitElementEnabledWithTimeout(element: By, timeoutSeconds: Long = defaultTimeoutMilliseconds) {
-    Selenide.`$`(element).waitUntil(Condition.enabled, timeoutSeconds)
+  fun waitElementEnabledWithTimeout(element: By, timeoutMilliseconds: Long = defaultTimeoutMilliseconds) {
+    Selenide.`$`(element).waitUntil(Condition.enabled, timeoutMilliseconds)
   }
 
   fun waitExplicitlyForElement(element: By) {
-    WebDriverWait(getDriver(), defaultTimeoutMilliseconds).until(
+    WebDriverWait(getWebDriver(), defaultTimeoutMilliseconds).until(
         ExpectedConditions.visibilityOfAllElementsLocatedBy(element))
   }
 
   fun waitFluentlyForElement(element: By) {
-    FluentWait(getDriver())
+    FluentWait(getWebDriver())
         .withTimeout(Duration.ofSeconds(defaultTimeoutMilliseconds))
         .pollingEvery(Duration.ofMillis(defaultPollingInterval))
         .ignoring(WebDriverException::class.java)
@@ -39,18 +37,18 @@ class Waiter {
   }
 
   fun waitForJQuery() {
-    WebDriverWait(getDriver(), defaultTimeoutMilliseconds).until { webDriver ->
-      getJsExecutor().executeScript("return JQuery.active === 0") as Boolean
+    WebDriverWait(getWebDriver(), defaultTimeoutMilliseconds).until { webDriver ->
+      Selenide.executeJavaScript<Any>("return JQuery.active === 0") as Boolean
     }
   }
 
   fun waitDomModelLoad(timeoutInSeconds: Long) {
     var domPreviousElementsCount: Long = 0
-    WebDriverWait(WebDriverRunner.getWebDriver(), timeoutInSeconds)
+    WebDriverWait(getWebDriver(), timeoutInSeconds)
         .ignoring(WebDriverException::class.java)
         .until {
           fun isPageDomModelFullyLoaded(): Boolean {
-            val domActualElementsCount: Long = getJsExecutor().executeScript(
+            val domActualElementsCount: Long = Selenide.executeJavaScript<Any>(
                 "return document.getElementsByTagName('*').length") as Long
             return if (domPreviousElementsCount == domActualElementsCount && isPageHasDocumentReadyState(
                     timeoutInSeconds)) {
@@ -66,11 +64,11 @@ class Waiter {
 
   fun waitElementNotExistsWithTimeout(elementName: String) {
     var elementExists = false
-    WebDriverWait(WebDriverRunner.getWebDriver(), defaultTimeoutMilliseconds)
+    WebDriverWait(getWebDriver(), defaultTimeoutMilliseconds)
         .ignoring(WebDriverException::class.java)
         .until { webDriver ->
           fun isElementExistsInDom(): Boolean {
-            if (getJsExecutor().executeScript(
+            if (Selenide.executeJavaScript<Any>(
                     "return !!document.getElementsByName('$elementName').length") as Boolean) {
               elementExists = true
             }
@@ -82,8 +80,8 @@ class Waiter {
 
   private fun isPageHasDocumentReadyState(timeout: Long): Boolean {
     var pageState = false
-    WebDriverWait(WebDriverRunner.getWebDriver(), timeout).until { webDriver ->
-      if (getJsExecutor().executeScript("return document.readyState") == "complete") {
+    WebDriverWait(getWebDriver(), timeout).until { webDriver ->
+      if (Selenide.executeJavaScript<Any>("return document.readyState") == "complete") {
         pageState = true
       }
     }

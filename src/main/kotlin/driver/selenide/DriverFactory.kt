@@ -1,4 +1,4 @@
-package selenide
+package driver.selenide
 
 interface DriverFactory {
   fun configDriver()

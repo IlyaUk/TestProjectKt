@@ -1,11 +1,13 @@
 package selenide
 
+import driver.config.DriverFrameworkType
+import driver.selenide.DriverConfiguration
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-class SelenideConfigurationTest {
+class SelenideApplicationConfigTest {
   private var browserScreenSizeRegex = Regex("[0-9]{1,4}x[0-9]{1,4}")
   private val timeoutRegex = Regex("[0-9]{1,4}")
   private val portRegex = Regex("[0-9]{4}")
@@ -15,7 +17,8 @@ class SelenideConfigurationTest {
   @DisplayName("Get_WebDriverConfig_From_Default_FilePath_To_Yaml")
   @Test
   fun getSelenideConfigFromDefaultFilePath() {
-    val selenideConfig = DriverConfigProvider().getDriverConfig()
+    val selenideConfig = driver.config.DriverConfigProvider()
+        .getDriverConfig(DriverFrameworkType.SELENIDE) as DriverConfiguration
     assertAll(
         { Assertions.assertTrue((selenideConfig.browserScreenSize).matches(browserScreenSizeRegex)) },
         { Assertions.assertTrue((selenideConfig.defaultTimeoutMilliseconds).toString().matches(timeoutRegex)) },
@@ -29,7 +32,7 @@ class SelenideConfigurationTest {
   @Test
   fun getSelenideConfigFromSpecifiedFilePath() {
     val filePath = "selenide_configs/fake_selenide_driver_config.yaml"
-    val selenideConfig = DriverConfigProvider().getDriverConfig(filePath)
+    val selenideConfig = driver.config.DriverConfigProvider().getSelenideDriverConfig(filePath)
     assertAll(
         { Assertions.assertEquals("1920x1080", selenideConfig.browserScreenSize) },
         { Assertions.assertEquals(100, selenideConfig.defaultTimeoutMilliseconds) },
@@ -46,7 +49,7 @@ class SelenideConfigurationTest {
   fun getSelenideConfigFromNonExistedFilePath() {
     val incorrectFilePath = "wedbriver_configs/driver_config1.yaml"
     Assertions.assertThrows(IllegalArgumentException::class.java) {
-      DriverConfigProvider().getDriverConfig(incorrectFilePath)
+      driver.config.DriverConfigProvider().getSelenideDriverConfig(incorrectFilePath)
     }
   }
 }

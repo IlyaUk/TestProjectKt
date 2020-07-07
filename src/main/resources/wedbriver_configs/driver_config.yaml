@@ -1,6 +1,6 @@
 width: 1600
 height: 900
-defaultTimeoutMilliseconds: 10
+defaultTimeoutMilliseconds: 5000
 webDriverHost: 127.0.0.1
 webDriverPort: 4444
 browserType: CHROME

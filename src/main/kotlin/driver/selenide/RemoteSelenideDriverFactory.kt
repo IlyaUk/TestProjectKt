@@ -1,6 +1,7 @@
-package selenide
+package driver.selenide
 
 import com.codeborne.selenide.Configuration
+import driver.config.BrowserType
 import org.openqa.selenium.remote.CapabilityType
 import org.openqa.selenium.remote.DesiredCapabilities
 
@@ -21,8 +22,10 @@ class RemoteSelenideDriverFactory(private val driverConfiguration: DriverConfigu
 
   private fun configBrowserRelatedDriver() {
     return when (driverConfiguration.browserType) {
-      BrowserType.CHROME -> ChromeSelenideDriverFactory(driverConfiguration).configDriver()
-      BrowserType.FIREFOX -> FirefoxSelenideDriverFactory(driverConfiguration).configDriver()
+      BrowserType.CHROME -> ChromeSelenideDriverFactory(
+          driverConfiguration).configDriver()
+      BrowserType.FIREFOX -> FirefoxSelenideDriverFactory(
+          driverConfiguration).configDriver()
     }
   }
 }

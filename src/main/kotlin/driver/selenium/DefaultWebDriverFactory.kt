@@ -1,4 +1,4 @@
-package driver
+package driver.selenium
 
 import org.openqa.selenium.Dimension
 import org.openqa.selenium.WebDriver
@@ -8,9 +8,9 @@ import java.util.concurrent.TimeUnit
 
 abstract class DefaultWebDriverFactory : WebDriverFactory {
 
-  protected fun setDefaultDriverConfig(driver: WebDriver, driverConfiguration: WebDriverConfiguration) {
-    driver.manage().window().size = Dimension(driverConfiguration.width, driverConfiguration.height)
-    driver.manage().timeouts().implicitlyWait(driverConfiguration.defaultTimeoutMilliseconds, TimeUnit.SECONDS)
+  protected fun setDefaultDriverConfig(driver: WebDriver, webDriverConfiguration: WebDriverConfiguration) {
+    driver.manage().window().size = Dimension(webDriverConfiguration.width, webDriverConfiguration.height)
+    driver.manage().timeouts().implicitlyWait(webDriverConfiguration.defaultTimeoutMilliseconds, TimeUnit.SECONDS)
   }
 
   protected fun getGeneralDesiredCapabilities(): DesiredCapabilities {

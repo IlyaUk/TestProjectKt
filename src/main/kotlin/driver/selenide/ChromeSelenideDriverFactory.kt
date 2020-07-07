@@ -1,6 +1,7 @@
-package selenide
+package driver.selenide
 
 import com.codeborne.selenide.Configuration
+import driver.config.BrowserType
 
 class ChromeSelenideDriverFactory(private val driverConfiguration: DriverConfiguration) :
     DefaultSelenideDriverFactory() {

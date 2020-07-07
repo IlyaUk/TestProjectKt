@@ -7,4 +7,8 @@ object Navigation {
   fun open(url: String) {
     Selenide.open(url)
   }
+
+  fun close() {
+    Selenide.closeWebDriver()
+  }
 }

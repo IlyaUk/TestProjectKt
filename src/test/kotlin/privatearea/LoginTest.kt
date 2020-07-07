@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test
 import services.PrivateAreaOperations
 
 class LoginTest : BaseUiTest() {
-  private val user = "p"
+  private val user = "u"
   private val pass = "p"
 
   @Test
   fun `login to PA`() {
     PrivateAreaOperations(config).apply {
-      openLoginPage()
+      openPage()
       login(user, pass)
       Assertions.assertTrue(isOnPrivateAreaHomePage())
     }
