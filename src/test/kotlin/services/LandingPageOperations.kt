@@ -16,7 +16,7 @@ class LandingPageOperations(private val config: Configuration) {
   }
 
   fun getCreditAmountValue(): String? {
-    Waiter().waitFluentlyForElement(landingPage.creditAmountSliderPoint)
+    Waiter().waitElementVisibleWithTimeout(landingPage.creditAmountSliderPoint, 7000)
     return landingPage.getActualCreditAmountValue()
   }
 

@@ -10,7 +10,7 @@ abstract class DefaultWebDriverFactory : WebDriverFactory {
 
   protected fun setDefaultDriverConfig(driver: WebDriver, driverConfiguration: WebDriverConfiguration) {
     driver.manage().window().size = Dimension(driverConfiguration.width, driverConfiguration.height)
-    driver.manage().timeouts().implicitlyWait(driverConfiguration.defaultTimeoutSec, TimeUnit.SECONDS)
+    driver.manage().timeouts().implicitlyWait(driverConfiguration.defaultTimeoutMilliseconds, TimeUnit.SECONDS)
   }
 
   protected fun getGeneralDesiredCapabilities(): DesiredCapabilities {

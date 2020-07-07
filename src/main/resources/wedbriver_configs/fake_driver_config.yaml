@@ -1,6 +1,6 @@
 width: 1920
 height: 1080
-defaultTimeoutSec: 100
+defaultTimeoutMilliseconds: 100
 webDriverHost: 192.168.1.1.
 webDriverPort: 5555
 browserType: CHROME

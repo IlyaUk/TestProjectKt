@@ -1,14 +1,10 @@
 package elements
 
-import driver.WebDriverManager.Companion.getDriver
+import com.codeborne.selenide.Selenide
 
 object Navigation {
 
   fun open(url: String) {
-    getDriver().get(url)
-  }
-
-  fun close() {
-    getDriver().quit()
+    Selenide.open(url)
   }
 }

@@ -1,31 +1,27 @@
 package elements
 
-import driver.WebDriverManager.Companion.getDriver
+import com.codeborne.selenide.Condition
+import com.codeborne.selenide.Selenide
+import com.codeborne.selenide.Selenide.`$`
 import org.openqa.selenium.By
 import utils.MmTestException
-import utils.JavaScriptOperations.getJsExecutor
 
 object Button {
-  fun isButtonEnabled(element: By): Boolean {
-    return getDriver().findElement(element).isEnabled
+  fun isButtonEnabled(element: By) {
+    `$`(element).should(Condition.enabled)
   }
 
   fun isButtonDisplayed(element: By): Boolean {
-    return getDriver().findElement(element).isDisplayed
-  }
-
-  fun isButtonExists(element: By): Boolean {
-    return getDriver().findElements(element).size > 0
+    return `$`(element).isDisplayed
   }
 
   fun clickButton(element: By) {
-    if (isButtonExists(element)) {
-      getDriver().findElement(element).click()
+    if (`$`(element).isDisplayed) {
+      `$`(element).click()
     } else throw MmTestException("The button $element is not displayed")
   }
 
   fun clickButtonJS(element: By) {
-    val driver = getDriver()
-    getJsExecutor().executeScript("arguments[0].click();", driver.findElement(element))
+    Selenide.executeJavaScript<Any>("arguments[0].click();", `$`(element))
   }
 }

@@ -15,13 +15,13 @@ class WebDriverConfigurationTest {
   @DisplayName("Get_WebDriverConfig_From_Default_FilePath_To_Yaml")
   @Test
   fun getWebDriverObjectFromDefaultFilepath() {
-    val webDriverObject = WebDriverConfigProvider().getDriverConfig()
+    val webDriverConfig = WebDriverConfigProvider().getDriverConfig()
     assertAll(
-        { Assertions.assertTrue((webDriverObject.height).toString().matches(screenResolutionRegex)) },
-        { Assertions.assertTrue((webDriverObject.width).toString().matches(screenResolutionRegex)) },
-        { Assertions.assertTrue((webDriverObject.defaultTimeoutSec).toString().matches(timeoutRegex)) },
-        { Assertions.assertTrue((webDriverObject.webDriverPort).toString().matches(portRegex)) },
-        { Assertions.assertTrue((webDriverObject.webDriverHost).matches(hostRegex)) }
+        { Assertions.assertTrue((webDriverConfig.height).toString().matches(screenResolutionRegex)) },
+        { Assertions.assertTrue((webDriverConfig.width).toString().matches(screenResolutionRegex)) },
+        { Assertions.assertTrue((webDriverConfig.defaultTimeoutMilliseconds).toString().matches(timeoutRegex)) },
+        { Assertions.assertTrue((webDriverConfig.webDriverPort).toString().matches(portRegex)) },
+        { Assertions.assertTrue((webDriverConfig.webDriverHost).matches(hostRegex)) }
     )
   }
 
@@ -29,13 +29,13 @@ class WebDriverConfigurationTest {
   @Test
   fun getWebDriverObjectFromSpecifiedFilepath() {
     val filePath = "wedbriver_configs/fake_driver_config.yaml"
-    val webDriverObject = WebDriverConfigProvider().getDriverConfig(filePath)
+    val webDriverConfig = WebDriverConfigProvider().getDriverConfig(filePath)
     assertAll(
-        { Assertions.assertEquals(1080, webDriverObject.height) },
-        { Assertions.assertEquals(1920, webDriverObject.width) },
-        { Assertions.assertEquals(100, webDriverObject.defaultTimeoutSec) },
-        { Assertions.assertEquals(5555, webDriverObject.webDriverPort) },
-        { Assertions.assertEquals("192.168.1.1.", webDriverObject.webDriverHost) }
+        { Assertions.assertEquals(1080, webDriverConfig.height) },
+        { Assertions.assertEquals(1920, webDriverConfig.width) },
+        { Assertions.assertEquals(100, webDriverConfig.defaultTimeoutMilliseconds) },
+        { Assertions.assertEquals(5555, webDriverConfig.webDriverPort) },
+        { Assertions.assertEquals("192.168.1.1.", webDriverConfig.webDriverHost) }
     )
   }
 

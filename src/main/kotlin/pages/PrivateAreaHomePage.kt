@@ -1,6 +1,6 @@
 package pages
 
-import elements.Button.isButtonEnabled
+import elements.Button.isButtonDisplayed
 import org.openqa.selenium.By
 import utils.Waiter
 
@@ -8,7 +8,7 @@ class PrivateAreaHomePage {
   private val signOutButton: By = By.cssSelector("[data-test-id='logOut']")
 
   fun isOnHomePage(): Boolean {
-    Waiter().waitFluentlyForElement(signOutButton)
-    return isButtonEnabled(signOutButton)
+    Waiter().waitElementVisibleWithTimeout(signOutButton, 5000)
+    return isButtonDisplayed(signOutButton)
   }
 }

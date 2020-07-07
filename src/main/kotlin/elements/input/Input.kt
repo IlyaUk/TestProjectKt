@@ -1,25 +1,23 @@
 package elements.input
 
-import driver.WebDriverManager.Companion.getDriver
+import com.codeborne.selenide.Selenide
+import com.codeborne.selenide.Selenide.`$`
 import org.openqa.selenium.By
-import utils.JavaScriptOperations.getJsExecutor
 import utils.MmTestException
-import utils.Waiter
 
 object Input {
 
   fun getInputValue(element: By): String? {
-    return getDriver().findElement(element).getAttribute("value")
+    return `$`(element).getAttribute("value")
   }
 
   fun setInputValueJS(element: String, value: String) {
-    Waiter().waitElementNotExistsWithTimeout(element)
-    getJsExecutor().executeScript("document.querySelectorAll('.mainCalculatorDynamic__input[name=$element]')[0].value = '$value'")
+    Selenide.executeJavaScript<Any>(
+        "document.querySelectorAll('.mainCalculatorDynamic__input[name=$element]')[0].value = '$value'")
   }
 
   fun inputValue(element: By, value: String) {
-    val driver = getDriver()
-    driver.findElement(element).sendKeys(value)
+    `$`(element).value = value
     if (!isTextInputMatchExpected(element, value)) {
       throw MmTestException("Incorrect input in field $element")
     }

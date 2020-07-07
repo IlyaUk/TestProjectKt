@@ -1,0 +1,9 @@
+browserScreenSize: 1600x900
+defaultTimeoutMilliseconds: 5000
+webDriverHost: 127.0.0.1
+webDriverPort: 4444
+browserType: FIREFOX
+webDriverType: LOCAL
+headlessMode: false
+browserStartMaximize: true
+browserPageLoadStrategy: normal
