@@ -1,22 +1,16 @@
 package services
 
-import config.Configuration
+import config.ApplicationConfig
 import elements.Navigation.open
 import pages.LandingPage
 import utils.Waiter
 
-class LandingPageOperations(private val config: Configuration) {
+class LandingPageOperations(config: ApplicationConfig): BasePageOperations() {
   private val landingPage = LandingPage().calculator
-  private val url = config.getURLWithAuthorization()
 
-  fun openLandingPage() {
-    config.apply {
-      open(url)
-    }
-  }
+  override val pageUrlEndpoint: String = config.landingPageServiceEndpoint
 
   fun getCreditAmountValue(): String? {
-    Waiter().waitFluentlyForElement(landingPage.creditAmountSliderPoint)
     return landingPage.getActualCreditAmountValue()
   }
 

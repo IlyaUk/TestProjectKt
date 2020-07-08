@@ -1,20 +1,14 @@
 package services
 
-import config.Configuration
-import elements.Navigation.open
+import config.ApplicationConfig
 import pages.PrivateAreaHomePage
 import pages.PrivateAreaLoginPage
 
-class PrivateAreaOperations(private val config: Configuration) {
+class PrivateAreaOperations(config: ApplicationConfig) : BasePageOperations() {
   private val privateAreaLoginPage = PrivateAreaLoginPage()
   private val privateAreaHomePage = PrivateAreaHomePage()
-  private var url = config.getURLWithAuthorization() + config.privateAreaServiceEndpoint
 
-  fun openLoginPage() {
-    config.apply {
-      open(url)
-    }
-  }
+  override val pageUrlEndpoint: String = config.privateAreaServiceEndpoint
 
   fun login(user: String, pass: String) {
     privateAreaLoginPage.apply {

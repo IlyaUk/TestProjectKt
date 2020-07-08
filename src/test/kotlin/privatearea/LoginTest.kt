@@ -4,7 +4,6 @@ import BaseUiTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import services.PrivateAreaOperations
-import utils.Waiter
 
 class LoginTest : BaseUiTest() {
   private val user = "u"
@@ -13,8 +12,7 @@ class LoginTest : BaseUiTest() {
   @Test
   fun `login to PA`() {
     PrivateAreaOperations(config).apply {
-      openLoginPage()
-      Waiter().waitDomModelLoad(5)
+      openPage()
       login(user, pass)
       Assertions.assertTrue(isOnPrivateAreaHomePage())
     }
