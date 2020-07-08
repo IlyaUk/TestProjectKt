@@ -4,18 +4,18 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 
-class ChromeDriverFactory(private val webDriverConfiguration: WebDriverConfiguration) : DefaultWebDriverFactory() {
+class ChromeSeleniumDriverFactory(private val seleniumDriverConfiguration: SeleniumDriverConfiguration) : DefaultSeleniumDriverFactory() {
   override fun getDriver(): WebDriver {
     configDriverProperties()
 
     val driver: WebDriver = ChromeDriver(createCapability())
 
-    setDefaultDriverConfig(driver, webDriverConfiguration)
+    setDefaultDriverConfig(driver, seleniumDriverConfiguration)
     return driver
   }
 
    private fun configDriverProperties() {
-     System.setProperty("webdriver.chrome.selenium", "src\\test\\resources\\selenium_drivers\\chromedriver.exe")
+     System.setProperty("selenium.chrome.selenium", "src\\test\\resources\\selenium_drivers\\chromedriver.exe")
    }
 
    override fun createCapability(): ChromeOptions {

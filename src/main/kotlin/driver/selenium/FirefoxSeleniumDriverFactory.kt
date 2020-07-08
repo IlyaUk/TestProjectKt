@@ -4,18 +4,18 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxOptions
 
-class FirefoxDriverFactory(private val webDriverConfiguration: WebDriverConfiguration) : DefaultWebDriverFactory() {
+class FirefoxSeleniumDriverFactory(private val seleniumDriverConfiguration: SeleniumDriverConfiguration) : DefaultSeleniumDriverFactory() {
   override fun getDriver(): WebDriver {
     configDriverProperties()
 
     val driver: WebDriver = FirefoxDriver(createCapability())
 
-    setDefaultDriverConfig(driver, webDriverConfiguration)
+    setDefaultDriverConfig(driver, seleniumDriverConfiguration)
     return driver
   }
 
   private fun configDriverProperties() {
-    System.setProperty("webdriver.gecko.selenium", "src\\test\\resources\\selenium_drivers\\geckodriver.exe")
+    System.setProperty("selenium.gecko.selenium", "src\\test\\resources\\selenium_drivers\\geckodriver.exe")
   }
 
   override fun createCapability(): FirefoxOptions {

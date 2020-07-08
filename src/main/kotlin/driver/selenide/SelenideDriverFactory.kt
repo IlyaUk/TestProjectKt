@@ -1,6 +1,6 @@
 package driver.selenide
 
-interface DriverFactory {
+interface SelenideDriverFactory {
   fun configDriver()
   fun startDriver()
 }

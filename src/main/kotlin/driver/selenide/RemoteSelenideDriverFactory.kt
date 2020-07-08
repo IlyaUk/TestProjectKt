@@ -5,12 +5,12 @@ import driver.config.BrowserType
 import org.openqa.selenium.remote.CapabilityType
 import org.openqa.selenium.remote.DesiredCapabilities
 
-class RemoteSelenideDriverFactory(private val driverConfiguration: DriverConfiguration) :
+class RemoteSelenideDriverFactory(private val selenideDriverConfiguration: SelenideDriverConfiguration) :
     DefaultSelenideDriverFactory() {
 
   override fun configDriver() {
     configBrowserRelatedDriver()
-    Configuration.remote = "http://${driverConfiguration.webDriverHost}:${driverConfiguration.webDriverPort}/wd/hub"
+    Configuration.remote = "http://${selenideDriverConfiguration.webDriverHost}:${selenideDriverConfiguration.webDriverPort}/wd/hub"
     Configuration.browserCapabilities.merge(getGeneralDesiredCapabilities())
   }
 
@@ -21,11 +21,11 @@ class RemoteSelenideDriverFactory(private val driverConfiguration: DriverConfigu
   }
 
   private fun configBrowserRelatedDriver() {
-    return when (driverConfiguration.browserType) {
+    return when (selenideDriverConfiguration.browserType) {
       BrowserType.CHROME -> ChromeSelenideDriverFactory(
-          driverConfiguration).configDriver()
+          selenideDriverConfiguration).configDriver()
       BrowserType.FIREFOX -> FirefoxSelenideDriverFactory(
-          driverConfiguration).configDriver()
+          selenideDriverConfiguration).configDriver()
     }
   }
 }

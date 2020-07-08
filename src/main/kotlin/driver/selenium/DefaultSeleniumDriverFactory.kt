@@ -6,11 +6,11 @@ import org.openqa.selenium.remote.CapabilityType
 import org.openqa.selenium.remote.DesiredCapabilities
 import java.util.concurrent.TimeUnit
 
-abstract class DefaultWebDriverFactory : WebDriverFactory {
+abstract class DefaultSeleniumDriverFactory : SeleniumDriverFactory {
 
-  protected fun setDefaultDriverConfig(driver: WebDriver, webDriverConfiguration: WebDriverConfiguration) {
-    driver.manage().window().size = Dimension(webDriverConfiguration.width, webDriverConfiguration.height)
-    driver.manage().timeouts().implicitlyWait(webDriverConfiguration.defaultTimeoutMilliseconds, TimeUnit.SECONDS)
+  protected fun setDefaultDriverConfig(driver: WebDriver, seleniumDriverConfiguration: SeleniumDriverConfiguration) {
+    driver.manage().window().size = Dimension(seleniumDriverConfiguration.width, seleniumDriverConfiguration.height)
+    driver.manage().timeouts().implicitlyWait(seleniumDriverConfiguration.defaultTimeoutMilliseconds, TimeUnit.SECONDS)
   }
 
   protected fun getGeneralDesiredCapabilities(): DesiredCapabilities {

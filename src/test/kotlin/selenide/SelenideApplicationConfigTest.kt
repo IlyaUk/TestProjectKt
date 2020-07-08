@@ -1,7 +1,7 @@
 package selenide
 
 import driver.config.DriverFrameworkType
-import driver.selenide.DriverConfiguration
+import driver.selenide.SelenideDriverConfiguration
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -18,7 +18,7 @@ class SelenideApplicationConfigTest {
   @Test
   fun getSelenideConfigFromDefaultFilePath() {
     val selenideConfig = driver.config.DriverConfigProvider()
-        .getDriverConfig(DriverFrameworkType.SELENIDE) as DriverConfiguration
+        .getDriverConfig(DriverFrameworkType.SELENIDE) as SelenideDriverConfiguration
     assertAll(
         { Assertions.assertTrue((selenideConfig.browserScreenSize).matches(browserScreenSizeRegex)) },
         { Assertions.assertTrue((selenideConfig.defaultTimeoutMilliseconds).toString().matches(timeoutRegex)) },

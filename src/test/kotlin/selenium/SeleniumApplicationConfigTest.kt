@@ -1,14 +1,14 @@
-package webdriver
+package selenium
 
 import driver.config.DriverConfigProvider
 import driver.config.DriverFrameworkType
-import driver.selenium.WebDriverConfiguration
+import driver.selenium.SeleniumDriverConfiguration
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-class WebDriverApplicationConfigTest {
+class SeleniumApplicationConfigTest {
   private val screenResolutionRegex = Regex("[0-9]{3,4}")
   private val timeoutRegex = Regex("[0-9]{1,4}")
   private val portRegex = Regex("[0-9]{4}")
@@ -17,7 +17,7 @@ class WebDriverApplicationConfigTest {
   @DisplayName("Get_WebDriverConfig_From_Default_FilePath_To_Yaml")
   @Test
   fun getWebDriverObjectFromDefaultFilepath() {
-    val webDriverConfig = DriverConfigProvider().getDriverConfig(DriverFrameworkType.SELENIUM) as WebDriverConfiguration
+    val webDriverConfig = DriverConfigProvider().getDriverConfig(DriverFrameworkType.SELENIUM) as SeleniumDriverConfiguration
     assertAll(
         { Assertions.assertTrue((webDriverConfig.height).toString().matches(screenResolutionRegex)) },
         { Assertions.assertTrue((webDriverConfig.width).toString().matches(screenResolutionRegex)) },

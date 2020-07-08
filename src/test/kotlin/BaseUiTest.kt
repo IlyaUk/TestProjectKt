@@ -7,8 +7,7 @@ import elements.Navigation.close
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
-import driver.selenide.DriverManager
-import elements.Navigation.open
+import driver.selenide.SelenideDriverManager
 import org.junit.jupiter.api.BeforeEach
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -18,7 +17,7 @@ abstract class BaseUiTest {
   @BeforeAll
   fun setConfig() {
     config = ConfigurationProvider.setConfigType(ConfigSource.YAML).getConfig()
-    DriverManager().setSelenideWebDriverConfiguration()
+    SelenideDriverManager().setSelenideWebDriverConfiguration()
     Configuration.baseUrl = config.getHostURL()
   }
 

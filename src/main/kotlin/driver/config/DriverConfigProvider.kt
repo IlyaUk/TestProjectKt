@@ -1,7 +1,7 @@
 package driver.config
 
-import driver.selenide.DriverConfiguration
-import driver.selenium.WebDriverConfiguration
+import driver.selenide.SelenideDriverConfiguration
+import driver.selenium.SeleniumDriverConfiguration
 import utils.getClassObjectFromYaml
 
 class DriverConfigProvider {
@@ -10,20 +10,20 @@ class DriverConfigProvider {
   private val defaultSeleniumFilePath = "wedbriver_configs/driver_config.yaml"
   private val defaultSelenideConfigFilePath = "selenide_configs/selenide_driver_config.yaml"
 
-  fun getDriverConfig(type: DriverFrameworkType): Any {
+  fun getDriverConfig(type: DriverFrameworkType): DriverConfig {
     return when (type) {
       DriverFrameworkType.SELENIDE -> DriverConfigProvider().getSelenideDriverConfig()
       DriverFrameworkType.SELENIUM -> DriverConfigProvider().getSeleniumDriverConfig()
     }
   }
 
-  fun getSelenideDriverConfig(filePath: String = defaultSelenideConfigFilePath): DriverConfiguration {
-    val driverConfiguration = getClassObjectFromYaml(filePath, DriverConfiguration::class.java)
+  fun getSelenideDriverConfig(filePath: String = defaultSelenideConfigFilePath): SelenideDriverConfiguration {
+    val driverConfiguration = getClassObjectFromYaml(filePath, SelenideDriverConfiguration::class.java)
     return driverConfiguration
   }
 
-  fun getSeleniumDriverConfig(filePath: String = defaultSeleniumFilePath): WebDriverConfiguration {
-    val driverConfiguration = getClassObjectFromYaml(filePath, WebDriverConfiguration::class.java)
+  fun getSeleniumDriverConfig(filePath: String = defaultSeleniumFilePath): SeleniumDriverConfiguration {
+    val driverConfiguration = getClassObjectFromYaml(filePath, SeleniumDriverConfiguration::class.java)
 
     System.getProperty(seleniumBrowserSystemProperty)?.apply {
       driverConfiguration.browserType = BrowserType.valueOf(this.toUpperCase())
