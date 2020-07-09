@@ -2,17 +2,17 @@ package elements.input
 
 import com.codeborne.selenide.Selenide
 import com.codeborne.selenide.Selenide.`$`
+import elements.Button
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.openqa.selenium.By
 import utils.MmTestException
 
 object Input {
-  private const val loggerName = "Input wrapper"
-  private val log: Logger = LogManager.getLogger(loggerName)
+  private val log: Logger = LogManager.getLogger(Input::class.simpleName)
 
   fun getInputValue(element: By): String? {
-    log.info("Retrieve input value for $element")
+    log.info("Get input value for $element")
     return `$`(element).getAttribute("value")
   }
 
@@ -27,7 +27,7 @@ object Input {
     `$`(element).value = value
     if (!isTextInputMatchExpected(element, value)) {
       val exception = MmTestException("Incorrect input in field $element")
-      log.error(exception)
+      log.error(exception.getExceptionMessage())
       throw exception
     }
   }

@@ -9,8 +9,7 @@ import pages.PrivateAreaLoginPage
 class PrivateAreaOperations(config: ApplicationConfig) : BasePageOperations() {
   private val privateAreaLoginPage = PrivateAreaLoginPage()
   private val privateAreaHomePage = PrivateAreaHomePage()
-  private val loggerName = PrivateAreaOperations::class.simpleName
-  private val log: Logger = LogManager.getLogger(loggerName)
+  private val log: Logger = LogManager.getLogger(PrivateAreaOperations::class.simpleName)
 
   override val pageUrlEndpoint: String = config.privateAreaServiceEndpoint
 

@@ -9,8 +9,7 @@ import utils.Waiter
 
 class LandingPageOperations(config: ApplicationConfig): BasePageOperations() {
   private val landingPage = LandingPage().calculator
-  private val loggerName = LandingPageOperations::class.simpleName
-  private val log: Logger = LogManager.getLogger(loggerName)
+  private val log: Logger = LogManager.getLogger(LandingPageOperations::class.simpleName)
 
   override val pageUrlEndpoint: String = config.landingPageServiceEndpoint
 
@@ -43,12 +42,12 @@ class LandingPageOperations(config: ApplicationConfig): BasePageOperations() {
   }
 
   fun clickTakeButton() {
-    log.info("Click Take Loan button")
+    log.info("Click 'Take Loan' button")
     landingPage.clickTakeLoanButton()
   }
 
   fun clickTakeButtonJS() {
-    log.info("Click Take Loan button with JS")
+    log.info("Click 'Take Loan' button with JS")
     landingPage.clickTakeLoanButtonJS()
   }
 }

@@ -8,8 +8,7 @@ import org.apache.logging.log4j.Logger
 import org.openqa.selenium.By
 
 object Slider {
-  private const val loggerName = "Slider wrapper"
-  private val log: Logger = LogManager.getLogger(loggerName)
+  private val log: Logger = LogManager.getLogger(Slider::class.simpleName)
 
   fun setValueUsingSlider(element: By, xOffset: Int, yOffset: Int) {
     log.info("Set value using slider $element")
