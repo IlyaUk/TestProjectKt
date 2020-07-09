@@ -11,7 +11,6 @@ abstract class BasePageOperations {
   private val log: Logger = LogManager.getLogger(BasePageOperations::class.simpleName)
 
   fun openPage() {
-    log.info("Open $pageUrlEndpoint endpoint and wait for DOM model load")
     open(pageUrlEndpoint)
     Waiter().waitDomModelLoad(defaultDomTimeout)
   }

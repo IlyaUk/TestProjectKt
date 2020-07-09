@@ -1,7 +1,7 @@
 package pages
 
 import elements.Button.clickButton
-import elements.input.Input.inputValue
+import elements.Input.inputValue
 import org.openqa.selenium.By
 
 class PrivateAreaLoginPage {
