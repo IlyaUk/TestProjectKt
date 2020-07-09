@@ -1,8 +1,7 @@
-package elements.input
+package elements
 
 import com.codeborne.selenide.Selenide
 import com.codeborne.selenide.Selenide.`$`
-import elements.Button
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.openqa.selenium.By
@@ -27,7 +26,7 @@ object Input {
     `$`(element).value = value
     if (!isTextInputMatchExpected(element, value)) {
       val exception = MmTestException("Incorrect input in field $element")
-      log.error(exception.getExceptionMessage())
+      log.error(exception.message)
       throw exception
     }
   }

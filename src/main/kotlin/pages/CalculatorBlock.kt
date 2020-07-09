@@ -2,8 +2,8 @@ package pages
 
 import elements.Button.clickButton
 import elements.Button.clickButtonJS
-import elements.input.Input.getInputValue
-import elements.input.Input.setInputValueJS
+import elements.Input.getInputValue
+import elements.Input.setInputValueJS
 import elements.Slider.setValueUsingSlider
 import elements.Slider.setValueUsingSliderJS
 import org.openqa.selenium.By

@@ -27,7 +27,7 @@ object Button {
         it.click()
       } else {
         val exception = MmTestException("The button $element is not displayed")
-        log.error(exception.getExceptionMessage())
+        log.error(exception.message)
         throw exception
       }
     }
@@ -39,7 +39,7 @@ object Button {
       Selenide.executeJavaScript<Any>("arguments[0].click();", `$`(element))
     } else {
       val exception = MmTestException("The button $element is not displayed")
-      log.error(exception.getExceptionMessage())
+      log.error(exception.message)
       throw exception
     }
   }

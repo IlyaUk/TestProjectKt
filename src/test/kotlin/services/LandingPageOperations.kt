@@ -14,12 +14,10 @@ class LandingPageOperations(config: ApplicationConfig): BasePageOperations() {
   override val pageUrlEndpoint: String = config.landingPageServiceEndpoint
 
   fun getCreditAmountValue(): String? {
-    log.info("Verify credit amount value")
     return landingPage.getActualCreditAmountValue()
   }
 
   fun getCreditPeriodValue(): String? {
-    log.info("Verify credit period value")
     return landingPage.getActualCreditPeriodValue()
   }
 
@@ -42,12 +40,10 @@ class LandingPageOperations(config: ApplicationConfig): BasePageOperations() {
   }
 
   fun clickTakeButton() {
-    log.info("Click 'Take Loan' button")
     landingPage.clickTakeLoanButton()
   }
 
   fun clickTakeButtonJS() {
-    log.info("Click 'Take Loan' button with JS")
     landingPage.clickTakeLoanButtonJS()
   }
 }
