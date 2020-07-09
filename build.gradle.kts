@@ -3,6 +3,7 @@ val jacksonVersion: String by project.extra
 val junitJupiterVersion: String by project.extra
 val seleniumWebDriverVersion: String by project.extra
 val selenideVersion: String by project.extra
+val log4j2Version: String by project.extra
 
 plugins {
     kotlin("jvm") version "1.3.72"
@@ -25,6 +26,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
     implementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
+    implementation("org.apache.logging.log4j:log4j-core:$log4j2Version")
 }
 
 tasks.test {
