@@ -10,7 +10,7 @@ Configuration:
 
     File:
       name: FILE
-      fileName: D:\logfile.log
+      fileName: src/main/resources/logfile.log
       PatternLayout:
         pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
 
@@ -18,4 +18,5 @@ Configuration:
     Root:
       level: info
       AppenderRef:
+        #- ref: FILE
         - ref: CONSOLE

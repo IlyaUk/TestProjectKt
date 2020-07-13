@@ -12,7 +12,7 @@ object Navigation {
     Selenide.open(url)
   }
 
-  fun close() {
+  fun closeDriver() {
     log.info("Close the driver")
     Selenide.closeWebDriver()
   }
