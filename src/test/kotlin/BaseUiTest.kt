@@ -6,10 +6,15 @@ import config.ApplicationConfig
 import config.ConfigSource
 import config.ConfigurationProvider
 import driver.selenide.SelenideDriverManager
-import elements.Navigation.close
 import io.qameta.allure.selenide.AllureSelenide
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.extension.ExtendWith
+import reporting.TestListener
 
+@ExtendWith(TestListener::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class BaseUiTest {
   protected lateinit var config: ApplicationConfig
@@ -34,10 +39,5 @@ abstract class BaseUiTest {
   @BeforeEach
   fun domainAuth() {
     Selenide.open(config.getURLWithAuthorization())
-  }
-
-  @AfterEach
-  fun quitDriver() {
-    close()
   }
 }

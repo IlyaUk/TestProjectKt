@@ -2,7 +2,7 @@ package services
 
 import config.ApplicationConfig
 import pages.LandingPage
-import reporting.AllureOperations
+import reporting.AllureOperations.addStepToReport
 
 class LandingPageOperations(config: ApplicationConfig) : BasePageOperations() {
   private val landingPage = LandingPage().calculator
@@ -18,7 +18,7 @@ class LandingPageOperations(config: ApplicationConfig) : BasePageOperations() {
   }
 
   fun setValuesOnCalculator(xOffset: Int, yOffset: Int) {
-    AllureOperations().addStepToReport("[Step][LandingPageOperations] Set credit values on calculator block")
+    addStepToReport("[Step][LandingPageOperations] Set credit values on calculator block")
     landingPage.apply {
       setCreditAmountSlider(xOffset, yOffset)
       setCreditPeriodSlider(xOffset, yOffset)
@@ -26,7 +26,7 @@ class LandingPageOperations(config: ApplicationConfig) : BasePageOperations() {
   }
 
   fun setValuesOnCalculatorJS(creditAmount: String, creditPeriod: String, xOffsetMin: Double, xOffsetMax: Double) {
-    AllureOperations().addStepToReport("[Step][LandingPageOperations] Set credit values on calculator block with JS")
+    addStepToReport("[Step][LandingPageOperations] Set credit values on calculator block with JS")
     landingPage.apply {
       setCreditAmountSliderJS(xOffsetMin, xOffsetMax)
       setCreditPeriodSliderJS(xOffsetMin, xOffsetMax)

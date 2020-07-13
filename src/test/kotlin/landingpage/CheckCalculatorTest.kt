@@ -3,11 +3,8 @@ package landingpage
 import BaseUiTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import reporting.TestListener
 import services.LandingPageOperations
 
-@ExtendWith(TestListener::class)
 class CheckCalculatorTest : BaseUiTest() {
 
   @Test

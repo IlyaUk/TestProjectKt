@@ -3,7 +3,7 @@ package services
 import config.ApplicationConfig
 import pages.PrivateAreaHomePage
 import pages.PrivateAreaLoginPage
-import reporting.AllureOperations
+import reporting.AllureOperations.addStepToReport
 
 class PrivateAreaOperations(config: ApplicationConfig) : BasePageOperations() {
   private val privateAreaLoginPage = PrivateAreaLoginPage()
@@ -12,7 +12,7 @@ class PrivateAreaOperations(config: ApplicationConfig) : BasePageOperations() {
   override val pageUrlEndpoint: String = config.privateAreaServiceEndpoint
 
   fun login(user: String, pass: String) {
-    AllureOperations().addStepToReport("[Step][PrivateAreaOperations] Log in to PA")
+    addStepToReport("[Step][PrivateAreaOperations] Log in to PA")
     privateAreaLoginPage.apply {
       inputLogin(user)
       inputPassword(pass)
@@ -21,7 +21,7 @@ class PrivateAreaOperations(config: ApplicationConfig) : BasePageOperations() {
   }
 
   fun isOnPrivateAreaHomePage(): Boolean {
-    AllureOperations().addStepToReport("[Step][PrivateAreaOperations] Navigate to PA home page")
+    addStepToReport("[Step][PrivateAreaOperations] Navigate to PA home page")
     return privateAreaHomePage.isOnHomePage()
   }
 }
