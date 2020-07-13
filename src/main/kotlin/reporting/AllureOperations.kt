@@ -14,18 +14,19 @@ import java.nio.file.Paths
 object AllureOperations {
   private val log: Logger = LogManager.getLogger(AllureOperations::class.simpleName)
   private const val screenshotName = "ScreenshotOnFail"
-  private const val logPath = "src/main/resources/logfile.log"
+  private const val logFileName = "LogFile"
+  private const val logPath = "src/main/resources/$logFileName.log"
   private const val screenshotPath = "build/reports/tests/$screenshotName.png"
   fun addStepToReport(stepName: String) {
     Allure.step(stepName)
   }
 
   private fun addScreenshotToReport(attachment: ByteArray) {
-    Allure.getLifecycle().addAttachment("Screenshot", "image/png", "png", attachment)
+    Allure.getLifecycle().addAttachment(screenshotName, "image/png", "png", attachment)
   }
 
   private fun addLogToReport(logByteArray: ByteArray) {
-    Allure.getLifecycle().addAttachment("LogsFiles", "log", "log", logByteArray)
+    Allure.getLifecycle().addAttachment(logFileName, "log", "log", logByteArray)
   }
 
   fun attachLogsFile() {
