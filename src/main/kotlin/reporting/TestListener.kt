@@ -1,6 +1,6 @@
 package reporting
 
-import elements.Navigation.close
+import elements.Navigation.closeDriver
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.junit.jupiter.api.extension.AfterEachCallback
@@ -34,7 +34,7 @@ class TestListener : TestWatcher, AfterEachCallback {
     if (isTestResultNotSuccessful(extensionContext)) {
       attachScreenshot()
     }
-    close()
+    closeDriver()
   }
 
   private fun isTestResultNotSuccessful(extensionContext: ExtensionContext): Boolean {

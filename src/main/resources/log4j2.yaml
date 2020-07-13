@@ -18,5 +18,5 @@ Configuration:
     Root:
       level: info
       AppenderRef:
-        - ref: FILE
+        #- ref: FILE
         - ref: CONSOLE
