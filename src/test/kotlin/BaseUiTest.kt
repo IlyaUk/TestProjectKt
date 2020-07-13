@@ -1,14 +1,14 @@
 import com.codeborne.selenide.Configuration
 import com.codeborne.selenide.Selenide
-import config.ConfigSource
+import com.codeborne.selenide.logevents.LogEventListener
+import com.codeborne.selenide.logevents.SelenideLogger
 import config.ApplicationConfig
+import config.ConfigSource
 import config.ConfigurationProvider
-import elements.Navigation.close
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.TestInstance
 import driver.selenide.SelenideDriverManager
-import org.junit.jupiter.api.BeforeEach
+import elements.Navigation.close
+import io.qameta.allure.selenide.AllureSelenide
+import org.junit.jupiter.api.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class BaseUiTest {
@@ -19,8 +19,17 @@ abstract class BaseUiTest {
     config = ConfigurationProvider.setConfigType(ConfigSource.YAML).getConfig()
     SelenideDriverManager().setSelenideWebDriverConfiguration()
     Configuration.baseUrl = config.getHostURL()
+    SelenideLogger.addListener(
+        "AllureSelenide", AllureSelenide()
+        .screenshots(true)
+        .savePageSource(false)
+    )
   }
 
+  @AfterAll()
+  fun cleanConfig() {
+    SelenideLogger.removeListener<LogEventListener>("AllureSelenide")
+  }
 
   @BeforeEach
   fun domainAuth() {

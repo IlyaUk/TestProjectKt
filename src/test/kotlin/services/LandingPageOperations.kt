@@ -1,15 +1,11 @@
 package services
 
 import config.ApplicationConfig
-import elements.Navigation.open
-import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.Logger
 import pages.LandingPage
-import utils.Waiter
+import reporting.AllureOperations
 
-class LandingPageOperations(config: ApplicationConfig): BasePageOperations() {
+class LandingPageOperations(config: ApplicationConfig) : BasePageOperations() {
   private val landingPage = LandingPage().calculator
-  private val log: Logger = LogManager.getLogger(LandingPageOperations::class.simpleName)
 
   override val pageUrlEndpoint: String = config.landingPageServiceEndpoint
 
@@ -22,7 +18,7 @@ class LandingPageOperations(config: ApplicationConfig): BasePageOperations() {
   }
 
   fun setValuesOnCalculator(xOffset: Int, yOffset: Int) {
-    log.info("Set credit values on calculator block")
+    AllureOperations().addStepToReport("[Step][LandingPageOperations] Set credit values on calculator block")
     landingPage.apply {
       setCreditAmountSlider(xOffset, yOffset)
       setCreditPeriodSlider(xOffset, yOffset)
@@ -30,7 +26,7 @@ class LandingPageOperations(config: ApplicationConfig): BasePageOperations() {
   }
 
   fun setValuesOnCalculatorJS(creditAmount: String, creditPeriod: String, xOffsetMin: Double, xOffsetMax: Double) {
-    log.info("Set credit values on calculator block with JS")
+    AllureOperations().addStepToReport("[Step][LandingPageOperations] Set credit values on calculator block with JS")
     landingPage.apply {
       setCreditAmountSliderJS(xOffsetMin, xOffsetMax)
       setCreditPeriodSliderJS(xOffsetMin, xOffsetMax)

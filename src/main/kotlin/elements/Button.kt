@@ -5,6 +5,7 @@ import com.codeborne.selenide.Selenide.`$`
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.openqa.selenium.By
+import reporting.AllureOperations
 import utils.MmTestException
 
 object Button {
@@ -22,10 +23,11 @@ object Button {
 
   fun clickButton(element: By) {
     `$`(element).also {
-      if (isButtonDisplayed(element)) {
+      if (!isButtonDisplayed(element)) {
         log.info("Click button $element")
         it.click()
       } else {
+        AllureOperations().attachScreenshot()
         val exception = MmTestException("The button $element is not displayed")
         log.error(exception.message)
         throw exception
@@ -38,6 +40,7 @@ object Button {
       log.info("Click button $element with JS")
       Selenide.executeJavaScript<Any>("arguments[0].click();", `$`(element))
     } else {
+      AllureOperations().attachScreenshot()
       val exception = MmTestException("The button $element is not displayed")
       log.error(exception.message)
       throw exception

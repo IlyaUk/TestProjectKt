@@ -5,6 +5,7 @@ import com.codeborne.selenide.Selenide.`$`
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.openqa.selenium.By
+import reporting.AllureOperations
 import utils.MmTestException
 
 object Input {
@@ -25,6 +26,7 @@ object Input {
     log.info("Set input value for $element")
     `$`(element).value = value
     if (!isTextInputMatchExpected(element, value)) {
+      AllureOperations().attachScreenshot()
       val exception = MmTestException("Incorrect input in field $element")
       log.error(exception.message)
       throw exception
