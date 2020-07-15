@@ -9,7 +9,11 @@ data class ApplicationConfig(
     val host: String,
     val registrationServiceEndpoint: String,
     val privateAreaServiceEndpoint: String,
-    var landingPageServiceEndpoint: String
+    var landingPageServiceEndpoint: String,
+    var dbUrl: String,
+    var dbUser: String,
+    var dbPassword: String,
+    var dbSchema: String
 ){
   fun getURLWithAuthorization() = "https://$user:$pass@$host/"
   fun getHostURL() = "https://$host/"
