@@ -6,8 +6,4 @@ class DbConnectionProvider(dbClient: DbClient) : DbClient {
   override fun connectToDb(): Any {
     return client.connectToDb()
   }
-
-  override fun selectBorrowerRefById(id: Int): Any {
-    return client.selectBorrowerRefById(id)
-  }
 }

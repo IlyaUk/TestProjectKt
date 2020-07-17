@@ -1,12 +1,10 @@
-package dbclient
+package dbclient.exposedclient
 
 import config.ApplicationConfig
 import config.ConfigSource
 import config.ConfigurationProvider
-import dbclient.tables.BorrowerReference
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.StdOutSqlLogger
-import org.jetbrains.exposed.sql.addLogger
+import dbclient.DbClient
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class ExposedDbClient : DbClient {
@@ -18,10 +16,19 @@ class ExposedDbClient : DbClient {
         config.dbPassword)
   }
 
-  override fun selectBorrowerRefById(id: Int): BorrowerReference {
+  fun selectTableData(table: Table, expression: () -> Op<Boolean>): Query {
     return transaction {
       addLogger(StdOutSqlLogger)
-      BorrowerReference.findById(id)!!
+      table.select { expression.invoke() }
     }
+  }
+
+  fun selectTableDataWithJoin(): List<*> {
+    val query = borrower_reference.join(borrower_file_content, JoinType.INNER, borrower_reference.borrower_id,
+        borrower_file_content.borrower_id)
+        .select {
+          borrower_reference.id eq 2 and (borrower_file_content.id eq 467)
+        }
+    return query.toList()
   }
 }
