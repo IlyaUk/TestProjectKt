@@ -6,4 +6,8 @@ class DbConnectionProvider(dbClient: DbClient) : DbClient {
   override fun connectToDb(): Any {
     return client.connectToDb()
   }
+
+  override fun closeConnectToDb(): Any {
+    return client.closeConnectToDb()
+  }
 }

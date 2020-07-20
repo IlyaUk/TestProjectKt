@@ -16,6 +16,10 @@ class ExposedDbClient : DbClient {
         config.dbPassword)
   }
 
+  override fun closeConnectToDb(): Any {
+    TODO("Not yet implemented")
+  }
+
   fun selectTableData(table: Table, expression: () -> Op<Boolean>): Query {
     return transaction {
       addLogger(StdOutSqlLogger)

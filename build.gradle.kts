@@ -7,6 +7,7 @@ val log4j2Version: String by project.extra
 val allureVersion: String by project.extra
 val exposedVerion: String by project.extra
 val mysqlDriverVersion: String by project.extra
+val kotlinjdbcVersion: String by project.extra
 
 plugins {
     kotlin("jvm") version "1.3.72"
@@ -48,6 +49,7 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao:$exposedVerion")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVerion")
     implementation("mysql:mysql-connector-java:$mysqlDriverVersion")
+    implementation("com.vladsch.kotlin-jdbc:kotlin-jdbc:$kotlinjdbcVersion")
 }
 
 tasks.test {
