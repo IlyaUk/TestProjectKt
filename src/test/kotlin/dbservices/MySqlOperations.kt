@@ -11,9 +11,9 @@ open class MySqlOperations {
     where id = :id
     order by id desc
   """.trimIndent()
-    val resultsMapping = "id" to id
+    val queryParams = mapOf("id" to id)
 
-    return VschClient().selectFirstRow(getBorrowerRefDataQuery, mapOf(resultsMapping))
+    return VschClient().selectFirstRow(getBorrowerRefDataQuery, queryParams)
   }
 
   fun getBorrowerRefDataByRefType(refType: String): List<Map<String, Any?>> {
@@ -24,9 +24,9 @@ open class MySqlOperations {
     order by id asc
     limit 2
   """.trimIndent()
-    val resultsMapping = "reference_type" to refType
+    val queryParams = mapOf("reference_type" to refType)
 
-    return VschClient().selectAllRows(getBorrowerRefDataQuery, mapOf(resultsMapping))
+    return VschClient().selectAllRows(getBorrowerRefDataQuery, queryParams)
   }
 
   fun getBorrowerRefDataAndFileContentType(borrowerId: Long, fileContentType: String): Map<String, Any?> {
@@ -37,9 +37,9 @@ open class MySqlOperations {
     where br.borrower_id = :borrowerId
     and bf.borrower_file_type = :fileContentType
   """.trimIndent()
-    val resultsMapping = "borrower_id" to borrowerId; "borrower_file_content" to fileContentType
+    val queryParams = mapOf("borrower_id" to borrowerId, "borrower_file_content" to fileContentType)
 
-    return VschClient().selectFirstRow(getBorrowerRefDataQuery, mapOf(resultsMapping))
+    return VschClient().selectFirstRow(getBorrowerRefDataQuery, queryParams)
   }
 
   fun closeDbConnection(client: DbClient) {
