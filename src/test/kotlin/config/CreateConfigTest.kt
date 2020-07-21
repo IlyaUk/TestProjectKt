@@ -16,7 +16,11 @@ class CreateConfigTest {
             { assertEquals("qa-delivery-mx-master.moneyman.ru", configurationFromJsonFile.host) },
             { assertEquals("client-area/registration", configurationFromJsonFile.registrationServiceEndpoint) },
             { assertEquals("private-area/static/#/login", configurationFromJsonFile.privateAreaServiceEndpoint) },
-            { assertEquals("/", configurationFromJsonFile.landingPageServiceEndpoint) }
+            { assertEquals("/", configurationFromJsonFile.landingPageServiceEndpoint) },
+            { assertEquals("1", configurationFromJsonFile.dbUrl) },
+            { assertEquals("2", configurationFromJsonFile.dbUser) },
+            { assertEquals("3", configurationFromJsonFile.dbPassword) },
+            { assertEquals("4", configurationFromJsonFile.dbSchema) }
         )
     }
 
@@ -30,7 +34,12 @@ class CreateConfigTest {
             { assertEquals("qa-delivery-mx-master.moneyman.ru", configurationFromYamlFile.host) },
             { assertEquals("client-area/registration", configurationFromYamlFile.registrationServiceEndpoint) },
             { assertEquals("private-area/static/#/login", configurationFromYamlFile.privateAreaServiceEndpoint) },
-            { assertEquals("/", configurationFromYamlFile.landingPageServiceEndpoint) }
+            { assertEquals("/", configurationFromYamlFile.landingPageServiceEndpoint) },
+            { assertEquals("/", configurationFromYamlFile.landingPageServiceEndpoint) },
+            { assertEquals("1", configurationFromYamlFile.dbUrl) },
+            { assertEquals("2", configurationFromYamlFile.dbUser) },
+            { assertEquals("3", configurationFromYamlFile.dbPassword) },
+            { assertEquals("4", configurationFromYamlFile.dbSchema) }
         )
     }
 }

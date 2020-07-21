@@ -5,6 +5,8 @@ val seleniumWebDriverVersion: String by project.extra
 val selenideVersion: String by project.extra
 val log4j2Version: String by project.extra
 val allureVersion: String by project.extra
+val mysqlDriverVersion: String by project.extra
+val kotlinjdbcVersion: String by project.extra
 
 plugins {
     kotlin("jvm") version "1.3.72"
@@ -26,6 +28,7 @@ allure {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -41,6 +44,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
     implementation("org.apache.logging.log4j:log4j-core:$log4j2Version")
     implementation("io.qameta.allure:allure-selenide:$allureVersion")
+    implementation("mysql:mysql-connector-java:$mysqlDriverVersion")
+    implementation("com.vladsch.kotlin-jdbc:kotlin-jdbc:$kotlinjdbcVersion")
 }
 
 tasks.test {

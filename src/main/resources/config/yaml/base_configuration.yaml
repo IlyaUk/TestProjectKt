@@ -4,3 +4,7 @@ host: qa-delivery-mx-master.moneyman.ru
 registrationServiceEndpoint: client-area/registration
 privateAreaServiceEndpoint: private-area/static/#/login
 landingPageServiceEndpoint: /
+dbUrl: 1
+dbUser: 2
+dbPassword: 3
+dbSchema: 4
