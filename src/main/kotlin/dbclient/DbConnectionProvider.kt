@@ -1,13 +1,11 @@
 package dbclient
 
-class DbConnectionProvider(dbClient: DbClient) : DbClient {
-  private var client: DbClient = dbClient
-
+class DbConnectionProvider(private val dbClient: DbClient) : DbClient {
   override fun connectToDb(): Any {
-    return client.connectToDb()
+    return dbClient.connectToDb()
   }
 
   override fun closeConnectToDb(): Any {
-    return client.closeConnectToDb()
+    return dbClient.closeConnectToDb()
   }
 }

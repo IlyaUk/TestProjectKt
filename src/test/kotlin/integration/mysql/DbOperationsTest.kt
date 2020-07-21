@@ -3,34 +3,30 @@ package integration.mysql
 import dbclient.DbClient
 import dbclient.DbConnectionProvider
 import dbclient.vsch.VschClient
+import dbservices.MySqlOperations
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-class DbOperationsTest {
+class DbOperationsTest : MySqlOperations() {
   private val dbClient: DbClient = DbConnectionProvider(VschClient())
-  private val id = 1
+  private val id: Long = 1
   private val referenceType = "FATHER"
-  private val borrowerId = 14555
+  private val borrowerId: Long = 14555
   private val borrowerFileType = "AVERSE_INE"
+
+  @AfterEach
+  fun closeConnection() {
+    closeDbConnection(dbClient)
+  }
 
   @Test
   fun getBorrowerReferenceOneRowData() {
-    val getBorrowerRefDataQuery: String = """
-    select *
-    from borrower_reference
-    where id = :id
-    order by id desc
-  """.trimIndent()
-
-    val resultMap: Map<String, Any?> = VschClient().selectFirstRow(
-        getBorrowerRefDataQuery,
-        mapOf("id" to id)
-    )
-    dbClient.closeConnectToDb()
+    val resultMap = getBorrowerRefDataById(id)
 
     assertAll(
-        { Assertions.assertEquals(id.toLong(), resultMap["id"]) },
+        { Assertions.assertEquals(id, resultMap["id"]) },
         { Assertions.assertEquals("FATHER", resultMap["reference_type"]) },
         { Assertions.assertEquals("wer", resultMap["reference_phone"]) },
         { Assertions.assertEquals("wer", resultMap["reference_name"]) },
@@ -40,19 +36,7 @@ class DbOperationsTest {
 
   @Test
   fun getBorrowerReferenceMultipleRowsData() {
-    val getBorrowerRefDataQuery: String = """
-    select id, reference_type, reference_phone, reference_name, borrower_id 
-    from borrower_reference
-    where reference_type = "FATHER"
-    order by id asc
-    limit 2
-  """.trimIndent()
-
-    val resultList: List<Map<String, Any?>> = VschClient().selectAllRows(
-        getBorrowerRefDataQuery,
-        mapOf("reference_type" to referenceType)
-    )
-    dbClient.closeConnectToDb()
+    val resultList = getBorrowerRefDataByRefType(referenceType)
 
     assertAll(
         { Assertions.assertTrue(resultList.size == 2) },
@@ -66,19 +50,7 @@ class DbOperationsTest {
 
   @Test
   fun getBorrowerReferenceAndFileContentData() {
-    val getBorrowerRefDataQuery: String = """
-    select br.id, br.reference_type, br.reference_phone, br.reference_name, br.borrower_id, bf.borrower_file_type
-    from borrower_reference br
-    join borrower_file_content bf on br.borrower_id = bf.borrower_id
-    where br.borrower_id = 14555
-    and bf.borrower_file_type = "AVERSE_INE"
-  """.trimIndent()
-
-    val resultMap: Map<String, Any?> = VschClient().selectFirstRow(
-        getBorrowerRefDataQuery,
-        mapOf("borrower_id" to borrowerId, "borrower_file_content" to borrowerFileType)
-    )
-    dbClient.closeConnectToDb()
+    val resultMap = getBorrowerRefDataAndFileContentType(borrowerId, borrowerFileType)
 
     assertAll(
         { Assertions.assertEquals(9737L, resultMap["id"]) },
