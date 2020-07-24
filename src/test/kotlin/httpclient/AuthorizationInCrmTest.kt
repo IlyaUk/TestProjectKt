@@ -28,9 +28,10 @@ class AuthorizationInCrmTest {
 
   @Test
   fun `Get current user authorized in CRM`() {
-    CrmHttpOperations(config).authorizeToCrm()
-
-    val currentUserResponse = CrmHttpOperations(config).sendCurrentUserGetRequest()
+    val currentUserResponse = CrmHttpOperations(config).run {
+      authorizeToCrm()
+      sendCurrentUserGetRequest()
+    }
 
     assertAll(
         { Assertions.assertEquals(username, currentUserResponse.userName) },
