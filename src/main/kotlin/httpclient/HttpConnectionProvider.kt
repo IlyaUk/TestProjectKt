@@ -6,7 +6,7 @@ class HttpConnectionProvider(private val httpClient: HttpClient) {
   }
 
   fun sendPostRequest(request: Any): Any {
-    return httpClient.sendPostRequest((request))
+    return httpClient.sendPostRequest(request)
   }
 
   fun closeResponse(response: Any?) {
