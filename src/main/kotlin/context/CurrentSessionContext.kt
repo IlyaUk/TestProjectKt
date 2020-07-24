@@ -4,27 +4,19 @@ import okhttp3.Request
 import okhttp3.Response
 
 object CurrentSessionContext {
-  private var rawResponse: Response? = null
-  private var rawRequest: Request? = null
-
-  var authUserToken: String?
-    get() = rawResponse?.headers?.toMultimap()?.get("Set-Cookie")?.get(1)
+  var rawRequest: Request? = null
+  var rawResponse: Response? = null
     set(value) {
-      value?.forEach {
-        if (it.toString().contains("AuthUser")) {
-          authUserToken = value
+      field = value
+      value?.headers?.toMultimap()?.forEach {
+        if (it.key == "set-cookie" && it.value.isNotEmpty()) {
+          authUserToken = it.value[1]
+          jsessionId = it.value[0]
         }
       }
     }
-  var jsessionId: String?
-    get() = rawResponse?.headers?.toMultimap()?.get("Set-Cookie")?.get(0)
-    set(value) {
-      value?.forEach {
-        if (it.toString().contains("JSESSIONID")) {
-          jsessionId = value
-        }
-      }
-    }
+  var authUserToken: String? = null
+  var jsessionId: String? = null
 
   fun updateResponse(response: Response) {
     rawResponse = response

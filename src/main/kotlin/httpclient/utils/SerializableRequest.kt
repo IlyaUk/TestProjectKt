@@ -1,4 +1,3 @@
 package httpclient.utils
 
-interface SerializableRequest {
-}
+interface SerializableRequest

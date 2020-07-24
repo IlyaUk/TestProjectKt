@@ -1,10 +1,10 @@
 package httpservices
 
-import config.ConfigSource
-import config.ConfigurationProvider
+import config.ApplicationConfig
 import context.CurrentSessionContext
 import httpclient.HttpClient
 import httpclient.HttpConnectionProvider
+import httpclient.okhttp.OkHttp
 import httpclient.request.AuthorizeInCrmRequest
 import httpclient.response.AuthorizeInCrmResponse
 import httpclient.utils.HeaderType
@@ -16,46 +16,59 @@ import okhttp3.Response
 import utils.convertObjectToJsonString
 import utils.getClassObjectFromString
 
-class CrmHttpOperations(private val httpClient: HttpClient) {
-  private val baseConfig = ConfigurationProvider.setConfigType(ConfigSource.JSON).getConfig()
+class CrmHttpOperations(private val config: ApplicationConfig) {
+  private val httpClient: HttpClient = OkHttp()
   private val contentType = "application/json"
-  private val authorizationEndpoint = "https://${baseConfig.host}/secure/rest/sign/in"
-  private val currentUserEndpoint = "https://${baseConfig.host}/secure/rest/sign/current-user"
+  private val expectedHttpCode = 200
+  private val authorizationEndpoint = "https://${config.host}/secure/rest/sign/in"
+  private val currentUserEndpoint = "https://${config.host}/secure/rest/sign/current-user"
 
-  fun sendAuthorizationPostRequest(login: String, password: String, captcha: String, remember: Boolean): Response {
-    val request = getAuthorizationRequestAsJson(login, password, captcha, remember)
+  fun authorizeToCrm(): AuthorizeInCrmResponse {
+    val request = getAuthorizationRequestAsJson(config.crmLogin, config.crmPass, config.crmCaptcha)
 
     val requestBuilder = Request.Builder()
         .url(authorizationEndpoint)
-        .addHeader(HeaderType.AUTHORIZATION.headerName, Credentials.basic(baseConfig.user, baseConfig.pass.toString()))
-        .addHeader(HeaderType.CONTENTTYPE.headerName, contentType)
+        .addHeader(HeaderType.AUTHORIZATION.headerName, Credentials.basic(config.user, config.pass.toString()))
+        .addHeader(HeaderType.CONTENT_TYPE.headerName, contentType)
         .post(request.toRequestBody(contentType.toMediaTypeOrNull()))
         .build()
 
-    return HttpConnectionProvider(httpClient).sendPostRq(requestBuilder) as Response
+    val rawResponse = HttpConnectionProvider(httpClient).sendPostRequest(requestBuilder) as Response
+    assert(rawResponse.code == expectedHttpCode) {
+      "Response code doesn't match: \nExpected:$expectedHttpCode \nActual:${rawResponse.code}"
+    }
+    val authorizationResponse = getAuthorizationResponse(rawResponse.body!!.string())
+
+    HttpConnectionProvider(httpClient).closeResponse(rawResponse)
+
+    return authorizationResponse
   }
 
-  fun sendCurrentUserGetRequest(): Response {
+  fun sendCurrentUserGetRequest(): AuthorizeInCrmResponse {
     val jsessionID = CurrentSessionContext.jsessionId ?: ""
     val authUser = CurrentSessionContext.authUserToken ?: ""
+
     val requestBuilder = Request.Builder()
         .url(currentUserEndpoint)
-        .addHeader(HeaderType.AUTHORIZATION.headerName, Credentials.basic(baseConfig.user, baseConfig.pass.toString()))
+        .addHeader(HeaderType.AUTHORIZATION.headerName, Credentials.basic(config.user, config.pass.toString()))
         .addHeader(HeaderType.COOKIE.headerName, jsessionID)
         .addHeader(HeaderType.COOKIE.headerName, authUser)
         .build()
 
-    return HttpConnectionProvider(httpClient).sendGetRq(requestBuilder) as Response
+    val rawResponse = HttpConnectionProvider(httpClient).sendGetRequest(requestBuilder) as Response
+    assert(rawResponse.code == expectedHttpCode) {
+      "Response code doesn't match: \nExpected:$expectedHttpCode \nActual:${rawResponse.code}"
+    }
+    val currentUserResponse = CrmHttpOperations(config).getAuthorizationResponse(rawResponse.body!!.string())
+
+    HttpConnectionProvider(httpClient).closeResponse(rawResponse)
+
+    return currentUserResponse
   }
 
-  fun getAuthorizationRequestAsJson(login: String, password: String, captcha: String,
-      remember: Boolean): String {
-    val authorizationData = AuthorizeInCrmRequest(login, password, captcha,
-        remember)
-    return convertObjectToJsonString(authorizationData)
-  }
+  private fun getAuthorizationRequestAsJson(login: String, password: String, captcha: String): String =
+      convertObjectToJsonString(AuthorizeInCrmRequest(login, password, captcha))
 
-  fun getAuthorizationResponse(response: String): AuthorizeInCrmResponse {
-    return getClassObjectFromString(response, AuthorizeInCrmResponse::class.java)
-  }
+  private fun getAuthorizationResponse(response: String): AuthorizeInCrmResponse =
+      getClassObjectFromString(response, AuthorizeInCrmResponse::class.java)
 }

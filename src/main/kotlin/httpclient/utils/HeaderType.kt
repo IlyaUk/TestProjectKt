@@ -2,6 +2,6 @@ package httpclient.utils
 
 enum class HeaderType(val headerName: String) {
   AUTHORIZATION("Authorization"),
-  CONTENTTYPE("Content-Type"),
+  CONTENT_TYPE("Content-Type"),
   COOKIE("Cookie")
 }

@@ -13,7 +13,10 @@ data class ApplicationConfig(
     var dbUrl: String,
     var dbUser: String,
     var dbPassword: String,
-    var dbSchema: String
+    var dbSchema: String,
+    var crmLogin: String,
+    var crmPass: String,
+    var crmCaptcha: String
 ){
   fun getURLWithAuthorization() = "https://$user:$pass@$host/"
   fun getHostURL() = "https://$host/"
