@@ -8,3 +8,6 @@ dbUrl: 1
 dbUser: 2
 dbPassword: 3
 dbSchema: 4
+crmLogin: 5
+crmPass: 6
+crmCaptcha: 7

@@ -7,6 +7,7 @@ val log4j2Version: String by project.extra
 val allureVersion: String by project.extra
 val mysqlDriverVersion: String by project.extra
 val kotlinjdbcVersion: String by project.extra
+val okhttpVersion: String by project.extra
 
 plugins {
     kotlin("jvm") version "1.3.72"
@@ -46,6 +47,7 @@ dependencies {
     implementation("io.qameta.allure:allure-selenide:$allureVersion")
     implementation("mysql:mysql-connector-java:$mysqlDriverVersion")
     implementation("com.vladsch.kotlin-jdbc:kotlin-jdbc:$kotlinjdbcVersion")
+    implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
 }
 
 tasks.test {
