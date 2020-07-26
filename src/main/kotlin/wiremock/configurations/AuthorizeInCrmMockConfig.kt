@@ -4,7 +4,7 @@ import config.ApplicationConfig
 import wiremock.MockConfig
 import java.util.*
 
-class AuthorizeInCrmMockConfigConfig(private val config: ApplicationConfig) : MockConfig {
+class AuthorizeInCrmMockConfig(private val config: ApplicationConfig) : MockConfig {
   override var id: UUID? = null
   override val priority: Int = 1
   override val mockName = "Authorize as admin in CRM"

@@ -6,7 +6,7 @@ import httpservices.CrmHttpOperations
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import wiremock.configurations.AuthorizeInCrmMockConfigConfig
+import wiremock.configurations.AuthorizeInCrmMockConfig
 
 class WireMockTest : WireMockBaseTest() {
   private val username = "admin"
@@ -17,7 +17,7 @@ class WireMockTest : WireMockBaseTest() {
 
   @Test
   fun `Verify that selected mock is added`() {
-    val authorizeInCrmStaticMock = AuthorizeInCrmMockConfigConfig(config)
+    val authorizeInCrmStaticMock = AuthorizeInCrmMockConfig(config)
     WireMockService(config).setMock(authorizeInCrmStaticMock)
 
     Assertions.assertTrue(wireMockServer.getStubMapping(authorizeInCrmStaticMock.id).isPresent,
@@ -27,7 +27,7 @@ class WireMockTest : WireMockBaseTest() {
 
   @Test
   fun `Verify that selected mock is removed`() {
-    val authorizeInCrmStaticMock = AuthorizeInCrmMockConfigConfig(config)
+    val authorizeInCrmStaticMock = AuthorizeInCrmMockConfig(config)
     WireMockService(config).setMock(authorizeInCrmStaticMock)
     WireMockService(config).removeMock(authorizeInCrmStaticMock)
 
@@ -38,7 +38,7 @@ class WireMockTest : WireMockBaseTest() {
 
   @Test
   fun `Get CRM authorization response from stub`() {
-    val authorizeInCrmStaticMock = AuthorizeInCrmMockConfigConfig(config)
+    val authorizeInCrmStaticMock = AuthorizeInCrmMockConfig(config)
     WireMockService(config).setMock(authorizeInCrmStaticMock)
     val authorizationResponse = CrmHttpOperations(config).authorizeToCrm(
         "http://${config.wireMockHost}:${config.wireMockPort}/secure/rest/sign/in")
