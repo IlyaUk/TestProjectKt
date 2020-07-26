@@ -22,10 +22,10 @@ class CrmHttpOperations(private val config: ApplicationConfig) {
   private val authorizationEndpoint = "https://${config.host}/secure/rest/sign/in"
   private val currentUserEndpoint = "https://${config.host}/secure/rest/sign/current-user"
 
-  fun authorizeToCrm(): AuthorizeInCrmResponse {
+  fun authorizeToCrm(endpoint: String = authorizationEndpoint): AuthorizeInCrmResponse {
     val request = getAuthorizationRequestAsJson(config.crmLogin, config.crmPass, config.crmCaptcha)
     val requestBuilder = Request.Builder()
-        .url(authorizationEndpoint)
+        .url(endpoint)
         .addHeader(HeaderType.AUTHORIZATION.headerName, Credentials.basic(config.user, config.pass.toString()))
         .addHeader(HeaderType.CONTENT_TYPE.headerName, contentType)
         .post(request.toRequestBody(contentType.toMediaTypeOrNull()))

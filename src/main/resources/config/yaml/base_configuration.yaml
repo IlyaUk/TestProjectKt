@@ -11,3 +11,5 @@ dbSchema: 4
 crmLogin: 5
 crmPass: 6
 crmCaptcha: 7
+wireMockHost: localhost
+wireMockPort: 8084

@@ -8,6 +8,7 @@ val allureVersion: String by project.extra
 val mysqlDriverVersion: String by project.extra
 val kotlinjdbcVersion: String by project.extra
 val okhttpVersion: String by project.extra
+val wireMockStandaloneVersion: String by project.extra
 
 plugins {
     kotlin("jvm") version "1.3.72"
@@ -48,6 +49,7 @@ dependencies {
     implementation("mysql:mysql-connector-java:$mysqlDriverVersion")
     implementation("com.vladsch.kotlin-jdbc:kotlin-jdbc:$kotlinjdbcVersion")
     implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
+    implementation("com.github.tomakehurst:wiremock:$wireMockStandaloneVersion")
 }
 
 tasks.test {
