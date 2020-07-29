@@ -7,6 +7,8 @@ import okhttp3.Request
 import okhttp3.Response
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 class OkHttp : HttpClient {
   private val client: OkHttpClient = OkHttpClient()
@@ -23,6 +25,24 @@ class OkHttp : HttpClient {
 
   override fun closeResponse(response: Any?) {
     (response as Response).close()
+  }
+
+  fun isSpecifiedUrlReachable(url: String, timeout: Long, responseCodesRange: IntRange): Boolean {
+    return try {
+      client.newBuilder()
+          .connectTimeout(timeout, TimeUnit.MILLISECONDS)
+          .readTimeout(timeout, TimeUnit.MILLISECONDS)
+          .build()
+      val request = Request.Builder()
+          .url(url)
+          .build()
+      val response = client.newCall(request).execute()
+      val responseCode = response.code
+      closeResponse(response)
+      responseCode in responseCodesRange
+    } catch (exception: IOException) {
+      false
+    }
   }
 
   private fun invokeHttpClientAction(clientOperation: () -> Response): Response {

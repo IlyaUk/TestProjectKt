@@ -1,7 +1,5 @@
 package wiremock
 
-import config.ConfigSource
-import config.ConfigurationProvider
 import httpservices.CrmHttpOperations
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -13,7 +11,6 @@ class WireMockTest : WireMockBaseTest() {
   private val id = 1
   private val role = "Administrator"
   private val roleId = 10
-  private val config = ConfigurationProvider.setConfigType(ConfigSource.JSON).getConfig()
 
   @Test
   fun `Verify that selected mock is added`() {

@@ -12,7 +12,6 @@ import org.apache.logging.log4j.Logger
 class WireMockService(private val config: ApplicationConfig) {
   private val log: Logger = LogManager.getLogger(WireMockService::class.simpleName)
   private val wireMockClient: WireMock = WireMock(config.wireMockHost, config.wireMockPort)
-  private lateinit var mappingBuilder: MappingBuilder
 
   fun setMock(mockConfig: MockConfig) {
     if (!isStubMappingPresentsInWireMock(mockConfig)) {
@@ -39,7 +38,7 @@ class WireMockService(private val config: ApplicationConfig) {
   }
 
   private fun getMappingStub(mockConfig: MockConfig): MappingBuilder {
-    mappingBuilder = WireMock.any(WireMock.urlMatching(mockConfig.url))
+    val mappingBuilder = WireMock.any(WireMock.urlMatching(mockConfig.url))
         .atPriority(mockConfig.priority)
         .withName(mockConfig.mockName)
         .withBasicAuth(config.user, config.pass.toString())

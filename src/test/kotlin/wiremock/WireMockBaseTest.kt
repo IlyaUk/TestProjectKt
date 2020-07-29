@@ -12,13 +12,12 @@ import org.junit.jupiter.api.TestInstance
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class WireMockBaseTest {
-  protected lateinit var wireMockServer: WireMockServer
+  protected val config = ConfigurationProvider.setConfigType(ConfigSource.JSON).getConfig()
+  protected val wireMockServer: WireMockServer = WireMockServer(WireMockConfiguration.options().port(config.wireMockPort))
   private val log: Logger = LogManager.getLogger(WireMockBaseTest::class.simpleName)
-  private val config = ConfigurationProvider.setConfigType(ConfigSource.JSON).getConfig()
 
   @BeforeAll
   fun startWireMockServer() {
-    wireMockServer = WireMockServer(WireMockConfiguration.options().port(config.wireMockPort))
     wireMockServer.start()
     log.info("WireMock server is started on ${config.wireMockPort} port")
   }
