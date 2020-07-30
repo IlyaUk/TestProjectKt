@@ -7,29 +7,37 @@ import okhttp3.Request
 import okhttp3.Response
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import java.util.concurrent.TimeUnit
 
 class OkHttp : HttpClient {
-  private val client: OkHttpClient = OkHttpClient()
+  private var client: OkHttpClient? = null
   private val log: Logger = LogManager.getLogger(OkHttp::class.simpleName)
-  private val expectedHttpCode = 200
+  private val defaultTimeoutMillis: Long = 5000
 
-  override fun sendGetRequest(request: Any): Response {
-    return invokeHttpClientAction { client.newCall((request as Request)).execute() }
+  private fun initHttpClient(timeout: Long = defaultTimeoutMillis): OkHttpClient {
+    if (client == null) {
+      client = OkHttpClient().newBuilder()
+          .connectTimeout(timeout, TimeUnit.MILLISECONDS)
+          .readTimeout(timeout, TimeUnit.MILLISECONDS)
+          .build()
+    }
+    return client as OkHttpClient
   }
 
-  override fun sendPostRequest(request: Any): Response {
-    return invokeHttpClientAction { client.newCall((request as Request)).execute() }
+  fun sendGetRequest(request: Request, timeout: Long = defaultTimeoutMillis): Response {
+    return invokeHttpClientAction { initHttpClient(timeout).newCall(request).execute() }
   }
 
-  override fun closeResponse(response: Any?) {
-    (response as Response).close()
+  fun sendPostRequest(request: Request, timeout: Long = defaultTimeoutMillis): Response {
+    return invokeHttpClientAction { initHttpClient(timeout).newCall(request).execute() }
+  }
+
+  fun closeResponse(response: Response) {
+    response.close()
   }
 
   private fun invokeHttpClientAction(clientOperation: () -> Response): Response {
     val response = clientOperation.invoke()
-    assert(response.code == expectedHttpCode) {
-      "Response code doesn't match: \nExpected:$expectedHttpCode \nActual:${response.code}"
-    }
     val request = response.request
 
     logRequest(request)

@@ -16,7 +16,9 @@ data class ApplicationConfig(
     var dbSchema: String,
     var crmLogin: String,
     var crmPass: String,
-    var crmCaptcha: String
+    var crmCaptcha: String,
+    var wireMockHost: String,
+    var wireMockPort: Int
 ){
   fun getURLWithAuthorization() = "https://$user:$pass@$host/"
   fun getHostURL() = "https://$host/"
