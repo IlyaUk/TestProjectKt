@@ -1,10 +1,12 @@
 package wiremock
 
 import httpservices.CrmHttpOperations
+import mockcontrol.MockServiceProvider
+import mockcontrol.mockconfigs.AuthorizeInCrmWireMockConfig
+import mockcontrol.mockconfigs.MockConfigs
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import wiremock.configurations.AuthorizeInCrmMockConfig
 
 class WireMockTest : WireMockBaseTest() {
   private val username = "admin"
@@ -14,8 +16,8 @@ class WireMockTest : WireMockBaseTest() {
 
   @Test
   fun `Verify that selected mock is added`() {
-    val authorizeInCrmStaticMock = AuthorizeInCrmMockConfig(config)
-    WireMockService(config).setMock(authorizeInCrmStaticMock)
+    val authorizeInCrmStaticMock = AuthorizeInCrmWireMockConfig
+    MockServiceProvider(mockService).setMock(MockConfigs.POST_CRM_AUTHORIZE)
 
     Assertions.assertTrue(wireMockServer.getStubMapping(authorizeInCrmStaticMock.id).isPresent,
         "Mock stub ${authorizeInCrmStaticMock.mockName} not added"
@@ -24,9 +26,9 @@ class WireMockTest : WireMockBaseTest() {
 
   @Test
   fun `Verify that selected mock is removed`() {
-    val authorizeInCrmStaticMock = AuthorizeInCrmMockConfig(config)
-    WireMockService(config).setMock(authorizeInCrmStaticMock)
-    WireMockService(config).removeMock(authorizeInCrmStaticMock)
+    val authorizeInCrmStaticMock = AuthorizeInCrmWireMockConfig
+    MockServiceProvider(mockService).setMock(MockConfigs.POST_CRM_AUTHORIZE)
+    MockServiceProvider(mockService).removeMock(MockConfigs.POST_CRM_AUTHORIZE)
 
     Assertions.assertFalse(wireMockServer.getStubMapping(authorizeInCrmStaticMock.id).isPresent,
         "Selected mock mapping ${authorizeInCrmStaticMock.mockName} not removed"
@@ -35,10 +37,8 @@ class WireMockTest : WireMockBaseTest() {
 
   @Test
   fun `Get CRM authorization response from stub`() {
-    val authorizeInCrmStaticMock = AuthorizeInCrmMockConfig(config)
-    WireMockService(config).setMock(authorizeInCrmStaticMock)
-    val authorizationResponse = CrmHttpOperations(config).authorizeToCrm(
-        "http://${config.wireMockHost}:${config.wireMockPort}/secure/rest/sign/in")
+    MockServiceProvider(mockService).setMock(MockConfigs.POST_CRM_AUTHORIZE)
+    val authorizationResponse = CrmHttpOperations(config).authorizeToCrm("http://${config.wireMockHost}:${config.wireMockPort}/secure/rest/sign/in")
 
     assertAll(
         { Assertions.assertEquals(username, authorizationResponse.userName) },
@@ -46,7 +46,5 @@ class WireMockTest : WireMockBaseTest() {
         { Assertions.assertEquals(role, authorizationResponse.localizedRole) },
         { Assertions.assertEquals(roleId, authorizationResponse.roleId) }
     )
-
-    WireMockService(config).removeMock(authorizeInCrmStaticMock)
   }
 }
