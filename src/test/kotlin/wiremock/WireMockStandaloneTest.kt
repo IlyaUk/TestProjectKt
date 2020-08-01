@@ -7,7 +7,6 @@ import junitconditions.EnabledIfReachable
 import mockcontrol.MockService
 import mockcontrol.MockServiceProvider
 import mockcontrol.mockconfigs.AuthorizeInCrmWireMockConfig
-import mockcontrol.mockconfigs.MockConfigs
 import mockcontrol.wiremock.WireMockService
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
@@ -27,7 +26,7 @@ class WireMockStandaloneTest {
   @EnabledIfReachable("http://localhost:8084/__admin/mappings", 5000)
   fun `Get mocking stubs list from WireMock standalone server`() {
     val authorizeInCrmStaticMock = AuthorizeInCrmWireMockConfig
-    MockServiceProvider(mockService).setMock(MockConfigs.POST_CRM_AUTHORIZE)
+    MockServiceProvider(mockService).setMock(authorizeInCrmStaticMock)
 
     Assertions.assertTrue(wireMockClient.getStubMapping(authorizeInCrmStaticMock.id).isPresent)
   }

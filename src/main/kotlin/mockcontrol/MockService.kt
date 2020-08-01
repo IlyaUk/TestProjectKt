@@ -1,7 +1,9 @@
 package mockcontrol
 
+import mockcontrol.mockconfigs.MockConfig
+
 interface MockService {
-  fun verifyMock(mockConfig: Any): Any
-  fun setMock(mockConfig: Any): Any
-  fun removeMock(mockConfig: Any): Any
+  fun verifyMock(mockConfig: MockConfig): Any
+  fun setMock(mockConfig: MockConfig): Any
+  fun removeMock(mockConfig: MockConfig): Any
 }

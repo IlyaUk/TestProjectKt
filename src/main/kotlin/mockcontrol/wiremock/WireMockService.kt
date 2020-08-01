@@ -4,61 +4,48 @@ import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
 import config.ApplicationConfig
-import mockcontrol.MethodType
 import mockcontrol.MockService
-import mockcontrol.mockconfigs.MockConfigs
-import mockcontrol.mockconfigs.WireMockConfig
+import mockcontrol.mockconfigs.MockConfig
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 
 class WireMockService(private val config: ApplicationConfig) : MockService {
   private val log: Logger = LogManager.getLogger(WireMockService::class.simpleName)
   private val wireMockClient: WireMock = WireMock(config.wireMockHost, config.wireMockPort)
+  private val responseBuilder = ResponseBuilder()
 
-  override fun setMock(mockConfig: Any) {
-    val selectedMockConfig: WireMockConfig = MockConfigs.valueOf(mockConfig.toString()).mockConfigType
-
+  override fun setMock(mockConfig: MockConfig) {
     if (!verifyMock(mockConfig)) {
-      val mapping: MappingBuilder = getMappingStub(selectedMockConfig)
+      val mapping: MappingBuilder = getMappingStub(mockConfig)
       val stubMapping: StubMapping = wireMockClient.register(mapping)
-      selectedMockConfig.id = stubMapping.id
-
-      assert(verifyMock(mockConfig)) {
-        "Could not add ${selectedMockConfig.mockName} mock"
-      }
-      log.info("Mock ${selectedMockConfig.mockName} is configured for the current environment")
+      mockConfig.id = stubMapping.id
     } else {
-      log.error("Mock ${selectedMockConfig.mockName}/${selectedMockConfig.id} is already configured in WireMock")
+      log.error("Mock ${mockConfig.mockName}/${mockConfig.id} is already configured in WireMock")
     }
   }
 
-  override fun removeMock(mockConfig: Any) {
-    val selectedMockConfig: WireMockConfig = MockConfigs.valueOf(mockConfig.toString()).mockConfigType
-    wireMockClient.removeStubMapping(wireMockClient.getStubMapping(selectedMockConfig.id).item)
+  override fun removeMock(mockConfig: MockConfig) {
+    wireMockClient.removeStubMapping(wireMockClient.getStubMapping(mockConfig.id).item)
 
     assert(!verifyMock(mockConfig)) {
-      "Failed to remove ${selectedMockConfig.mockName}"
+      "Failed to remove ${mockConfig.mockName}"
     }
-    log.info("Mock ${selectedMockConfig.mockName} is removed")
+    log.info("Mock ${mockConfig.mockName} is removed")
   }
 
-  override fun verifyMock(mockConfig: Any): Boolean {
-    val selectedMockConfig: WireMockConfig = MockConfigs.valueOf(mockConfig.toString()).mockConfigType
+  override fun verifyMock(mockConfig: MockConfig): Boolean {
     val actualWireMockStubs = wireMockClient.allStubMappings().mappings.map { it.id }
 
-    return actualWireMockStubs.contains(selectedMockConfig.id)
+    return actualWireMockStubs.contains(mockConfig.id)
   }
 
-  private fun getMappingStub(selectedMockConfig: WireMockConfig): MappingBuilder {
-    val mappingBuilder = WireMock.any(WireMock.urlMatching(selectedMockConfig.requestUrl))
-        .atPriority(selectedMockConfig.priority)
-        .withName(selectedMockConfig.mockName)
+  private fun getMappingStub(mockConfig: MockConfig): MappingBuilder {
+    val mappingBuilder = WireMock.any(WireMock.urlMatching(mockConfig.requestUrl))
+        .atPriority(mockConfig.priority)
+        .withName(mockConfig.mockName)
         .withBasicAuth(config.user, config.pass.toString())
+    val responseDefinitionBuilder = responseBuilder.buildResponseDefinition(mockConfig)
 
-    if (selectedMockConfig.methodType != MethodType.ANY_NO_RESPONSE) {
-      val responseDefinitionBuilder = ResponseBuilder().buildResponseDefinition(selectedMockConfig)
-      mappingBuilder.willReturn(responseDefinitionBuilder)
-    }
-    return mappingBuilder
+    return mappingBuilder.willReturn(responseDefinitionBuilder)
   }
 }
