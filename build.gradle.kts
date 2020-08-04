@@ -9,6 +9,7 @@ val mysqlDriverVersion: String by project.extra
 val kotlinjdbcVersion: String by project.extra
 val okhttpVersion: String by project.extra
 val wireMockStandaloneVersion: String by project.extra
+val allureOkhttpVersion: String by project.extra
 
 plugins {
     kotlin("jvm") version "1.3.72"
@@ -50,9 +51,10 @@ dependencies {
     implementation("com.vladsch.kotlin-jdbc:kotlin-jdbc:$kotlinjdbcVersion")
     implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
     implementation("com.github.tomakehurst:wiremock:$wireMockStandaloneVersion")
+    implementation("io.qameta.allure:allure-okhttp3:$allureOkhttpVersion")
 }
 
-tasks.test {
+    tasks.test {
     useJUnitPlatform()
     testLogging {
         events("passed", "skipped", "failed")
@@ -67,3 +69,51 @@ tasks {
         kotlinOptions.jvmTarget = "1.8"
     }
 }
+
+tasks.register<Test>("selenideConfigTests") {
+    useJUnitPlatform()
+    filter {
+        includeTestsMatching("selenide.*")
+    }
+}
+
+tasks.register<Test>("seleniumConfigTests") {
+    useJUnitPlatform()
+    filter {
+        includeTestsMatching("selenium.*")
+    }
+    failFast = true
+}
+
+tasks.register<Test>("runAllConfigTests") {
+    useJUnitPlatform()
+    filter {
+        includeTestsMatching("selenium.*")
+        includeTestsMatching("selenide.*")
+        includeTestsMatching("config.*")
+    }
+    maxParallelForks = 2
+}
+
+/*tasks.register<Exec>("generateAllureReport"){
+    commandLine("cmd", "allure generate build/reports/allure")
+}
+
+tasks.register<Exec>("openAllureReport"){
+    commandLine("cmd", "allure open build/reports/allure-report")
+}*/
+
+//tasks.withType("Test")
+//tasks.withType(Test)*.finalizedBy allureReport
+
+
+/*task generateAllureReport(type: Exec) {
+    commandLine "allure", "generate build/allure-results"
+}
+test.finalizedBy(generateAllureReport)
+task openAllureReport(type: Exec) {
+    commandLine "allure report open -o build/reports/allure"
+}
+
+task generateAllureReport(type: Exec) {
+    commandLine "allure", "generate build/allure-results" }*/
