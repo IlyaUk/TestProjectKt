@@ -94,26 +94,3 @@ tasks.register<Test>("runAllConfigTests") {
     }
     maxParallelForks = 2
 }
-
-/*tasks.register<Exec>("generateAllureReport"){
-    commandLine("cmd", "allure generate build/reports/allure")
-}
-
-tasks.register<Exec>("openAllureReport"){
-    commandLine("cmd", "allure open build/reports/allure-report")
-}*/
-
-//tasks.withType("Test")
-//tasks.withType(Test)*.finalizedBy allureReport
-
-
-/*task generateAllureReport(type: Exec) {
-    commandLine "allure", "generate build/allure-results"
-}
-test.finalizedBy(generateAllureReport)
-task openAllureReport(type: Exec) {
-    commandLine "allure report open -o build/reports/allure"
-}
-
-task generateAllureReport(type: Exec) {
-    commandLine "allure", "generate build/allure-results" }*/
