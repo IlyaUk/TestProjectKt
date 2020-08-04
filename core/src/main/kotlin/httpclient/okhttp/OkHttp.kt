@@ -2,6 +2,7 @@ package httpclient.okhttp
 
 import context.CurrentSessionContext
 import httpclient.HttpClient
+import io.qameta.allure.okhttp3.AllureOkHttp3
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -13,12 +14,14 @@ class OkHttp : HttpClient {
   private var client: OkHttpClient? = null
   private val log: Logger = LogManager.getLogger(OkHttp::class.simpleName)
   private val defaultTimeoutMillis: Long = 5000
+  private val allureOkHttp3 = AllureOkHttp3()
 
   private fun initHttpClient(timeout: Long = defaultTimeoutMillis): OkHttpClient {
     if (client == null) {
       client = OkHttpClient().newBuilder()
           .connectTimeout(timeout, TimeUnit.MILLISECONDS)
           .readTimeout(timeout, TimeUnit.MILLISECONDS)
+          .addInterceptor(allureOkHttp3)
           .build()
     }
     return client as OkHttpClient

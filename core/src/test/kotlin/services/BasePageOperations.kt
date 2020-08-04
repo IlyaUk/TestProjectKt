@@ -1,8 +1,6 @@
 package services
 
 import elements.Navigation.open
-import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.Logger
 import utils.Waiter
 
 abstract class BasePageOperations {
