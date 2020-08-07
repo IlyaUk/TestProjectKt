@@ -13,13 +13,8 @@ pipeline {
       }
     }
     stage('Allure report') {
-      allure([
-          includeProperties: false,
-          jdk: '',
-          properties: [],
-          reportBuildPolicy: 'ALWAYS',
-          results: [[path: 'core\\build\\allure-results']]
-      ])
+      allure includeProperties: false, jdk: '', results: [[path: 'core\\build\\allure-results']]
     }
   }
 }
+
