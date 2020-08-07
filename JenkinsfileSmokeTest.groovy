@@ -1,10 +1,14 @@
 pipeline {
   agent any
   stages {
+    stage('Git checkout') {
+      steps {
+        checkout([$class: 'GitSCM', branches: [[name: '*/add-jenkins-pipeline']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/IlyaUk/TestProjectKt/']]])
+      }
+    }
     stage('build') {
       steps {
-        //bat 'gradle clean :core:test'
-        bat 'gradle build'
+        bat 'gradle build -x test'
       }
     }
     stage('test') {
