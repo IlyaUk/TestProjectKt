@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh 'clean :core:test'
+        bat 'clean :core:test'
       }
     }
   }
