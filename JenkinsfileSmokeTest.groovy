@@ -13,7 +13,9 @@ pipeline {
       }
     }
     stage('Allure report') {
-      allure includeProperties: false, jdk: '', results: [[path: 'core\\build\\allure-results']]
+      steps {
+        allure([includeProperties: false, jdk: '', results: [[path: 'core\\build\\allure-results']]])
+      }
     }
   }
 }
