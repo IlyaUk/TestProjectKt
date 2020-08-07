@@ -9,8 +9,17 @@ pipeline {
     }
     stage('test') {
       steps {
-        bat 'gradle runAllConfigTests'
+        bat 'gradle :core:runAllConfigTests'
       }
+    }
+    stage('Allure report') {
+      allure([
+          includeProperties: false,
+          jdk: '',
+          properties: [],
+          reportBuildPolicy: 'ALWAYS',
+          results: [[path: 'core\\build\\allure-results']]
+      ])
     }
   }
 }
