@@ -6,12 +6,12 @@ pipeline {
         checkout([$class: 'GitSCM', branches: [[name: '*/add-jenkins-pipeline']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/IlyaUk/TestProjectKt/']]])
       }
     }
-    stage('build') {
+    stage('Build project') {
       steps {
         bat 'gradle build -x test'
       }
     }
-    stage('test') {
+    stage('Run tests') {
       steps {
         bat 'gradle :core:runAllConfigTests'
       }
