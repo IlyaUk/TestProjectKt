@@ -4,9 +4,11 @@ import config.ConfigSource
 import config.ConfigurationProvider
 import httpservices.CrmHttpOperations
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
+@Disabled
 class AuthorizationInCrmTest {
   private val username = "admin"
   private val id = 1

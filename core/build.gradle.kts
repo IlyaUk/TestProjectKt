@@ -13,7 +13,7 @@ allure {
   useJUnit5 {
     version = allureVersion
   }
-  resultsDir = file("allure-results")
+  //resultsDir = file("build/allure-results")
 }
 
 dependencies {

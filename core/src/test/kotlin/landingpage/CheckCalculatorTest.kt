@@ -2,9 +2,10 @@ package landingpage
 
 import BaseUiTest
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import services.LandingPageOperations
-
+@Disabled
 class CheckCalculatorTest : BaseUiTest() {
 
   @Test
