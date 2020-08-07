@@ -1,3 +1,10 @@
 pipeline {
-  /* insert Declarative Pipeline here */
+  agent any
+  stages {
+    stage('build') {
+      steps {
+        sh 'clean :core:test'
+      }
+    }
+  }
 }
