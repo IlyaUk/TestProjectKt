@@ -2,7 +2,6 @@ val allureOkhttpVersion: String by project.extra
 val allureVersion: String by project.extra
 
 plugins {
-  kotlin("jvm")
   id("io.qameta.allure") version "2.8.1"
 }
 

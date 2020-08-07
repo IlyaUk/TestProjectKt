@@ -47,20 +47,21 @@ subprojects {
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
     implementation("org.apache.logging.log4j:log4j-core:$log4j2Version")
   }
+
+  tasks.test {
+    useJUnitPlatform()
+    testLogging {
+      events("passed", "skipped", "failed")
+    }
+  }
+
+  tasks {
+    compileKotlin {
+      kotlinOptions.jvmTarget = "1.8"
+    }
+    compileTestKotlin {
+      kotlinOptions.jvmTarget = "1.8"
+    }
+  }
 }
 
-tasks.test {
-  useJUnitPlatform()
-  testLogging {
-    events("passed", "skipped", "failed")
-  }
-}
-
-tasks {
-  compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-  }
-  compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-  }
-}
