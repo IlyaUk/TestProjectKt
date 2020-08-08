@@ -3,12 +3,12 @@ pipeline {
   stages {
     stage('Git checkout') {
       steps {
-        checkout([$class: 'GitSCM',
-                  branches: [[name: '*/add-jenkins-pipeline']],
+        checkout([$class                           : 'GitSCM',
+                  branches                         : [[name: '*/add-jenkins-pipeline']],
                   doGenerateSubmoduleConfigurations: false,
-                  extensions: [],
-                  submoduleCfg: [],
-                  userRemoteConfigs: [[url: 'https://github.com/IlyaUk/TestProjectKt/']]])
+                  extensions                       : [],
+                  submoduleCfg                     : [],
+                  userRemoteConfigs                : [[url: 'https://github.com/IlyaUk/TestProjectKt/']]])
       }
     }
     stage('Build project') {
@@ -30,7 +30,7 @@ pipeline {
         ])
       }
     }*/
-   /* stage('Gradle report') {
+    /* stage('Gradle report') {
       steps {
         publishHTML([
              allowMissing: false,
@@ -44,25 +44,25 @@ pipeline {
       }
     }
   }*/
-    post {
-      always {
-        script {
-          allure([
-              includeProperties: false,
-              jdk: '',
-              results: [[path: 'core\\build\\allure-results']]
-          ])
-          publishHTML([
-              allowMissing: false,
-              alwaysLinkToLastBuild: false,
-              keepAll: false,
-              reportDir: 'core\\build\\reports\\tests\\test',
-              reportFiles: 'index.html',
-              reportName: 'HTML Report - Gradle',
-              reportTitles: ''
-          ])
-        }
-        }
+  }
+  post {
+    always {
+      script {
+        allure([
+            includeProperties: false,
+            jdk              : '',
+            results          : [[path: 'core\\build\\allure-results']]
+        ])
+        publishHTML([
+            allowMissing         : false,
+            alwaysLinkToLastBuild: false,
+            keepAll              : false,
+            reportDir            : 'core\\build\\reports\\tests\\test',
+            reportFiles          : 'index.html',
+            reportName           : 'HTML Report - Gradle',
+            reportTitles         : ''
+        ])
       }
     }
   }
+}
