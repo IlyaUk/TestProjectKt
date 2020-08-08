@@ -21,25 +21,48 @@ pipeline {
         bat 'gradle :core:runAllConfigTests'
       }
     }
-    stage('Allure report') {
+    /*stage('Allure report') {
       steps {
-        allure([includeProperties: false,
-                jdk: '',
-                results: [[path: 'core\\build\\allure-results']]])
+        allure([
+            includeProperties: false,
+            jdk: '',
+            results: [[path: 'core\\build\\allure-results']]
+        ])
       }
-    }
-    stage('Gradle report') {
+    }*/
+   /* stage('Gradle report') {
       steps {
-        publishHTML(
-            [allowMissing: false,
+        publishHTML([
+             allowMissing: false,
              alwaysLinkToLastBuild: false,
              keepAll: false,
              reportDir: 'core\\build\\reports\\tests\\test',
              reportFiles: 'index.html',
              reportName: 'HTML Report - Gradle',
-             reportTitles: ''])
+             reportTitles: ''
+             ])
+      }
+    }
+  }*/
+    post {
+      always {
+        script {
+          allure([
+              includeProperties: false,
+              jdk: '',
+              results: [[path: 'core\\build\\allure-results']]
+          ])
+          publishHTML([
+              allowMissing: false,
+              alwaysLinkToLastBuild: false,
+              keepAll: false,
+              reportDir: 'core\\build\\reports\\tests\\test',
+              reportFiles: 'index.html',
+              reportName: 'HTML Report - Gradle',
+              reportTitles: ''
+          ])
+        }
+        }
       }
     }
   }
-}
-
