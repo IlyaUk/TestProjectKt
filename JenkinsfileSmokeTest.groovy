@@ -53,6 +53,8 @@ pipeline {
             jdk              : '',
             results          : [[path: 'core\\build\\allure-results']]
         ])
+      }
+      script {
         publishHTML([
             allowMissing         : false,
             alwaysLinkToLastBuild: true,
