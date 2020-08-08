@@ -44,3 +44,10 @@ tasks.register<Test>("runAllConfigTests") {
   }
   maxParallelForks = 2
 }
+
+tasks.register<Test>("loginToPA") {
+  useJUnitPlatform()
+  filter {
+    includeTestsMatching("privatearea.*")
+  }
+}
