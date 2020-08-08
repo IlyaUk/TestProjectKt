@@ -6,8 +6,6 @@ import dbclient.vsch.VschClient
 import dbservices.MySqlOperations
 import org.junit.jupiter.api.*
 
-
-@Disabled
 class DbOperationsTest : MySqlOperations() {
   private val dbClient: DbClient = DbConnectionProvider(VschClient())
   private val id: Long = 1
