@@ -59,7 +59,7 @@ pipeline {
             allowMissing         : false,
             alwaysLinkToLastBuild: true,
             keepAll              : false,
-            reportDir            : '\\core\\build\\reports\\tests\\runAllConfigTests',
+            reportDir            : 'core\\build\\reports\\tests\\runAllConfigTests',
             reportFiles          : 'index.html',
             reportName           : 'Gradle Report',
             reportTitles         : ''
