@@ -30,7 +30,7 @@ pipeline {
         ])
       }
     }*/
-    /* stage('Gradle report') {
+    stage('Gradle report') {
       steps {
         publishHTML([
              allowMissing: false,
@@ -43,7 +43,6 @@ pipeline {
              ])
       }
     }
-  }*/
   }
   post {
     always {
@@ -54,7 +53,7 @@ pipeline {
             results          : [[path: 'core\\build\\allure-results']]
         ])
       }
-      script {
+      /*script {
         publishHTML([
             allowMissing         : false,
             alwaysLinkToLastBuild: true,
@@ -64,7 +63,7 @@ pipeline {
             reportName           : 'Gradle Report',
             reportTitles         : ''
         ])
-      }
+      }*/
     }
   }
 }
