@@ -55,7 +55,7 @@ pipeline {
         ])
         publishHTML([
             allowMissing         : false,
-            alwaysLinkToLastBuild: false,
+            alwaysLinkToLastBuild: true,
             keepAll              : false,
             reportDir            : 'core\\build\\reports\\tests\\test',
             reportFiles          : 'index.html',
