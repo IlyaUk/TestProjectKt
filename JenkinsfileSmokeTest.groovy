@@ -61,7 +61,7 @@ pipeline {
             keepAll              : false,
             reportDir            : 'core\\build\\reports\\tests\\test',
             reportFiles          : 'index.html',
-            reportName           : 'HTML Report - Gradle',
+            reportName           : 'Gradle Report',
             reportTitles         : ''
         ])
       }
