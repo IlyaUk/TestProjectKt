@@ -30,8 +30,6 @@ pipeline {
             jdk              : '',
             results          : [[path: 'core\\build\\allure-results']]
         ])
-      }
-      script {
         publishHTML([
             allowMissing         : false,
             alwaysLinkToLastBuild: true,
@@ -41,11 +39,7 @@ pipeline {
             reportName           : 'Gradle Report',
             reportTitles         : ''
         ])
-      }
-      script {
         junit allowEmptyResults: true, testResults: '**/core/build/test-results/**/*.xml'
-      }
-      script {
         archiveArtifacts artifacts: '**/core/build/reports/**/*.*', followSymlinks: false
       }
     }
