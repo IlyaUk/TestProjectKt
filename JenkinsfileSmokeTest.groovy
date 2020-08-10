@@ -45,6 +45,9 @@ pipeline {
       script {
         junit allowEmptyResults: true, testResults: '**/core/build/test-results/**/*.xml'
       }
+      script {
+        archiveArtifacts artifacts: '**/core/build/reports/**/*.*', followSymlinks: false
+      }
     }
   }
 }
