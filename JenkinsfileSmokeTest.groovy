@@ -14,7 +14,6 @@ pipeline {
     stage('Build project') {
       steps {
         bat 'gradle build -x test'
-        bat 'rmdir '
       }
     }
     stage('Run tests') {
