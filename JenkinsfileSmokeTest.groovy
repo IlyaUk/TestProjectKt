@@ -42,6 +42,9 @@ pipeline {
             reportTitles         : ''
         ])
       }
+      script {
+        junit allowEmptyResults: true, testResults: '**/core/build/test-results/**/*.xml'
+      }
     }
   }
 }
