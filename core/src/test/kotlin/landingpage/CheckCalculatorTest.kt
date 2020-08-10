@@ -2,6 +2,7 @@ package landingpage
 
 import BaseUiTest
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import services.LandingPageOperations
 
@@ -13,7 +14,7 @@ class CheckCalculatorTest : BaseUiTest() {
     val expectedDefaultCreditPeriodValue = "30"
     val expectedMinCreditAmountValue = "1,500"
     val expectedMinCreditPeriodValue = "7"
-    val expectedMaxCreditAmountValue = "5,000"
+    val expectedMaxCreditAmountValue = "4,000"
     val expectedMaxCreditPeriodValue = "30"
 
     LandingPageOperations(config).apply {

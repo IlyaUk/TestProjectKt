@@ -41,8 +41,8 @@ class CrmHttpOperations(private val config: ApplicationConfig) {
   }
 
   fun sendCurrentUserGetRequest(): AuthorizeInCrmResponse {
-    val jsessionID = CurrentSessionContext.jsessionId ?: ""
-    val authUser = CurrentSessionContext.authUserToken ?: ""
+    val jsessionID = CurrentSessionContext.jsessionId
+    val authUser = CurrentSessionContext.authUserToken
     val requestBuilder = Request.Builder()
         .url(currentUserEndpoint)
         .addHeader(HeaderType.AUTHORIZATION.headerName, Credentials.basic(config.user, config.pass.toString()))

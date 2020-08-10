@@ -2,7 +2,6 @@ val allureOkhttpVersion: String by project.extra
 val allureVersion: String by project.extra
 
 plugins {
-  kotlin("jvm")
   id("io.qameta.allure") version "2.8.1"
 }
 
@@ -14,7 +13,6 @@ allure {
   useJUnit5 {
     version = allureVersion
   }
-  resultsDir = file("$projectDir/build/allure-results")
 }
 
 dependencies {
@@ -45,4 +43,11 @@ tasks.register<Test>("runAllConfigTests") {
     includeTestsMatching("config.*")
   }
   maxParallelForks = 2
+}
+
+tasks.register<Test>("loginToPA") {
+  useJUnitPlatform()
+  filter {
+    includeTestsMatching("privatearea.*")
+  }
 }
