@@ -13,7 +13,7 @@ pipeline {
     }
     stage('Build project') {
       steps {
-        bat 'gradle build -x test'
+        bat 'gradle clean build -x test'
       }
     }
     stage('Run tests') {
