@@ -2,45 +2,51 @@ version: "3"
 services:
 
   hub:
-    image: selenium/hub
+    image: ${IMAGE_HUB}
     ports:
-      - "4444:4444"
+      - "${HUB_PORT}:${EXT_HUB_PORT}"
 
     environment:
-      GRID_MAX_SESSION: 16
-      GRID_BROWSER_TIMEOUT: 3000
-      GRID_TIMEOUT: 3000
+      GRID_MAX_SESSION: ${GRID_MAX_SESSION}
+      GRID_BROWSER_TIMEOUT: ${GRID_BROWSER_TIMEOUT}
+      GRID_TIMEOUT: ${GRID_TIMEOUT}
 
   chrome:
-    image: selenium/node-chrome
+    image: ${IMAGE_CHROME}
     container_name: web-automation_chrome
     depends_on:
       - hub
     environment:
       HUB_PORT_4444_TCP_ADDR: hub
-      HUB_PORT_4444_TCP_PORT: 4444
-      NODE_MAX_SESSION: 2
-      NODE_MAX_INSTANCES: 2
+      HUB_PORT_4444_TCP_PORT: ${HUB_PORT}
+      NODE_MAX_SESSION: ${NODE_MAX_SESSION_CHROME}
+      NODE_MAX_INSTANCES: ${NODE_MAX_INSTANCES_CHROME}
+      NODE_APP_NAME: ${NODE_APP_NAME_CHROME}
+      SCREEN_WIDTH: ${SCREEN_WIDTH_CHROME}
+      SCREEN_HEIGHT: ${SCREEN_HEIGHT_CHROME}
     volumes:
       - /dev/shm:/dev/shm
     ports:
-      - "9001:5900"
+      - "${CHROME_PORT}:${CHROME_EXT_PORT}"
     links:
       - hub
 
   firefox:
-    image: selenium/node-firefox
+    image: ${IMAGE_FIREFOX}
     container_name: web-automation_firefox
     depends_on:
       - hub
     environment:
       HUB_PORT_4444_TCP_ADDR: hub
-      HUB_PORT_4444_TCP_PORT: 4444
-      NODE_MAX_SESSION: 2
-      NODE_MAX_INSTANCES: 2
+      HUB_PORT_4444_TCP_PORT: ${HUB_PORT}
+      NODE_MAX_SESSION: ${NODE_MAX_SESSION_FIREFOX}
+      NODE_MAX_INSTANCES: ${NODE_MAX_INSTANCES_FIREFOX}
+      NODE_APP_NAME: ${NODE_APP_NAME_FIREFOX}
+      SCREEN_WIDTH: ${SCREEN_WIDTH_FIREFOX}
+      SCREEN_HEIGHT: ${SCREEN_HEIGHT_FIREFOX}
     volumes:
       - /dev/shm:/dev/shm
     ports:
-      - "9002:5900"
+      - "${FIREFOX_PORT}:${FIREFOX_EXT_PORT}"
     links:
       - hub
