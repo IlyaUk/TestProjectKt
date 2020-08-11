@@ -45,9 +45,15 @@ tasks.register<Test>("runAllConfigTests") {
   maxParallelForks = 2
 }
 
-tasks.register<Test>("loginToPA") {
+tasks.register<Test>("loginToPaTest") {
   useJUnitPlatform()
   filter {
     includeTestsMatching("privatearea.*")
+  }
+}
+tasks.register<Test>("landingPageTests") {
+  useJUnitPlatform()
+  filter {
+    includeTestsMatching("landingpage.*")
   }
 }
