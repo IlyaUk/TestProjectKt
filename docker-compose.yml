@@ -27,7 +27,7 @@ services:
     volumes:
       - /dev/shm:/dev/shm
     ports:
-      - "${CHROME_PORT}:${CHROME_EXT_PORT}"
+      - "${CHROME_PORT}:5900"
     links:
       - hub
 
@@ -47,6 +47,6 @@ services:
     volumes:
       - /dev/shm:/dev/shm
     ports:
-      - "${FIREFOX_PORT}:${FIREFOX_EXT_PORT}"
+      - "${FIREFOX_PORT}:5900"
     links:
       - hub
