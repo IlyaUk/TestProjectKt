@@ -1,9 +1,9 @@
 browserScreenSize: 1600x900
 defaultTimeoutMilliseconds: 5000
-webDriverHost: 127.0.0.1
+webDriverHost: 192.168.99.100
 webDriverPort: 4444
 browserType: FIREFOX
-webDriverType: LOCAL
+webDriverType: REMOTE
 headlessMode: false
 browserStartMaximize: true
 browserPageLoadStrategy: normal
