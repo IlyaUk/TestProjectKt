@@ -22,7 +22,8 @@ pipeline {
              -Dwebdriver.type=remote\
              -Dwebdriver.host=192.168.99.100\
              -Dwebdirver.port=4444\
-             -Dwebdriver.browser.name="firefox"\
+             -Dbrowser.name="firefox"\
+             -Dbrowser.headless="false"\
              :core:landingPageTests'
       }
     }

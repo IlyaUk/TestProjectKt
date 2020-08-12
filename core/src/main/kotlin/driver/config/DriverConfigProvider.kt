@@ -10,8 +10,8 @@ class DriverConfigProvider {
     const val DRIVER_TYPE_SYSTEM_PROPERTY: String = "webdriver.type"
     const val REMOTE_HOST_SYSTEM_PROPERTY: String = "webdriver.host"
     const val REMOTE_PORT_SYSTEM_PROPERTY: String = "webdriver.port"
-    const val BROWSER_SYSTEM_PROPERTY: String = "webdriver.browser.name"
-    const val BROWSER_HEADLESS_SYSTEM_PROPERTY: String = "webdriver.browser.headless"
+    const val BROWSER_NAME_SYSTEM_PROPERTY: String = "browser.name"
+    const val BROWSER_HEADLESS_SYSTEM_PROPERTY: String = "browser.headless"
   }
 
   private val seleniumBrowserSystemProperty = "selenium.browser"
@@ -59,7 +59,7 @@ class DriverConfigProvider {
   }
 
   private fun getBrowserTypeConfig(): BrowserType {
-    val browserTypeProperty: String? = System.getProperty(BROWSER_SYSTEM_PROPERTY)
+    val browserTypeProperty: String? = System.getProperty(BROWSER_NAME_SYSTEM_PROPERTY)
     return when {
       browserTypeProperty.isNullOrEmpty() -> driverConfiguration.browserType
       else -> BrowserType.valueOf(browserTypeProperty.toUpperCase())

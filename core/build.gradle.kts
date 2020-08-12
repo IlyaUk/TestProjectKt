@@ -48,7 +48,7 @@ tasks.register<Test>("runAllConfigTests") {
   maxParallelForks = 2
 }
 
-tasks.register<Test>("loginToPaTest") {
+tasks.register<Test>("privateAreaTests") {
   useJUnitPlatform()
   systemProperties.putAll(project.gradle.startParameter.systemPropertiesArgs)
   filter {
