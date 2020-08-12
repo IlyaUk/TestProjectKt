@@ -3,7 +3,7 @@ defaultTimeoutMilliseconds: 5000
 webDriverHost: 192.168.99.100
 webDriverPort: 4444
 browserType: FIREFOX
-webDriverType: REMOTE
+webDriverType: LOCAL
 headlessMode: false
 browserStartMaximize: true
 browserPageLoadStrategy: normal
