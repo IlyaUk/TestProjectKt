@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test
 import services.LandingPageOperations
 
 class CheckCalculatorTest : BaseUiTest() {
-
-  @Disabled
+  
   @Test
   fun `check Calculator Block`() {
     val expectedDefaultCreditAmountValue = "2,000"
