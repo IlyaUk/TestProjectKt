@@ -4,7 +4,7 @@ pipeline {
     stage('Git checkout') {
       steps {
         checkout([$class                           : 'GitSCM',
-                  branches                         : [[name: '*/master']],
+                  branches                         : [[name: '*/configure-docker']],
                   doGenerateSubmoduleConfigurations: false,
                   extensions                       : [],
                   submoduleCfg                     : [],
@@ -18,7 +18,13 @@ pipeline {
     }
     stage('Run tests') {
       steps {
-        bat 'gradle :core:runAllConfigTests'
+        bat 'gradle\
+             -Dwebdriver.type=remote\
+             -Dwebdriver.host=192.168.99.100\
+             -Dwebdirver.port=4444\
+             -Dbrowser.name="firefox"\
+             -Dbrowser.headless="false"\
+             :core:landingPageTests'
       }
     }
   }
@@ -34,7 +40,7 @@ pipeline {
             allowMissing         : false,
             alwaysLinkToLastBuild: true,
             keepAll              : false,
-            reportDir            : 'core\\build\\reports\\tests\\runAllConfigTests',
+            reportDir            : 'core\\build\\reports\\tests\\landingPageTests',
             reportFiles          : 'index.html',
             reportName           : 'Gradle Report',
             reportTitles         : ''

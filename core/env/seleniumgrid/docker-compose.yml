@@ -1,0 +1,52 @@
+version: "3"
+services:
+
+  hub:
+    image: ${IMAGE_HUB}
+    ports:
+      - "${HUB_PORT}:${EXT_HUB_PORT}"
+
+    environment:
+      GRID_MAX_SESSION: ${GRID_MAX_SESSION}
+      GRID_BROWSER_TIMEOUT: ${GRID_BROWSER_TIMEOUT}
+      GRID_TIMEOUT: ${GRID_TIMEOUT}
+
+  chrome:
+    image: ${IMAGE_CHROME}
+    container_name: web-automation_chrome
+    depends_on:
+      - hub
+    environment:
+      HUB_PORT_4444_TCP_ADDR: hub
+      HUB_PORT_4444_TCP_PORT: ${HUB_PORT}
+      NODE_MAX_SESSION: ${NODE_MAX_SESSION_CHROME}
+      NODE_MAX_INSTANCES: ${NODE_MAX_INSTANCES_CHROME}
+      NODE_APP_NAME: ${NODE_APP_NAME_CHROME}
+      SCREEN_WIDTH: ${SCREEN_WIDTH_CHROME}
+      SCREEN_HEIGHT: ${SCREEN_HEIGHT_CHROME}
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - "${CHROME_PORT}:5900"
+    links:
+      - hub
+
+  firefox:
+    image: ${IMAGE_FIREFOX}
+    container_name: web-automation_firefox
+    depends_on:
+      - hub
+    environment:
+      HUB_PORT_4444_TCP_ADDR: hub
+      HUB_PORT_4444_TCP_PORT: ${HUB_PORT}
+      NODE_MAX_SESSION: ${NODE_MAX_SESSION_FIREFOX}
+      NODE_MAX_INSTANCES: ${NODE_MAX_INSTANCES_FIREFOX}
+      NODE_APP_NAME: ${NODE_APP_NAME_FIREFOX}
+      SCREEN_WIDTH: ${SCREEN_WIDTH_FIREFOX}
+      SCREEN_HEIGHT: ${SCREEN_HEIGHT_FIREFOX}
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - "${FIREFOX_PORT}:5900"
+    links:
+      - hub

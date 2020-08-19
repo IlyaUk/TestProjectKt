@@ -19,6 +19,7 @@ class VschClient : DbClient {
     config = ConfigurationProvider.setConfigType(ConfigSource.YAML).getConfig()
     if (session == null) {
       session = session("jdbc:mysql://${config.dbUrl}/${config.dbSchema}", config.dbUser, config.dbPassword)
+      //session = session("jdbc:mysql://${config.dbUrl}/${config.dbSchema}?autoReconnect=true&useSSL=false", config.dbUser, config.dbPassword)
     }
     return session as Session
   }

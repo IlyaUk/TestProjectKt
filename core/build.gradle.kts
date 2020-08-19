@@ -22,6 +22,7 @@ dependencies {
 
 tasks.register<Test>("selenideConfigTests") {
   useJUnitPlatform()
+  systemProperties.putAll(project.gradle.startParameter.systemPropertiesArgs)
   filter {
     includeTestsMatching("selenide.*")
   }
@@ -29,6 +30,7 @@ tasks.register<Test>("selenideConfigTests") {
 
 tasks.register<Test>("seleniumConfigTests") {
   useJUnitPlatform()
+  systemProperties.putAll(project.gradle.startParameter.systemPropertiesArgs)
   filter {
     includeTestsMatching("selenium.*")
   }
@@ -37,6 +39,7 @@ tasks.register<Test>("seleniumConfigTests") {
 
 tasks.register<Test>("runAllConfigTests") {
   useJUnitPlatform()
+  systemProperties.putAll(project.gradle.startParameter.systemPropertiesArgs)
   filter {
     includeTestsMatching("selenium.*")
     includeTestsMatching("selenide.*")
@@ -45,9 +48,17 @@ tasks.register<Test>("runAllConfigTests") {
   maxParallelForks = 2
 }
 
-tasks.register<Test>("loginToPA") {
+tasks.register<Test>("privateAreaTests") {
   useJUnitPlatform()
+  systemProperties.putAll(project.gradle.startParameter.systemPropertiesArgs)
   filter {
     includeTestsMatching("privatearea.*")
+  }
+}
+tasks.register<Test>("landingPageTests") {
+  useJUnitPlatform()
+  systemProperties.putAll(project.gradle.startParameter.systemPropertiesArgs)
+  filter {
+    includeTestsMatching("landingpage.*")
   }
 }
