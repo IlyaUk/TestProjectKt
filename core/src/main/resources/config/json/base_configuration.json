@@ -5,6 +5,8 @@
 "registrationServiceEndpoint": "client-area/registration",
 "privateAreaServiceEndpoint": "private-area/static/#/login",
 "landingPageServiceEndpoint": "/",
+"blackListServiceEndpoint": "mxn-crm-gateway/blacklist/contains",
+"signInServiceEndpoint": "secure/rest/sign/in",
 "dbUrl": "1",
 "dbUser": "2",
 "dbPassword": "3",
