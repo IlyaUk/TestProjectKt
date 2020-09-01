@@ -11,10 +11,12 @@ import io.restassured.response.Response
 import io.restassured.specification.ResponseSpecification
 import org.junit.jupiter.api.Assertions
 import utils.convertObjectToJsonString
-import utils.getClassObjectFromString
+import utils.getClassObjectFromYaml
+import java.util.stream.Stream
 
 class FraudMatcherOperations(private val config: ApplicationConfig) {
   private lateinit var baseResponseSpec: ResponseSpecification
+  private lateinit var crmCookies: Cookies
   private val expectedHttpStatusCode = 200
   private val expectedContentType = ContentType.JSON
 
@@ -25,6 +27,7 @@ class FraudMatcherOperations(private val config: ApplicationConfig) {
       expectContentType(expectedContentType)
       expectStatusCode(expectedHttpStatusCode)
     }.build()
+    crmCookies = getCrmCookies()
   }
 
   private fun getCrmCookies(): Cookies {
@@ -46,21 +49,17 @@ class FraudMatcherOperations(private val config: ApplicationConfig) {
 
   fun sendPostRequestToFraudMatcher(fraudRequestData: FraudData): FraudData {
     val fraudRequestPayload: String = convertObjectToJsonString(fraudRequestData)
-    val fraudMatcherResponseData: String =
-        RestAssured.given()
-            .contentType(expectedContentType)
-            .cookies(getCrmCookies())
-            .`when`()
-            .body(fraudRequestPayload)
-            .post(config.blackListServiceEndpoint)
-            .then()
-            .spec(baseResponseSpec)
-            .extract()
-            .response()
-            .body
-            .asString()
-
-    return getClassObjectFromString(fraudMatcherResponseData, FraudData::class.java)
+    return RestAssured.given()
+        .contentType(expectedContentType)
+        .cookies(crmCookies)
+        .`when`()
+        .body(fraudRequestPayload)
+        .post(config.blackListServiceEndpoint)
+        .then()
+        .spec(baseResponseSpec)
+        .extract()
+        .body()
+        .`as`(FraudData::class.java)
   }
 
   fun sendRequestToFraudMatcher(fraudRequestData: FraudData): Response {
@@ -68,9 +67,17 @@ class FraudMatcherOperations(private val config: ApplicationConfig) {
 
     return RestAssured.given()
         .contentType(expectedContentType)
-        .cookies(getCrmCookies())
+        .cookies(crmCookies)
         .`when`()
         .body(fraudRequestPayload)
         .post(config.blackListServiceEndpoint)
+  }
+
+  inline fun <reified T> readTestData(testResourcePath: String, testResourceFiles: List<String>): Stream<T> {
+    return testResourceFiles.stream()
+        .map { testResourceFile ->
+          val filePath = "$testResourcePath/$testResourceFile.yaml"
+          getClassObjectFromYaml(filePath, T::class.java)
+        }
   }
 }
