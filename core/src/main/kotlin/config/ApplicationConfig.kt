@@ -10,6 +10,8 @@ data class ApplicationConfig(
     val registrationServiceEndpoint: String,
     val privateAreaServiceEndpoint: String,
     var landingPageServiceEndpoint: String,
+    var blackListServiceEndpoint: String,
+    var signInServiceEndpoint: String,
     var dbUrl: String,
     var dbUser: String,
     var dbPassword: String,

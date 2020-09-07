@@ -1,0 +1,184 @@
+cases:
+
+  ## 1
+  - case: "[1] matcherCheck: Blocked input values in lower case for all text types"
+    request:
+      FULL_NAME:
+        - "unknown unknown unknown"
+      SECOND_LAST_NAME:
+        - "wer"
+      EMAIL:
+        - "test1220400@mail.ru"
+      PHONE_MOBILE:
+        - "+523414112247"
+      COMPANY_NAME:
+        - "oioioi"
+      PHONE_WORK:
+        - "+526646310001"
+      REFERENCE_CONTACT_PHONE:
+        - "+523459370407"
+      IP:
+        - "10.1.1.250"
+      PHONE_HOME:
+        - "+527777774744"
+      ADDRESS_REG:
+        - "puebla,puebla,puebla (heroica puebla),del valle,street,1"
+      DEVICE_ALIAS:
+        - "216965035455793102"
+      CURP:
+        - "GHKF9006170QQ8UG7R"
+      RFC:
+        - "BKIP900508253"
+      CLABE:
+        - "653826230245471697"
+      DEBIT_CARD:
+        - "1563145634135413"
+    response:
+      FULL_NAME:
+        - "unknown unknown unknown"
+      SECOND_LAST_NAME:
+        - "wer"
+      EMAIL:
+        - "test1220400@mail.ru"
+      PHONE_MOBILE:
+        - "+523414112247"
+      COMPANY_NAME:
+        - "oioioi"
+      PHONE_WORK:
+        - "+526646310001"
+      REFERENCE_CONTACT_PHONE:
+        - "+523459370407"
+      IP:
+        - "10.1.1.250"
+      PHONE_HOME:
+        - "+527777774744"
+      ADDRESS_REG:
+        - "puebla,puebla,puebla (heroica puebla),del valle,street,1"
+      DEVICE_ALIAS:
+        - "216965035455793102"
+      CURP:
+        - "GHKF9006170QQ8UG7R"
+      RFC:
+        - "BKIP900508253"
+      CLABE:
+        - "653826230245471697"
+      DEBIT_CARD:
+        - "1563145634135413"
+
+  ## 2
+  - case: "[2] matcherCheck: Blocked and unblocked input values all text types"
+    request:
+      FULL_NAME:
+        - "unknown unknown unknown"
+        - "TA Verification yBIYKePL aJleaNRR"
+      SECOND_LAST_NAME:
+        - "wer"
+        - "VzTNzRPG"
+      EMAIL:
+        - "test1220400@mail.ru"
+        - "test1220401@mail.ru"
+      PHONE_MOBILE:
+        - "+523414112247"
+        - "+525587807850"
+      COMPANY_NAME:
+        - "oioioi"
+        - "MXN Comspany"
+      PHONE_WORK:
+        - "+526646310001"
+        - "+527761599752"
+      REFERENCE_CONTACT_PHONE:
+        - "+523459370407"
+        - "+525588615941"
+      IP:
+        - "10.1.1.250"
+        - "10.1.1.0"
+      PHONE_HOME:
+        - "+527777774744"
+        - "+523414141232"
+      ADDRESS_REG:
+        - "puebla,puebla,puebla (heroica puebla),del valle,street,1"
+        - "nayarit,la yesca,la yesca,cebolletas (el maguey),rrrrr,77"
+      DEVICE_ALIAS:
+        - "216965035455793102"
+        - "282357559009723579"
+      CURP:
+        - "GHKF9006170QQ8UG7R"
+        - "CCRB900619H488T814"
+      RFC:
+        - "BKIP900508253"
+        - "RTYU891212374"
+      CLABE:
+        - "653826230245471697"
+        - "032065960833436058"
+      DEBIT_CARD:
+        - "1563145634135413"
+        - "5436346346346346"
+    response:
+      FULL_NAME:
+        - "unknown unknown unknown"
+      SECOND_LAST_NAME:
+        - "wer"
+      EMAIL:
+        - "test1220400@mail.ru"
+      PHONE_MOBILE:
+        - "+523414112247"
+      COMPANY_NAME:
+        - "oioioi"
+      PHONE_WORK:
+        - "+526646310001"
+      REFERENCE_CONTACT_PHONE:
+        - "+523459370407"
+      IP:
+        - "10.1.1.250"
+      PHONE_HOME:
+        - "+527777774744"
+      ADDRESS_REG:
+        - "puebla,puebla,puebla (heroica puebla),del valle,street,1"
+      DEVICE_ALIAS:
+        - "216965035455793102"
+      CURP:
+        - "GHKF9006170QQ8UG7R"
+      RFC:
+        - "BKIP900508253"
+      CLABE:
+        - "653826230245471697"
+      DEBIT_CARD:
+        - "1563145634135413"
+
+  ## 3
+  - case: "[3] matcherCheck: empty input values for SECOND_LAST_NAME, PHONE_MOBILE, PHONE_WORK, IP, ADDRESS_REG,
+  CURP, CLABE types"
+    request:
+      FULL_NAME:
+        - "MXN TEST API"
+      EMAIL:
+        - "TESTMXNN@MAIL.RU"
+      COMPANY_NAME:
+        - "SDFG"
+      REFERENCE_CONTACT_PHONE:
+        - "+523459370407"
+      PHONE_HOME:
+        - "+527777774744"
+      DEVICE_ALIAS:
+        - "216965035455793102"
+      RFC:
+        - "BKIP900508253"
+      DEBIT_CARD:
+        - "1563145634135413"
+    response:
+      FULL_NAME:
+        - "MXN TEST API"
+      EMAIL:
+        - "TESTMXNN@MAIL.RU"
+      COMPANY_NAME:
+        - "SDFG"
+      REFERENCE_CONTACT_PHONE:
+        - "+523459370407"
+      PHONE_HOME:
+        - "+527777774744"
+      DEVICE_ALIAS:
+        - "216965035455793102"
+      RFC:
+        - "BKIP900508253"
+      DEBIT_CARD:
+        - "1563145634135413"

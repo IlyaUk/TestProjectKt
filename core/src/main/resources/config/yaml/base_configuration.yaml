@@ -4,6 +4,8 @@ host: qa-delivery-mx-master.moneyman.ru
 registrationServiceEndpoint: client-area/registration
 privateAreaServiceEndpoint: private-area/static/#/login
 landingPageServiceEndpoint: /
+blackListServiceEndpoint: mxn-crm-gateway/blacklist/contains
+signInServiceEndpoint: secure/rest/sign/in
 dbUrl: 192.168.99.100:3308
 dbUser: test
 dbPassword: testpwd
