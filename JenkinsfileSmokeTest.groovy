@@ -34,13 +34,13 @@ pipeline {
   post {
     always {
       script {
-        def obligatoryEmailLink = "<a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master " +
-            "Branch- Build ${env.BUILD_ID}</a>" as String
-        def emailBody = obligatoryEmailLink
+        String obligatoryEmailLink = """<a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master 
+Branch- Build ${env.BUILD_ID}</a>"""
+        String emailBody = obligatoryEmailLink
 
         if (isSavedToNexus == "true") {
-          def versionData = "<h2>Build version: $autotestVersion</h2> <h2>Branch name: $branchToRunWith</h2>" as String
-          emailBody = + versionData
+          String versionData = "<h2>Build version: $autotestVersion</h2> <h2>Branch name: $branchToRunWith</h2>"
+          emailBody = "$emailbody\n$versionData"
         }
         emailext(
             subject: "[Autotests Internal Test Execution] ${currentBuild.currentResult}",
