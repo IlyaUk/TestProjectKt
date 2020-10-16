@@ -1,3 +1,6 @@
+def obligatoryEmailLink = "<a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>"
+def emailBody = obligatoryEmailLink
+
 pipeline {
   agent any
 
@@ -35,19 +38,14 @@ pipeline {
     always {
       script {
         if (isSavedToNexus == "true") {
-          emailext(
-              subject: "[Autotests Internal Test Execution] ${currentBuild.currentResult}",
-              body: "<a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a> " +
-                  "<h2>Build version: $autotestVersion</h2><h2>Environment:  $branchToRunWith</h2>",
-              to: "ilya.uk@hotmail.com"
-          )
-        } else {
-          emailext(
-              subject: "[Autotests Internal Test Execution] ${currentBuild.currentResult}",
-              body: "<a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>",
-              to: "ilya.uk@hotmail.com"
-          )
+          def versionData = "<h2>Build version: $autotestVersion</h2> <h2>Branch name: $branchToRunWith</h2>"
+          emailBody = + versionData
         }
+        emailext(
+            subject: "[Autotests Internal Test Execution] ${currentBuild.currentResult}",
+            body: emailBody,
+            to: "${mailResultsTo}"
+        )
         allure([
             includeProperties: false,
             jdk              : '',
