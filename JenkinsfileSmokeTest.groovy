@@ -1,5 +1,14 @@
 pipeline {
   agent any
+
+  parameters {
+    string(name: 'autotestVersion', defaultValue: "1.0-SNAPSHOT", trim: true)
+    string(name: 'branchToRunWith', defaultValue: "master", trim: true)
+    booleanParam(name: 'isSavedToNexus', defaultValue: false,
+        description: 'Set to save version mm-automation to Nexus'
+    )
+  }
+
   stages {
     stage('Git checkout') {
       steps {
@@ -25,6 +34,15 @@ pipeline {
   post {
     always {
       script {
+        emailext(
+            subject: "[Autotests Internal Test Execution] ${currentBuild.currentResult}",
+            body: "<a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>",
+            "{% if $isSavedToNexus == 'true' %}",
+            "<h2>Build version: $autotestVersion</h2>",
+            "<h2>Environment:  $branchToRunWith</h2>",
+            "{% endif %}",
+            to: "ilya.ukh@gmail.com"
+        )
         allure([
             includeProperties: false,
             jdk              : '',
