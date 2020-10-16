@@ -37,9 +37,8 @@ pipeline {
         if (isSavedToNexus == "true") {
           emailext(
               subject: "[Autotests Internal Test Execution] ${currentBuild.currentResult}",
-              body: "<a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>",
-              "<h2>Build version: $autotestVersion</h2>",
-              "<h2>Environment:  $branchToRunWith</h2>",
+              body: "<a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a> " +
+                  "<h2>Build version: $autotestVersion</h2><h2>Environment:  $branchToRunWith</h2>",
               to: "ilya.uk@hotmail.com"
           )
         } else {
