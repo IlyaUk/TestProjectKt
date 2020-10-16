@@ -48,6 +48,22 @@ pipeline {
             body: emailBody,
             to: "ilya.uk@hotmail.com"
         )
+        allure([
+            includeProperties: false,
+            jdk              : '',
+            results          : [[path: 'core\\build\\allure-results']]
+        ])
+        publishHTML([
+            allowMissing         : false,
+            alwaysLinkToLastBuild: true,
+            keepAll              : false,
+            reportDir            : 'core\\build\\reports\\tests\\runAllConfigTests',
+            reportFiles          : 'index.html',
+            reportName           : 'Gradle Report',
+            reportTitles         : ''
+        ])
+        junit allowEmptyResults: true, testResults: '**/core/build/test-results/**/*.xml'
+        archiveArtifacts artifacts: '**/core/build/reports/**/*.*', followSymlinks: false
       }
     }
   }
