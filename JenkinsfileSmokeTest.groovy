@@ -1,6 +1,3 @@
-def obligatoryEmailLink = "<a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>"
-def emailBody = obligatoryEmailLink
-
 pipeline {
   agent any
 
@@ -37,8 +34,11 @@ pipeline {
   post {
     always {
       script {
+        obligatoryEmailLink = "<a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>"
+        emailBody = obligatoryEmailLink
+
         if (isSavedToNexus == "true") {
-          def versionData = "<h2>Build version: $autotestVersion</h2> <h2>Branch name: $branchToRunWith</h2>"
+          versionData = "<h2>Build version: $autotestVersion</h2> <h2>Branch name: $branchToRunWith</h2>"
           emailBody = + versionData
         }
         emailext(
