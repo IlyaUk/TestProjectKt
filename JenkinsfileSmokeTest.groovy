@@ -34,8 +34,9 @@ pipeline {
   post {
     always {
       script {
-        String obligatoryEmailLink = """<a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master 
-Branch- Build ${env.BUILD_ID}</a>"""
+        String obligatoryEmailLink = """
+        <a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>
+        """
         String emailBody = obligatoryEmailLink
 
         if (isSavedToNexus == "true") {
@@ -45,7 +46,7 @@ Branch- Build ${env.BUILD_ID}</a>"""
         emailext(
             subject: "[Autotests Internal Test Execution] ${currentBuild.currentResult}",
             body: emailBody,
-            to: "${mailResultsTo}"
+            to: "ilya.uk@hotmail.com"
         )
       }
     }
