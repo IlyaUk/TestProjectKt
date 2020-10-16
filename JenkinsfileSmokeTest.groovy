@@ -34,11 +34,11 @@ pipeline {
   post {
     always {
       script {
-        obligatoryEmailLink = "<a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>"
-        emailBody = obligatoryEmailLink
+        def obligatoryEmailLink = "<a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>"
+        def emailBody = obligatoryEmailLink
 
         if (isSavedToNexus == "true") {
-          versionData = "<h2>Build version: $autotestVersion</h2> <h2>Branch name: $branchToRunWith</h2>"
+          def versionData = "<h2>Build version: $autotestVersion</h2> <h2>Branch name: $branchToRunWith</h2>"
           emailBody = + versionData
         }
         emailext(
@@ -46,22 +46,6 @@ pipeline {
             body: emailBody,
             to: "${mailResultsTo}"
         )
-        allure([
-            includeProperties: false,
-            jdk              : '',
-            results          : [[path: 'core\\build\\allure-results']]
-        ])
-        publishHTML([
-            allowMissing         : false,
-            alwaysLinkToLastBuild: true,
-            keepAll              : false,
-            reportDir            : 'core\\build\\reports\\tests\\runAllConfigTests',
-            reportFiles          : 'index.html',
-            reportName           : 'Gradle Report',
-            reportTitles         : ''
-        ])
-        junit allowEmptyResults: true, testResults: '**/core/build/test-results/**/*.xml'
-        archiveArtifacts artifacts: '**/core/build/reports/**/*.*', followSymlinks: false
       }
     }
   }
