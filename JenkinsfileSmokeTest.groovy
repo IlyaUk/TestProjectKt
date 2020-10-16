@@ -40,7 +40,7 @@ Branch- Build ${env.BUILD_ID}</a>"""
 
         if (isSavedToNexus == "true") {
           String versionData = "<h2>Build version: $autotestVersion</h2> <h2>Branch name: $branchToRunWith</h2>"
-          emailBody = "$emailbody\n$versionData"
+          emailBody = "$emailBody\n$versionData"
         }
         emailext(
             subject: "[Autotests Internal Test Execution] ${currentBuild.currentResult}",
