@@ -1,3 +1,18 @@
+def sendTelegram(message) {
+  def encodedMessage = URLEncoder.encode(message, "UTF-8")
+
+  withCredentials([string(credentialsId: 'telegramToken', variable: 'TOKEN'),
+                   string(credentialsId: 'telegramChatId', variable: 'CHAT_ID')]) {
+
+    response = httpRequest (consoleLogResponseBody: true,
+        contentType: 'APPLICATION_JSON',
+        httpMode: 'POST',
+        url: "https://api.telegram.org/bot$TOKEN/sendMessage?text=$encodedMessage&chat_id=$CHAT_ID",
+        validResponseCodes: '200')
+    return response
+  }
+}
+
 pipeline {
   agent any
 
@@ -30,9 +45,8 @@ pipeline {
   post {
     always {
       script {
-        chat_id = '-1001266979201'
         message = "Build results for ${env.JOB_NAME} - ${env.BUILD_URL}"
-        telegramSend(message, -1001266979201)
+        sendTelegram(message)
         String obligatoryEmailLink = """
         <a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>
         """
