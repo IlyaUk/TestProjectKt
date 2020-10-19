@@ -7,7 +7,7 @@ def sendTelegram(message) {
     response = httpRequest (consoleLogResponseBody: true,
         contentType: 'APPLICATION_JSON',
         httpMode: 'POST',
-        url: "https://api.telegram.org/bot$TOKEN/sendMessage?text=$encodedMessage&chat_id=$CHAT_ID",
+        url: "https://api.telegram.org/bot$TOKEN/sendMessage?text=$encodedMessage&chat_id=$CHAT_ID&parse_mode=HTML",
         validResponseCodes: '200')
     return response
   }
