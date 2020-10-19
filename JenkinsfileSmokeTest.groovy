@@ -34,9 +34,6 @@ pipeline {
   post {
     always {
       script {
-        chat_id = '-1001205698701'
-        message = "Build results for ${env.JOB_NAME} - ${env.BUILD_URL}"
-        telegramSendMessage(message, chat_id )
         String obligatoryEmailLink = """
         <a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>
         """
