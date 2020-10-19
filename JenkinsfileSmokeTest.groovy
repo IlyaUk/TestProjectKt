@@ -49,7 +49,7 @@ pipeline {
         sendTelegram(message)
         String emailBody = """
         <a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>
-        <h2>Build version: $autotestVersion</h2> <h2>Branch name: $branchToRunWith</h2>
+        <h2>Build version: $autotestVersion</h2> <h2>Branch name: Master</h2>
         """
         emailext(
             subject: "[Autotests Internal Test Execution] ${currentBuild.currentResult}",
