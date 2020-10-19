@@ -3,10 +3,6 @@ pipeline {
 
   parameters {
     string(name: 'autotestVersion', defaultValue: "1.0-SNAPSHOT", trim: true)
-    string(name: 'branchToRunWith', defaultValue: "master", trim: true)
-    booleanParam(name: 'isSavedToNexus', defaultValue: false,
-        description: 'Set to save version mm-automation to Nexus'
-    )
   }
 
   stages {
@@ -36,7 +32,7 @@ pipeline {
       script {
         chat_id = '-1001266979201'
         message = "Build results for ${env.JOB_NAME} - ${env.BUILD_URL}"
-        telegramSend(message, chat_id)
+        telegramSend(message, -1001266979201)
         String obligatoryEmailLink = """
         <a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>
         """
