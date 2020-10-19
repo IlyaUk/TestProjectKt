@@ -45,17 +45,12 @@ pipeline {
   post {
     always {
       script {
-        message = "Build results for ${env.JOB_NAME} - ${env.BUILD_URL}"
+        message = "Build results for ${env.JOB_NAME} job - <a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>"
         sendTelegram(message)
-        String obligatoryEmailLink = """
+        String emailBody = """
         <a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>
+        <h2>Build version: $autotestVersion</h2> <h2>Branch name: $branchToRunWith</h2>
         """
-        String emailBody = obligatoryEmailLink
-
-        if (isSavedToNexus == "true") {
-          String versionData = "<h2>Build version: $autotestVersion</h2> <h2>Branch name: $branchToRunWith</h2>"
-          emailBody = "$emailBody\n$versionData"
-        }
         emailext(
             subject: "[Autotests Internal Test Execution] ${currentBuild.currentResult}",
             body: emailBody,
