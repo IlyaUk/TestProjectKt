@@ -56,12 +56,9 @@ pipeline {
   post {
     always {
       script {
-        message = """Build results\n
-                   job: ${env.JOB_NAME}\n
-                   result: ${currentBuild.currentResult}\n
-                   buildUrl: ${env.BUILD_URL}\n
-                   startedBy: jobStartedBy ?: ${TRIGGERED_BY_UPSTREAM}\n
-                   autotestVersion: $autotestVersion"""
+        jobStartedBy = wrap([$class: 'BuildUser']) ?: ${TRIGGERED_BY_UPSTREAM}
+        message = """
+        Build results\n job: ${env.JOB_NAME}\n result: ${currentBuild.currentResult}\n buildUrl: ${env.BUILD_URL}\n startedBy: $jobStartedBy\n autotestVersion: $autotestVersion"""
         sendTelegram(message)
         String emailBody = """
         <a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>
