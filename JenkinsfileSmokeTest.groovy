@@ -4,7 +4,7 @@ def sendTelegram(message) {
   withCredentials([string(credentialsId: 'telegramToken', variable: 'TOKEN'),
                    string(credentialsId: 'telegramChatId', variable: 'CHAT_ID')]) {
 
-    response = httpRequest (consoleLogResponseBody: true,
+    response = httpRequest(consoleLogResponseBody: true,
         contentType: 'APPLICATION_JSON',
         httpMode: 'POST',
         url: "https://api.telegram.org/bot$TOKEN/sendMessage?text=$encodedMessage&chat_id=$CHAT_ID&parse_mode=HTML",
@@ -17,10 +17,20 @@ pipeline {
   agent any
 
   parameters {
-    string(name: 'autotestVersion', defaultValue: "1.0-SNAPSHOT", trim: true)
+    string(name: 'autotestVersion', defaultValue: "1.0-SNAPSHOT", trim: true,
+        description: 'Max. length - 30 symbols')
   }
 
   stages {
+    stage('Validate build parameters') {
+      steps {
+        script {
+          if ((params.autotestVersion).length() > 30) {
+            error("Build failed because of incorrect size for autotestVersion parameter")
+          }
+        }
+      }
+    }
     stage('Git checkout') {
       steps {
         checkout([$class                           : 'GitSCM',
@@ -45,7 +55,12 @@ pipeline {
   post {
     always {
       script {
-        message = "Build results for ${env.JOB_NAME} job - <a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>"
+        message = """Build results\n
+                   job: ${env.JOB_NAME}\n
+                   result: ${currentBuild.currentResult}\n
+                   buildUrl: ${env.BUILD_URL}\n
+                   startedBy: jobStartedBy ?: ${TRIGGERED_BY_UPSTREAM}\n
+                   autotestVersion: $autotestVersion"""
         sendTelegram(message)
         String emailBody = """
         <a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>
