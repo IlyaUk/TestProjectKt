@@ -1,3 +1,4 @@
+final TRIGGERED_BY_UPSTREAM = "Triggered by upstream"
 def sendTelegram(message) {
   def encodedMessage = URLEncoder.encode(message, "UTF-8")
 
