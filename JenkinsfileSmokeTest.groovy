@@ -60,7 +60,7 @@ pipeline {
           jobStartedBy = env.BUILD_USER_ID ?: ${TRIGGERED_BY_UPSTREAM}
         }
         message = """
-        Build results\n job: ${env.JOB_NAME}\n result: ${currentBuild.currentResult}\n buildUrl: ${env.BUILD_URL}\n startedBy: $jobStartedBy\n autotestVersion: $autotestVersion"""
+        Build results\njob: ${env.JOB_NAME}\nresult: ${currentBuild.currentResult}\nbuildUrl: ${env.BUILD_URL}\nstartedBy: $jobStartedBy\nautotestVersion: $autotestVersion"""
         sendTelegram(message)
         String emailBody = """
         <a href='${env.BUILD_URL}'>Autotests Internal Test Results After Merge to Master Branch- Build ${env.BUILD_ID}</a>
