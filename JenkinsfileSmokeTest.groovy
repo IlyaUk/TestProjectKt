@@ -56,7 +56,9 @@ pipeline {
   post {
     always {
       script {
-        jobStartedBy = wrap([$class: 'BuildUser']) ?: ${TRIGGERED_BY_UPSTREAM}
+        wrap([$class: 'BuildUser']) {
+          jobStartedBy = env.BUILD_USER_ID ?: ${TRIGGERED_BY_UPSTREAM}
+        }
         message = """
         Build results\n job: ${env.JOB_NAME}\n result: ${currentBuild.currentResult}\n buildUrl: ${env.BUILD_URL}\n startedBy: $jobStartedBy\n autotestVersion: $autotestVersion"""
         sendTelegram(message)
