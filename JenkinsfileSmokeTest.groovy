@@ -58,10 +58,15 @@ pipeline {
     always {
       script {
         wrap([$class: 'BuildUser']) {
-          jobStartedBy = env.BUILD_USER_ID ?: $ {TRIGGERED_BY_UPSTREAM}
+          jobStartedBy = env.BUILD_USER_ID ?: ${TRIGGERED_BY_UPSTREAM}
         }
         message = """
-        Build results\njob: ${env.JOB_NAME}\nresult: ${currentBuild.currentResult}\nbuildUrl: ${env.BUILD_URL}\nstartedBy: $jobStartedBy\nautotestVersion: $autotestVersion
+      Build results
+      job: ${env.JOB_NAME}
+      result: ${currentBuild.currentResult}
+      buildUrl: ${env.BUILD_URL}
+      startedBy: $jobStartedBy
+      autotestVersion: $autotestVersion
         """
         sendTelegram(message)
         String emailBody = """
