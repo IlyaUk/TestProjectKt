@@ -61,7 +61,7 @@ pipeline {
       script {
         wrap([$class: 'BuildUser']) {
           //a = env.BUILD_USER_ID
-          jobStartedBy = a ?: $TRIGGERED_BY_UPSTREAM
+          jobStartedBy = a ?: TRIGGERED_BY_UPSTREAM
         }
         message = """
         Build results\njob: ${env.JOB_NAME}\nresult: ${currentBuild.currentResult}\nbuildUrl: ${env.BUILD_URL}\nstartedBy: $jobStartedBy\nautotestVersion: $autotestVersion
