@@ -1,4 +1,5 @@
 final TRIGGERED_BY_UPSTREAM = "Triggered by upstream"
+String a = null
 
 def sendTelegram(message) {
   def encodedMessage = URLEncoder.encode(message, "UTF-8")
@@ -58,7 +59,7 @@ pipeline {
     always {
       script {
         wrap([$class: 'BuildUser']) {
-          jobStartedBy = env.BUILD_USER_ID ?: ${TRIGGERED_BY_UPSTREAM}
+          jobStartedBy = a ?: TRIGGERED_BY_UPSTREAM
         }
         message = """
         Build results\njob: ${env.JOB_NAME}\nresult: ${currentBuild.currentResult}\nbuildUrl: ${env.BUILD_URL}\nstartedBy: $jobStartedBy\nautotestVersion: $autotestVersion
