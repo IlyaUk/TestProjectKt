@@ -1,4 +1,5 @@
 final TRIGGERED_BY_UPSTREAM = "Triggered by upstream"
+final AUTOTEST_VERSION_MAXIMUM_LENGTH = 30
 String a = null
 
 def sendTelegram(message) {
@@ -28,8 +29,8 @@ pipeline {
     stage('Validate build parameters') {
       steps {
         script {
-          if ((params.autotestVersion).length() > 30) {
-            error("Build failed because of incorrect size for autotestVersion parameter")
+          if ((params.autotestVersion).length() > AUTOTEST_VERSION_MAXIMUM_LENGTH) {
+            error("Build fail reason: autotestVersion parameter exceeds max applicable length of $AUTOTEST_VERSION_MAXIMUM_LENGTH symbols")
           }
         }
       }
@@ -59,6 +60,7 @@ pipeline {
     always {
       script {
         wrap([$class: 'BuildUser']) {
+          a = env.BUILD_USER_ID
           jobStartedBy = a ?: TRIGGERED_BY_UPSTREAM
         }
         message = """
